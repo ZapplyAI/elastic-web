@@ -914,7 +914,7 @@ const TaskManagerTab: React.FC = () => {
       {/* Power Profile Selection */}
       <div className="flex flex-col gap-4">
         <div className="flex items-center justify-between">
-          <h3 className="text-base font-medium text-bolt-elements-textPrimary">Power Management</h3>
+          <h3 className="text-base font-medium text-elasticApp-elements-textPrimary">Power Management</h3>
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
               <input
@@ -924,8 +924,8 @@ const TaskManagerTab: React.FC = () => {
                 onChange={(e) => handleAutoEnergySaverChange(e.target.checked)}
                 className="form-checkbox h-4 w-4 text-purple-600 rounded border-gray-300 dark:border-gray-700"
               />
-              <div className="i-ph:gauge-duotone w-4 h-4 text-bolt-elements-textSecondary" />
-              <label htmlFor="autoEnergySaver" className="text-sm text-bolt-elements-textSecondary">
+              <div className="i-ph:gauge-duotone w-4 h-4 text-elasticApp-elements-textSecondary" />
+              <label htmlFor="autoEnergySaver" className="text-sm text-elasticApp-elements-textSecondary">
                 Auto Energy Saver
               </label>
             </div>
@@ -938,13 +938,15 @@ const TaskManagerTab: React.FC = () => {
                 disabled={autoEnergySaver}
                 className="form-checkbox h-4 w-4 text-purple-600 rounded border-gray-300 dark:border-gray-700 disabled:opacity-50"
               />
-              <div className="i-ph:leaf-duotone w-4 h-4 text-bolt-elements-textSecondary" />
+              <div className="i-ph:leaf-duotone w-4 h-4 text-elasticApp-elements-textSecondary" />
               <label
                 htmlFor="energySaver"
-                className={classNames('text-sm text-bolt-elements-textSecondary', { 'opacity-50': autoEnergySaver })}
+                className={classNames('text-sm text-elasticApp-elements-textSecondary', {
+                  'opacity-50': autoEnergySaver,
+                })}
               >
                 Energy Saver
-                {energySaverMode && <span className="ml-2 text-xs text-bolt-elements-textSecondary">Active</span>}
+                {energySaverMode && <span className="ml-2 text-xs text-elasticApp-elements-textSecondary">Active</span>}
               </label>
             </div>
             <div className="relative">
@@ -958,14 +960,14 @@ const TaskManagerTab: React.FC = () => {
                     toast.success(`Switched to ${profile.name} power profile`);
                   }
                 }}
-                className="pl-8 pr-8 py-1.5 rounded-md bg-bolt-background-secondary dark:bg-[#1E1E1E] border border-bolt-border dark:border-bolt-borderDark text-sm text-bolt-elements-textPrimary dark:text-bolt-elements-textPrimaryDark hover:border-bolt-action-primary dark:hover:border-bolt-action-primary focus:outline-none focus:ring-1 focus:ring-bolt-action-primary appearance-none min-w-[160px] cursor-pointer transition-colors duration-150"
+                className="pl-8 pr-8 py-1.5 rounded-md bg-elasticApp-background-secondary dark:bg-[#1E1E1E] border border-elasticApp-border dark:border-elasticApp-borderDark text-sm text-elasticApp-elements-textPrimary dark:text-elasticApp-elements-textPrimaryDark hover:border-elasticApp-action-primary dark:hover:border-elasticApp-action-primary focus:outline-none focus:ring-1 focus:ring-elasticApp-action-primary appearance-none min-w-[160px] cursor-pointer transition-colors duration-150"
                 style={{ WebkitAppearance: 'none', MozAppearance: 'none' }}
               >
                 {POWER_PROFILES.map((profile) => (
                   <option
                     key={profile.name}
                     value={profile.name}
-                    className="py-2 px-3 bg-bolt-background-secondary dark:bg-[#1E1E1E] text-bolt-elements-textPrimary dark:text-bolt-elements-textPrimaryDark hover:bg-bolt-background-tertiary dark:hover:bg-bolt-backgroundDark-tertiary cursor-pointer"
+                    className="py-2 px-3 bg-elasticApp-background-secondary dark:bg-[#1E1E1E] text-elasticApp-elements-textPrimary dark:text-elasticApp-elements-textPrimaryDark hover:bg-elasticApp-background-tertiary dark:hover:bg-elasticApp-backgroundDark-tertiary cursor-pointer"
                   >
                     {profile.name}
                   </option>
@@ -973,7 +975,7 @@ const TaskManagerTab: React.FC = () => {
               </select>
               <div className="absolute left-2 top-1/2 -translate-y-1/2 pointer-events-none">
                 <div
-                  className={classNames('w-4 h-4 text-bolt-elements-textSecondary', {
+                  className={classNames('w-4 h-4 text-elasticApp-elements-textSecondary', {
                     'i-ph:lightning-fill text-yellow-500': selectedProfile.name === 'Performance',
                     'i-ph:scales-fill text-blue-500': selectedProfile.name === 'Balanced',
                     'i-ph:leaf-fill text-green-500': selectedProfile.name === 'Energy Saver',
@@ -981,21 +983,21 @@ const TaskManagerTab: React.FC = () => {
                 />
               </div>
               <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none">
-                <div className="i-ph:caret-down w-4 h-4 text-bolt-elements-textSecondary opacity-75" />
+                <div className="i-ph:caret-down w-4 h-4 text-elasticApp-elements-textSecondary opacity-75" />
               </div>
             </div>
           </div>
         </div>
-        <div className="text-sm text-bolt-elements-textSecondary">{selectedProfile.description}</div>
+        <div className="text-sm text-elasticApp-elements-textSecondary">{selectedProfile.description}</div>
       </div>
 
       {/* System Health Score */}
       <div className="flex flex-col gap-4">
-        <h3 className="text-base font-medium text-bolt-elements-textPrimary">System Health</h3>
+        <h3 className="text-base font-medium text-elasticApp-elements-textPrimary">System Health</h3>
         <div className="grid grid-cols-1 gap-4">
           <div className="flex flex-col gap-2 rounded-lg bg-[#F8F8F8] dark:bg-[#141414] p-4">
             <div className="flex items-center justify-between">
-              <span className="text-sm text-bolt-elements-textSecondary">Health Score</span>
+              <span className="text-sm text-elasticApp-elements-textSecondary">Health Score</span>
               <span
                 className={classNames('text-lg font-medium', {
                   'text-green-500': metrics.health.score >= 80,
@@ -1008,8 +1010,8 @@ const TaskManagerTab: React.FC = () => {
             </div>
             {metrics.health.issues.length > 0 && (
               <div className="mt-2">
-                <div className="text-sm font-medium text-bolt-elements-textSecondary mb-1">Issues:</div>
-                <ul className="text-sm text-bolt-elements-textSecondary space-y-1">
+                <div className="text-sm font-medium text-elasticApp-elements-textSecondary mb-1">Issues:</div>
+                <ul className="text-sm text-elasticApp-elements-textSecondary space-y-1">
                   {metrics.health.issues.map((issue, index) => (
                     <li key={index} className="flex items-center gap-2">
                       <div className="i-ph:warning-circle-fill text-yellow-500 w-4 h-4" />
@@ -1021,8 +1023,8 @@ const TaskManagerTab: React.FC = () => {
             )}
             {metrics.health.suggestions.length > 0 && (
               <div className="mt-2">
-                <div className="text-sm font-medium text-bolt-elements-textSecondary mb-1">Suggestions:</div>
-                <ul className="text-sm text-bolt-elements-textSecondary space-y-1">
+                <div className="text-sm font-medium text-elasticApp-elements-textSecondary mb-1">Suggestions:</div>
+                <ul className="text-sm text-elasticApp-elements-textSecondary space-y-1">
                   {metrics.health.suggestions.map((suggestion, index) => (
                     <li key={index} className="flex items-center gap-2">
                       <div className="i-ph:lightbulb-fill text-purple-500 w-4 h-4" />
@@ -1038,24 +1040,24 @@ const TaskManagerTab: React.FC = () => {
 
       {/* System Metrics */}
       <div className="flex flex-col gap-4">
-        <h3 className="text-base font-medium text-bolt-elements-textPrimary">System Metrics</h3>
+        <h3 className="text-base font-medium text-elasticApp-elements-textPrimary">System Metrics</h3>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {/* CPU Usage */}
           <div className="flex flex-col gap-2 rounded-lg bg-[#F8F8F8] dark:bg-[#141414] p-4">
             <div className="flex items-center justify-between">
-              <span className="text-sm text-bolt-elements-textSecondary">CPU Usage</span>
+              <span className="text-sm text-elasticApp-elements-textSecondary">CPU Usage</span>
               <span className={classNames('text-sm font-medium', getUsageColor(metrics.cpu.usage))}>
                 {Math.round(metrics.cpu.usage)}%
               </span>
             </div>
             {renderUsageGraph(metricsHistory.cpu, 'CPU', '#9333ea')}
             {metrics.cpu.temperature && (
-              <div className="text-xs text-bolt-elements-textSecondary mt-2">
+              <div className="text-xs text-elasticApp-elements-textSecondary mt-2">
                 Temperature: {metrics.cpu.temperature}°C
               </div>
             )}
             {metrics.cpu.frequency && (
-              <div className="text-xs text-bolt-elements-textSecondary">
+              <div className="text-xs text-elasticApp-elements-textSecondary">
                 Frequency: {(metrics.cpu.frequency / 1000).toFixed(1)} GHz
               </div>
             )}
@@ -1064,17 +1066,19 @@ const TaskManagerTab: React.FC = () => {
           {/* Memory Usage */}
           <div className="flex flex-col gap-2 rounded-lg bg-[#F8F8F8] dark:bg-[#141414] p-4">
             <div className="flex items-center justify-between">
-              <span className="text-sm text-bolt-elements-textSecondary">Memory Usage</span>
+              <span className="text-sm text-elasticApp-elements-textSecondary">Memory Usage</span>
               <span className={classNames('text-sm font-medium', getUsageColor(metrics.memory.percentage))}>
                 {Math.round(metrics.memory.percentage)}%
               </span>
             </div>
             {renderUsageGraph(metricsHistory.memory, 'Memory', '#2563eb')}
-            <div className="text-xs text-bolt-elements-textSecondary mt-2">
+            <div className="text-xs text-elasticApp-elements-textSecondary mt-2">
               Used: {formatBytes(metrics.memory.used)}
             </div>
-            <div className="text-xs text-bolt-elements-textSecondary">Total: {formatBytes(metrics.memory.total)}</div>
-            <div className="text-xs text-bolt-elements-textSecondary">
+            <div className="text-xs text-elasticApp-elements-textSecondary">
+              Total: {formatBytes(metrics.memory.total)}
+            </div>
+            <div className="text-xs text-elasticApp-elements-textSecondary">
               Heap: {formatBytes(metrics.memory.heap.used)} / {formatBytes(metrics.memory.heap.total)}
             </div>
           </div>
@@ -1082,7 +1086,7 @@ const TaskManagerTab: React.FC = () => {
           {/* Performance */}
           <div className="flex flex-col gap-2 rounded-lg bg-[#F8F8F8] dark:bg-[#141414] p-4">
             <div className="flex items-center justify-between">
-              <span className="text-sm text-bolt-elements-textSecondary">Performance</span>
+              <span className="text-sm text-elasticApp-elements-textSecondary">Performance</span>
               <span
                 className={classNames('text-sm font-medium', {
                   'text-red-500': metrics.performance.fps < PERFORMANCE_THRESHOLDS.fps.critical,
@@ -1093,16 +1097,16 @@ const TaskManagerTab: React.FC = () => {
                 {Math.round(metrics.performance.fps)} FPS
               </span>
             </div>
-            <div className="text-xs text-bolt-elements-textSecondary mt-2">
+            <div className="text-xs text-elasticApp-elements-textSecondary mt-2">
               Page Load: {(metrics.performance.pageLoad / 1000).toFixed(2)}s
             </div>
-            <div className="text-xs text-bolt-elements-textSecondary">
+            <div className="text-xs text-elasticApp-elements-textSecondary">
               DOM Ready: {(metrics.performance.domReady / 1000).toFixed(2)}s
             </div>
-            <div className="text-xs text-bolt-elements-textSecondary">
+            <div className="text-xs text-elasticApp-elements-textSecondary">
               TTFB: {(metrics.performance.timing.ttfb / 1000).toFixed(2)}s
             </div>
-            <div className="text-xs text-bolt-elements-textSecondary">
+            <div className="text-xs text-elasticApp-elements-textSecondary">
               Resources: {metrics.performance.resources.total} ({formatBytes(metrics.performance.resources.size)})
             </div>
           </div>
@@ -1110,18 +1114,18 @@ const TaskManagerTab: React.FC = () => {
           {/* Network */}
           <div className="flex flex-col gap-2 rounded-lg bg-[#F8F8F8] dark:bg-[#141414] p-4">
             <div className="flex items-center justify-between">
-              <span className="text-sm text-bolt-elements-textSecondary">Network</span>
-              <span className="text-sm font-medium text-bolt-elements-textPrimary">
+              <span className="text-sm text-elasticApp-elements-textSecondary">Network</span>
+              <span className="text-sm font-medium text-elasticApp-elements-textPrimary">
                 {metrics.network.downlink.toFixed(1)} Mbps
               </span>
             </div>
             {renderUsageGraph(metricsHistory.network, 'Network', '#f59e0b')}
-            <div className="text-xs text-bolt-elements-textSecondary mt-2">Type: {metrics.network.type}</div>
-            <div className="text-xs text-bolt-elements-textSecondary">Latency: {metrics.network.latency}ms</div>
-            <div className="text-xs text-bolt-elements-textSecondary">
+            <div className="text-xs text-elasticApp-elements-textSecondary mt-2">Type: {metrics.network.type}</div>
+            <div className="text-xs text-elasticApp-elements-textSecondary">Latency: {metrics.network.latency}ms</div>
+            <div className="text-xs text-elasticApp-elements-textSecondary">
               Received: {formatBytes(metrics.network.bytesReceived)}
             </div>
-            <div className="text-xs text-bolt-elements-textSecondary">
+            <div className="text-xs text-elasticApp-elements-textSecondary">
               Sent: {formatBytes(metrics.network.bytesSent)}
             </div>
           </div>
@@ -1131,13 +1135,13 @@ const TaskManagerTab: React.FC = () => {
         {metrics.battery && (
           <div className="flex flex-col gap-2 rounded-lg bg-[#F8F8F8] dark:bg-[#141414] p-4">
             <div className="flex items-center justify-between">
-              <span className="text-sm text-bolt-elements-textSecondary">Battery</span>
+              <span className="text-sm text-elasticApp-elements-textSecondary">Battery</span>
               <div className="flex items-center gap-2">
-                {metrics.battery.charging && <div className="i-ph:lightning-fill w-4 h-4 text-bolt-action-primary" />}
+                {energySaverMode && <div className="i-ph:lightning-fill w-4 h-4 text-elasticApp-action-primary" />}
                 <span
                   className={classNames(
                     'text-sm font-medium',
-                    metrics.battery.level > 20 ? 'text-bolt-elements-textPrimary' : 'text-red-500',
+                    metrics.battery.level > 20 ? 'text-elasticApp-elements-textPrimary' : 'text-red-500',
                   )}
                 >
                   {Math.round(metrics.battery.level)}%
@@ -1146,22 +1150,22 @@ const TaskManagerTab: React.FC = () => {
             </div>
             {renderUsageGraph(metricsHistory.battery, 'Battery', '#22c55e')}
             {metrics.battery.timeRemaining && (
-              <div className="text-xs text-bolt-elements-textSecondary mt-2">
+              <div className="text-xs text-elasticApp-elements-textSecondary mt-2">
                 {metrics.battery.charging ? 'Time to full: ' : 'Time remaining: '}
                 {formatTime(metrics.battery.timeRemaining)}
               </div>
             )}
             {metrics.battery.temperature && (
-              <div className="text-xs text-bolt-elements-textSecondary">
+              <div className="text-xs text-elasticApp-elements-textSecondary">
                 Temperature: {metrics.battery.temperature}°C
               </div>
             )}
-            {metrics.battery.cycles && (
-              <div className="text-xs text-bolt-elements-textSecondary">Charge cycles: {metrics.battery.cycles}</div>
-            )}
-            {metrics.battery.health && (
-              <div className="text-xs text-bolt-elements-textSecondary">Battery health: {metrics.battery.health}%</div>
-            )}
+            <div className="text-xs text-elasticApp-elements-textSecondary">
+              Charge cycles: {metrics.battery.cycles}
+            </div>
+            <div className="text-xs text-elasticApp-elements-textSecondary">
+              Battery health: {metrics.battery.health}%
+            </div>
           </div>
         )}
 
@@ -1169,10 +1173,10 @@ const TaskManagerTab: React.FC = () => {
         {alerts.length > 0 && (
           <div className="flex flex-col gap-2 rounded-lg bg-[#F8F8F8] dark:bg-[#141414] p-4">
             <div className="flex items-center justify-between">
-              <span className="text-sm font-medium text-bolt-elements-textPrimary">Recent Alerts</span>
+              <span className="text-sm font-medium text-elasticApp-elements-textPrimary">Recent Alerts</span>
               <button
                 onClick={() => setAlerts([])}
-                className="text-xs text-bolt-elements-textSecondary hover:text-bolt-elements-textPrimary"
+                className="text-xs text-elasticApp-elements-textSecondary hover:text-elasticApp-elements-textPrimary"
               >
                 Clear All
               </button>
@@ -1195,7 +1199,7 @@ const TaskManagerTab: React.FC = () => {
                     })}
                   />
                   <span>{alert.message}</span>
-                  <span className="text-xs text-bolt-elements-textSecondary ml-auto">
+                  <span className="text-xs text-elasticApp-elements-textSecondary ml-auto">
                     {new Date(alert.timestamp).toLocaleTimeString()}
                   </span>
                 </div>
@@ -1207,21 +1211,21 @@ const TaskManagerTab: React.FC = () => {
         {/* Energy Savings */}
         {energySaverMode && (
           <div className="flex flex-col gap-2 rounded-lg bg-[#F8F8F8] dark:bg-[#141414] p-4">
-            <h4 className="text-sm font-medium text-bolt-elements-textPrimary">Energy Savings</h4>
+            <h4 className="text-sm font-medium text-elasticApp-elements-textPrimary">Energy Savings</h4>
             <div className="grid grid-cols-3 gap-4">
               <div>
-                <span className="text-sm text-bolt-elements-textSecondary">Updates Reduced</span>
-                <p className="text-lg font-medium text-bolt-elements-textPrimary">{energySavings.updatesReduced}</p>
+                <span className="text-sm text-elasticApp-elements-textSecondary">Updates Reduced</span>
+                <p className="text-lg font-medium text-elasticApp-elements-textPrimary">{energySavings.updatesReduced}</p>
               </div>
               <div>
-                <span className="text-sm text-bolt-elements-textSecondary">Time in Saver Mode</span>
-                <p className="text-lg font-medium text-bolt-elements-textPrimary">
+                <span className="text-sm text-elasticApp-elements-textSecondary">Time in Saver Mode</span>
+                <p className="text-lg font-medium text-elasticApp-elements-textPrimary">
                   {Math.floor(energySavings.timeInSaverMode / 60)}m {Math.floor(energySavings.timeInSaverMode % 60)}s
                 </p>
               </div>
               <div>
-                <span className="text-sm text-bolt-elements-textSecondary">Energy Saved</span>
-                <p className="text-lg font-medium text-bolt-elements-textPrimary">
+                <span className="text-sm text-elasticApp-elements-textSecondary">Energy Saved</span>
+                <p className="text-lg font-medium text-elasticApp-elements-textPrimary">
                   {energySavings.estimatedEnergySaved.toFixed(2)} mWh
                 </p>
               </div>

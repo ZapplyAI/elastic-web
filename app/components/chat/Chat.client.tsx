@@ -68,10 +68,10 @@ export function Chat() {
            */
           switch (type) {
             case 'success': {
-              return <div className="i-ph:check-bold text-bolt-elements-icon-success text-2xl" />;
+              return <div className="i-ph:check-bold text-elasticApp-elements-icon-success text-2xl" />;
             }
             case 'error': {
-              return <div className="i-ph:warning-circle-bold text-bolt-elements-icon-error text-2xl" />;
+              return <div className="i-ph:warning-circle-bold text-elasticApp-elements-icon-error text-2xl" />;
             }
           }
 
@@ -129,15 +129,9 @@ export const ChatImpl = memo(
     const [model, setModel] = useState('claude-3-5-sonnet-latest');
 
     // Always use Anthropic as the provider
-    const [provider, setProvider] = useState<ProviderInfo>(() => {
-      // Find the Anthropic provider from the provider list
-      const anthropicProvider = PROVIDER_LIST.find((p) => p.name === 'Anthropic');
-      if (!anthropicProvider) {
-        console.error('Anthropic provider not found in provider list');
-        return DEFAULT_PROVIDER as unknown as ProviderInfo;
-      }
-      return anthropicProvider;
-    });
+    const [provider, setProvider] = useState<ProviderInfo>(
+      PROVIDER_LIST.find((p) => p.name === 'Anthropic') || PROVIDER_LIST[0]
+    );
 
     const { showChat } = useStore(chatStore);
 

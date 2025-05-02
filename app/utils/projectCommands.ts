@@ -72,58 +72,38 @@ export function createCommandsMessage(commands: ProjectCommands): Message | null
 
   if (commands.setupCommand) {
     commandString += `
-<boltAction type="shell">${commands.setupCommand}</boltAction>`;
+<elasticAppAction type="shell">${commands.setupCommand}</elasticAppAction>`;
   }
 
   if (commands.startCommand) {
     commandString += `
-<boltAction type="start">${commands.startCommand}</boltAction>
+<elasticAppAction type="start">${commands.startCommand}</elasticAppAction>
 `;
   }
 
   return {
     role: 'assistant',
     content: `
-<boltArtifact id="project-setup" title="Project Setup">
+<elasticAppArtifact id="project-setup" title="Project Setup">
 ${commandString}
-</boltArtifact>${commands.followupMessage ? `\n\n${commands.followupMessage}` : ''}`,
+</elasticAppArtifact>${commands.followupMessage ? `\n\n${commands.followupMessage}` : ''}`,
     id: generateId(),
     createdAt: new Date(),
   };
 }
 
-export function escapeBoltArtifactTags(input: string) {
-  // Regular expression to match boltArtifact tags and their content
-  const regex = /(<boltArtifact[^>]*>)([\s\S]*?)(<\/boltArtifact>)/g;
-
-  return input.replace(regex, (match, openTag, content, closeTag) => {
-    // Escape the opening tag
-    const escapedOpenTag = openTag.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-
-    // Escape the closing tag
-    const escapedCloseTag = closeTag.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-
-    // Return the escaped version
-    return `${escapedOpenTag}${content}${escapedCloseTag}`;
-  });
+export function escapeElasticAppArtifactTags(input: string) {
+  return input
+    .replace(/<elasticAppArtifact/g, '&lt;elasticAppArtifact')
+    .replace(/<\/elasticAppArtifact>/g, '&lt;/elasticAppArtifact&gt;');
 }
 
-export function escapeBoltAActionTags(input: string) {
-  // Regular expression to match boltArtifact tags and their content
-  const regex = /(<boltAction[^>]*>)([\s\S]*?)(<\/boltAction>)/g;
-
-  return input.replace(regex, (match, openTag, content, closeTag) => {
-    // Escape the opening tag
-    const escapedOpenTag = openTag.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-
-    // Escape the closing tag
-    const escapedCloseTag = closeTag.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-
-    // Return the escaped version
-    return `${escapedOpenTag}${content}${escapedCloseTag}`;
-  });
+export function escapeElasticAppActionTags(input: string) {
+  return input
+    .replace(/<elasticAppAction/g, '&lt;elasticAppAction')
+    .replace(/<\/elasticAppAction>/g, '&lt;/elasticAppAction&gt;');
 }
 
-export function escapeBoltTags(input: string) {
-  return escapeBoltArtifactTags(escapeBoltAActionTags(input));
+export function escapeElasticAppTags(input: string) {
+  return escapeElasticAppArtifactTags(escapeElasticAppActionTags(input));
 }

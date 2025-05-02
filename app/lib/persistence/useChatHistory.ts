@@ -120,22 +120,22 @@ export function useChatHistory() {
                   id: storedMessages.messages[snapshotIndex].id,
                   role: 'assistant',
                   content: ` 📦 Chat Restored from snapshot, You can revert this message to load the full chat history
-                  <boltArtifact id="imported-files" title="Project Files Snapshot" type="bundled">
+                  <elasticAppArtifact id="imported-files" title="Project Files Snapshot" type="bundled">
                   ${Object.entries(snapshot?.files || {})
                     .filter((x) => !x[0].endsWith('lock.json'))
                     .map(([key, value]) => {
                       if (value?.type === 'file') {
                         return `
-                      <boltAction type="file" filePath="${key}">
+                      <elasticAppAction type="file" filePath="${key}">
 ${value.content}
-                      </boltAction>
+                      </elasticAppAction>
                       `;
                       } else {
                         return ``;
                       }
                     })
                     .join('\n')}
-                  </boltArtifact>
+                  </elasticAppArtifact>
                   `,
                   annotations: [
                     'no-store',
@@ -320,6 +320,16 @@ ${value.content}
           navigateChat(nextId);
         }
       }
+
+      // Log values just before calling setMessages
+      console.log('--- Calling setMessages ---', {
+        dbExists: !!db,
+        chatId: chatId.get() as string,
+        urlId,
+        description: description.get(),
+        messageCount: [...archivedMessages, ...messages].length,
+        metadata: chatMetadata.get(),
+      });
 
       await setMessages(
         db,

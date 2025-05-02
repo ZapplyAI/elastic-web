@@ -72,6 +72,8 @@ export function diffFiles(fileName: string, oldFileContent: string, newFileConte
     return undefined;
   }
 
+  console.log('ElasticApp: Applying diff', unifiedDiff);
+
   return unifiedDiff;
 }
 
@@ -90,12 +92,12 @@ export function extractRelativePath(filePath: string) {
  * Example:
  *
  * ```html
- * <bolt_file_modifications>
+ * <elastic_file_modifications>
  * <diff path="/home/project/index.js">
  * - console.log('Hello, World!');
- * + console.log('Hello, Bolt!');
+ * + console.log('Hello, elastic!');
  * </diff>
- * </bolt_file_modifications>
+ * </elastic_file_modifications>
  * ```
  */
 export function fileModificationsToHTML(modifications: FileModifications) {

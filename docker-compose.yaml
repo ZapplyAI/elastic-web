@@ -1,10 +1,10 @@
 services:
   app-prod:
-    image: bolt-ai:production
+    image: elasticApp:production
     build:
       context: .
       dockerfile: Dockerfile
-      target: bolt-ai-production
+      target: elasticApp-production
     ports:
       - '5173:5173'
     env_file: '.env.local'
@@ -34,9 +34,9 @@ services:
       - production
 
   app-dev:
-    image: bolt-ai:development
+    image: elasticApp:development
     build:
-      target: bolt-ai-development
+      target: elasticApp-development
     env_file: '.env.local'
     environment:
       - NODE_ENV=development
@@ -74,7 +74,7 @@ services:
     profiles: ['development', 'default']
 
   app-prebuild:
-    image: ghcr.io/stackblitz-labs/bolt.diy:latest
+    image: ghcr.io/stackblitz-labs/elasticApp.diy:latest
     ports:
       - '5173:5173'
     environment:

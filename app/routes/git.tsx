@@ -7,7 +7,7 @@ import { Header } from '~/components/header/Header';
 import BackgroundRays from '~/components/ui/BackgroundRays';
 
 export const meta: MetaFunction = () => {
-  return [{ title: 'Elastic Copilot' }, { name: 'description', content: 'Talk with Elastic Copilot' }];
+  return [{ title: 'Elastic App' }, { name: 'description', content: 'Talk with Elastic App' }];
 };
 
 export async function loader(args: LoaderFunctionArgs) {
@@ -16,7 +16,7 @@ export async function loader(args: LoaderFunctionArgs) {
 
 export default function Index() {
   return (
-    <div className="flex flex-col h-full w-full bg-bolt-elements-background-depth-1">
+    <div className="flex flex-col h-full w-full bg-elasticApp-elements-background-depth-1">
       <BackgroundRays />
       <Header />
       <ClientOnly fallback={<BaseChat />}>{() => <GitUrlImport />}</ClientOnly>

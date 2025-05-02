@@ -206,12 +206,12 @@ export function HeaderActionButtons({}: HeaderActionButtonsProps) {
   return (
     <div className="flex">
       <div className="relative" ref={dropdownRef}>
-        <div className="flex border border-bolt-elements-borderColor rounded-md overflow-hidden mr-2 text-sm">
+        <div className="flex border border-elasticApp-elements-borderColor rounded-md overflow-hidden mr-2 text-sm">
           <Button
             active
             disabled={isDeploying || !activePreview || isStreaming}
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            className="px-4 hover:bg-bolt-elements-item-backgroundActive flex items-center gap-2"
+            className="px-4 hover:bg-elasticApp-elements-item-backgroundActive flex items-center gap-2"
           >
             {isDeploying ? 'Deploying...' : 'Deploy'}
             <div
@@ -221,7 +221,7 @@ export function HeaderActionButtons({}: HeaderActionButtonsProps) {
         </div>
 
         {isDropdownOpen && (
-          <div className="absolute right-2 flex flex-col gap-1 z-50 p-1 mt-1 min-w-[13.5rem] bg-bolt-elements-background-depth-2 rounded-md shadow-lg bg-bolt-elements-backgroundDefault border border-bolt-elements-borderColor">
+          <div className="absolute right-2 flex flex-col gap-1 z-50 p-1 mt-1 min-w-[13.5rem] bg-elasticApp-elements-background-depth-2 rounded-md shadow-lg bg-elasticApp-elements-backgroundDefault border border-elasticApp-elements-borderColor">
             <Button
               active
               onClick={() => {
@@ -229,7 +229,7 @@ export function HeaderActionButtons({}: HeaderActionButtonsProps) {
                 setIsDropdownOpen(false);
               }}
               disabled={isDeploying || !activePreview || !connection.user}
-              className="flex items-center w-full px-4 py-2 text-sm text-bolt-elements-textPrimary hover:bg-bolt-elements-item-backgroundActive gap-2 rounded-md group relative"
+              className="flex items-center w-full px-4 py-2 text-sm text-elasticApp-elements-textPrimary hover:bg-elasticApp-elements-item-backgroundActive gap-2 rounded-md group relative"
             >
               <img
                 className="w-5 h-5"
@@ -244,7 +244,7 @@ export function HeaderActionButtons({}: HeaderActionButtonsProps) {
             <Button
               active={false}
               disabled
-              className="flex items-center w-full rounded-md px-4 py-2 text-sm text-bolt-elements-textTertiary gap-2"
+              className="flex items-center w-full rounded-md px-4 py-2 text-sm text-elasticApp-elements-textTertiary gap-2"
             >
               <span className="sr-only">Coming Soon</span>
               <img
@@ -260,7 +260,7 @@ export function HeaderActionButtons({}: HeaderActionButtonsProps) {
             <Button
               active={false}
               disabled
-              className="flex items-center w-full rounded-md px-4 py-2 text-sm text-bolt-elements-textTertiary gap-2"
+              className="flex items-center w-full rounded-md px-4 py-2 text-sm text-elasticApp-elements-textTertiary gap-2"
             >
               <span className="sr-only">Coming Soon</span>
               <img
@@ -276,7 +276,7 @@ export function HeaderActionButtons({}: HeaderActionButtonsProps) {
           </div>
         )}
       </div>
-      <div className="flex border border-bolt-elements-borderColor rounded-md overflow-hidden">
+      <div className="flex border border-elasticApp-elements-borderColor rounded-md overflow-hidden">
         <Button
           active={showChat}
           disabled={!canHideChat || isSmallViewport} // expand button is disabled on mobile as it's not needed
@@ -286,9 +286,9 @@ export function HeaderActionButtons({}: HeaderActionButtonsProps) {
             }
           }}
         >
-          <div className="i-bolt:chat text-sm" />
+          <div className="i-elasticApp:chat text-sm" />
         </Button>
-        <div className="w-[1px] bg-bolt-elements-borderColor" />
+        <div className="w-[1px] bg-elasticApp-elements-borderColor" />
         <Button
           active={showWorkbench}
           onClick={() => {
@@ -320,10 +320,10 @@ function Button({ active = false, disabled = false, children, onClick, className
       className={classNames(
         'flex items-center p-1.5',
         {
-          'bg-bolt-elements-item-backgroundDefault hover:bg-bolt-elements-item-backgroundActive text-bolt-elements-textTertiary hover:text-bolt-elements-textPrimary':
+          'bg-elasticApp-elements-item-backgroundDefault hover:bg-elasticApp-elements-item-backgroundActive text-elasticApp-elements-textTertiary hover:text-elasticApp-elements-textPrimary':
             !active,
-          'bg-bolt-elements-item-backgroundAccent text-bolt-elements-item-contentAccent': active && !disabled,
-          'bg-bolt-elements-item-backgroundDefault text-alpha-gray-20 dark:text-alpha-white-20 cursor-not-allowed':
+          'bg-elasticApp-elements-item-backgroundAccent text-elasticApp-elements-item-contentAccent': active && !disabled,
+          'bg-elasticApp-elements-item-backgroundDefault text-alpha-gray-20 dark:text-alpha-white-20 cursor-not-allowed':
             disabled,
         },
         className,

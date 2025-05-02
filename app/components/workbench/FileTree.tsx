@@ -205,7 +205,7 @@ function ContextMenuItem({ onSelect, children }: { onSelect?: () => void; childr
   return (
     <ContextMenu.Item
       onSelect={onSelect}
-      className="flex items-center gap-2 px-2 py-1.5 outline-0 text-sm text-bolt-elements-textPrimary cursor-pointer ws-nowrap text-bolt-elements-item-contentDefault hover:text-bolt-elements-item-contentActive hover:bg-bolt-elements-item-backgroundActive rounded-md"
+      className="flex items-center gap-2 px-2 py-1.5 outline-0 text-sm text-elasticApp-elements-textPrimary cursor-pointer ws-nowrap text-elasticApp-elements-item-contentDefault hover:text-elasticApp-elements-item-contentActive hover:bg-elasticApp-elements-item-backgroundActive rounded-md"
     >
       <span className="size-4 shrink-0"></span>
       <span>{children}</span>
@@ -220,9 +220,9 @@ function FileContextMenu({ onCopyPath, onCopyRelativePath, children }: FolderCon
       <ContextMenu.Portal>
         <ContextMenu.Content
           style={{ zIndex: 998 }}
-          className="border border-bolt-elements-borderColor rounded-md z-context-menu bg-bolt-elements-background-depth-1 dark:bg-bolt-elements-background-depth-2 data-[state=open]:animate-in animate-duration-100 data-[state=open]:fade-in-0 data-[state=open]:zoom-in-98 w-56"
+          className="border border-elasticApp-elements-borderColor rounded-md z-context-menu bg-elasticApp-elements-background-depth-1 dark:bg-elasticApp-elements-background-depth-2 data-[state=open]:animate-in animate-duration-100 data-[state=open]:fade-in-0 data-[state=open]:zoom-in-98 w-56"
         >
-          <ContextMenu.Group className="p-1 border-b-px border-solid border-bolt-elements-borderColor">
+          <ContextMenu.Group className="p-1 border-b-px border-solid border-elasticApp-elements-borderColor">
             <ContextMenuItem onSelect={onCopyPath}>Copy path</ContextMenuItem>
             <ContextMenuItem onSelect={onCopyRelativePath}>Copy relative path</ContextMenuItem>
           </ContextMenu.Group>
@@ -237,9 +237,9 @@ function Folder({ folder, collapsed, selected = false, onCopyPath, onCopyRelativ
     <FileContextMenu onCopyPath={onCopyPath} onCopyRelativePath={onCopyRelativePath}>
       <NodeButton
         className={classNames('group', {
-          'bg-transparent text-bolt-elements-item-contentDefault hover:text-bolt-elements-item-contentActive hover:bg-bolt-elements-item-backgroundActive':
+          'bg-transparent text-elasticApp-elements-item-contentDefault hover:text-elasticApp-elements-item-contentActive hover:bg-elasticApp-elements-item-backgroundActive':
             !selected,
-          'bg-bolt-elements-item-backgroundAccent text-bolt-elements-item-contentAccent': selected,
+          'bg-elasticApp-elements-item-backgroundAccent text-elasticApp-elements-item-contentAccent': selected,
         })}
         depth={folder.depth}
         iconClasses={classNames({
@@ -320,19 +320,19 @@ function File({
     <FileContextMenu onCopyPath={onCopyPath} onCopyRelativePath={onCopyRelativePath}>
       <NodeButton
         className={classNames('group', {
-          'bg-transparent hover:bg-bolt-elements-item-backgroundActive text-bolt-elements-item-contentDefault':
+          'bg-transparent hover:bg-elasticApp-elements-item-backgroundActive text-elasticApp-elements-item-contentDefault':
             !selected,
-          'bg-bolt-elements-item-backgroundAccent text-bolt-elements-item-contentAccent': selected,
+          'bg-elasticApp-elements-item-backgroundAccent text-elasticApp-elements-item-contentAccent': selected,
         })}
         depth={depth}
         iconClasses={classNames('i-ph:file-duotone scale-98', {
-          'group-hover:text-bolt-elements-item-contentActive': !selected,
+          'group-hover:text-elasticApp-elements-item-contentActive': !selected,
         })}
         onClick={onClick}
       >
         <div
           className={classNames('flex items-center', {
-            'group-hover:text-bolt-elements-item-contentActive': !selected,
+            'group-hover:text-elasticApp-elements-item-contentActive': !selected,
           })}
         >
           <div className="flex-1 truncate pr-2">{name}</div>

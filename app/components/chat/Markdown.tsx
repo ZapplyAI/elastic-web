@@ -23,7 +23,7 @@ export const Markdown = memo(({ children, html = false, limitedMarkdown = false 
   const components = useMemo(() => {
     return {
       div: ({ className, children, node, ...props }) => {
-        if (className?.includes('__boltArtifact__')) {
+        if (className?.includes('__elasticAppArtifact__')) {
           const messageId = node?.properties.dataMessageId as string;
 
           if (!messageId) {
@@ -33,7 +33,7 @@ export const Markdown = memo(({ children, html = false, limitedMarkdown = false 
           return <Artifact messageId={messageId} />;
         }
 
-        if (className?.includes('__boltThought__')) {
+        if (className?.includes('__elasticAppThought__')) {
           return <ThoughtBox title="Thought process">{children}</ThoughtBox>;
         }
 
@@ -87,23 +87,23 @@ export const Markdown = memo(({ children, html = false, limitedMarkdown = false 
  *
  * @example
  * // Removes code fences around artifact
- * const input = "```xml\n<div class='__boltArtifact__'></div>\n```";
+ * const input = "```xml\n<div class='__elasticAppArtifact__'></div>\n```";
  * stripCodeFenceFromArtifact(input);
- * // Returns: "\n<div class='__boltArtifact__'></div>\n"
+ * // Returns: "\n<div class='__elasticAppArtifact__'></div>\n"
  *
  * @remarks
- * - Only removes code fences that directly wrap an artifact (marked with __boltArtifact__ class)
+ * - Only removes code fences that directly wrap an artifact (marked with __elasticAppArtifact__ class)
  * - Handles code fences with optional language specifications (e.g. ```xml, ```typescript)
  * - Preserves original content if no artifact is found
  * - Safely handles edge cases like empty input or artifacts at start/end of content
  */
 export const stripCodeFenceFromArtifact = (content: string) => {
-  if (!content || !content.includes('__boltArtifact__')) {
+  if (!content || !content.includes('__elasticAppArtifact__')) {
     return content;
   }
 
   const lines = content.split('\n');
-  const artifactLineIndex = lines.findIndex((line) => line.includes('__boltArtifact__'));
+  const artifactLineIndex = lines.findIndex((line) => line.includes('__elasticAppArtifact__'));
 
   // Return original content if artifact line not found
   if (artifactLineIndex === -1) {

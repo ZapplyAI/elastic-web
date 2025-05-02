@@ -250,17 +250,17 @@ export const Preview = memo(() => {
       {isPortDropdownOpen && (
         <div className="z-iframe-overlay w-full h-full absolute" onClick={() => setIsPortDropdownOpen(false)} />
       )}
-      <div className="bg-bolt-elements-background-depth-2 p-2 flex items-center gap-2">
+      <div className="bg-elasticApp-elements-background-depth-2 p-2 flex items-center gap-2">
         <div className="flex items-center gap-2">
           <IconButton icon="i-ph:arrow-clockwise" onClick={reloadPreview} />
           <IconButton
             icon="i-ph:selection"
             onClick={() => setIsSelectionMode(!isSelectionMode)}
-            className={isSelectionMode ? 'bg-bolt-elements-background-depth-3' : ''}
+            className={isSelectionMode ? 'bg-elasticApp-elements-background-depth-3' : ''}
           />
         </div>
 
-        <div className="flex-grow flex items-center gap-1 bg-bolt-elements-preview-addressBar-background border border-bolt-elements-borderColor text-bolt-elements-preview-addressBar-text rounded-full px-3 py-1 text-sm hover:bg-bolt-elements-preview-addressBar-backgroundHover hover:focus-within:bg-bolt-elements-preview-addressBar-backgroundActive focus-within:bg-bolt-elements-preview-addressBar-backgroundActive focus-within-border-bolt-elements-borderColorActive focus-within:text-bolt-elements-preview-addressBar-textActive">
+        <div className="flex-grow flex items-center gap-1 bg-elasticApp-elements-preview-addressBar-background border border-elasticApp-elements-borderColor text-elasticApp-elements-preview-addressBar-text rounded-full px-3 py-1 text-sm hover:bg-elasticApp-elements-preview-addressBar-backgroundHover hover:focus-within:bg-elasticApp-elements-preview-addressBar-backgroundActive focus-within:bg-elasticApp-elements-preview-addressBar-backgroundActive focus-within-border-elasticApp-elements-borderColorActive focus-within:text-elasticApp-elements-preview-addressBar-textActive">
           <input
             title="URL"
             ref={inputRef}
@@ -359,13 +359,13 @@ export const Preview = memo(() => {
         </div>
       </div>
 
-      <div className="flex-1 border-t border-bolt-elements-borderColor flex justify-center items-center overflow-auto">
+      <div className="flex-1 border-t border-elasticApp-elements-borderColor flex justify-center items-center overflow-auto">
         <div
           style={{
             width: isDeviceModeOn ? `${widthPercent}%` : '100%',
             height: '100%',
             overflow: 'visible',
-            background: 'var(--bolt-elements-background-depth-1)',
+            background: 'var(--elasticApp-elements-background-depth-1)',
             position: 'relative',
             display: 'flex',
           }}
@@ -375,7 +375,7 @@ export const Preview = memo(() => {
               <iframe
                 ref={iframeRef}
                 title="preview"
-                className="border-none w-full h-full bg-bolt-elements-background-depth-1"
+                className="border-none w-full h-full bg-elasticApp-elements-background-depth-1"
                 src={iframeUrl}
                 sandbox="allow-scripts allow-forms allow-popups allow-modals allow-storage-access-by-user-activation allow-same-origin"
                 allow="cross-origin-isolated"
@@ -387,7 +387,7 @@ export const Preview = memo(() => {
               />
             </>
           ) : (
-            <div className="flex w-full h-full justify-center items-center bg-bolt-elements-background-depth-1 text-bolt-elements-textPrimary">
+            <div className="flex w-full h-full justify-center items-center bg-elasticApp-elements-background-depth-1 text-elasticApp-elements-textPrimary">
               No preview available
             </div>
           )}

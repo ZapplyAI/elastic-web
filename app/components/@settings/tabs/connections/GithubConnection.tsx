@@ -261,13 +261,13 @@ export default function GithubConnection() {
     >
       <div className="p-6 space-y-6">
         <div className="flex items-center gap-2">
-          <div className="i-ph:github-logo w-5 h-5 text-bolt-elements-textPrimary" />
-          <h3 className="text-base font-medium text-bolt-elements-textPrimary">GitHub Connection</h3>
+          <div className="i-ph:github-logo w-5 h-5 text-elasticApp-elements-textPrimary" />
+          <h3 className="text-base font-medium text-elasticApp-elements-textPrimary">GitHub Connection</h3>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm text-bolt-elements-textSecondary mb-2">Token Type</label>
+            <label className="block text-sm text-elasticApp-elements-textSecondary mb-2">Token Type</label>
             <select
               value={connection.tokenType}
               onChange={(e) =>
@@ -278,7 +278,7 @@ export default function GithubConnection() {
                 'w-full px-3 py-2 rounded-lg text-sm',
                 'bg-[#F8F8F8] dark:bg-[#1A1A1A]',
                 'border border-[#E5E5E5] dark:border-[#333333]',
-                'text-bolt-elements-textPrimary',
+                'text-elasticApp-elements-textPrimary',
                 'focus:outline-none focus:ring-1 focus:ring-purple-500',
                 'disabled:opacity-50',
               )}
@@ -289,7 +289,7 @@ export default function GithubConnection() {
           </div>
 
           <div>
-            <label className="block text-sm text-bolt-elements-textSecondary mb-2">
+            <label className="block text-sm text-elasticApp-elements-textSecondary mb-2">
               {connection.tokenType === 'classic' ? 'Personal Access Token' : 'Fine-grained Token'}
             </label>
             <input
@@ -304,12 +304,12 @@ export default function GithubConnection() {
                 'w-full px-3 py-2 rounded-lg text-sm',
                 'bg-[#F8F8F8] dark:bg-[#1A1A1A]',
                 'border border-[#E5E5E5] dark:border-[#333333]',
-                'text-bolt-elements-textPrimary placeholder-bolt-elements-textTertiary',
+                'text-elasticApp-elements-textPrimary placeholder-elasticApp-elements-textTertiary',
                 'focus:outline-none focus:ring-1 focus:ring-purple-500',
                 'disabled:opacity-50',
               )}
             />
-            <div className="mt-2 text-sm text-bolt-elements-textSecondary">
+            <div className="mt-2 text-sm text-elasticApp-elements-textSecondary">
               <a
                 href={`https://github.com/settings/tokens${connection.tokenType === 'fine-grained' ? '/beta' : '/new'}`}
                 target="_blank"
@@ -369,7 +369,7 @@ export default function GithubConnection() {
           )}
 
           {connection.user && (
-            <span className="text-sm text-bolt-elements-textSecondary flex items-center gap-1">
+            <span className="text-sm text-elasticApp-elements-textSecondary flex items-center gap-1">
               <div className="i-ph:check-circle w-4 h-4" />
               Connected to GitHub
             </span>
@@ -383,20 +383,20 @@ export default function GithubConnection() {
                 <img src={connection.user.avatar_url} alt={connection.user.login} className="w-16 h-16 rounded-full" />
                 <div className="flex-1">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-lg font-medium text-bolt-elements-textPrimary">
+                    <h3 className="text-lg font-medium text-elasticApp-elements-textPrimary">
                       {connection.user.name || connection.user.login}
                     </h3>
                     <div
                       className={classNames(
-                        'i-ph:caret-down w-4 h-4 text-bolt-elements-textSecondary transition-transform',
+                        'i-ph:caret-down w-4 h-4 text-elasticApp-elements-textSecondary transition-transform',
                         isStatsExpanded ? 'rotate-180' : '',
                       )}
                     />
                   </div>
                   {connection.user.bio && (
-                    <p className="text-sm text-start text-bolt-elements-textSecondary">{connection.user.bio}</p>
+                    <p className="text-sm text-start text-elasticApp-elements-textSecondary">{connection.user.bio}</p>
                   )}
-                  <div className="flex gap-4 mt-2 text-sm text-bolt-elements-textSecondary">
+                  <div className="flex gap-4 mt-2 text-sm text-elasticApp-elements-textSecondary">
                     <span className="flex items-center gap-1">
                       <div className="i-ph:users w-4 h-4" />
                       {connection.user.followers} followers
@@ -422,7 +422,7 @@ export default function GithubConnection() {
               <div className="pt-4">
                 {connection.stats.organizations.length > 0 && (
                   <div className="mb-6">
-                    <h4 className="text-sm font-medium text-bolt-elements-textPrimary mb-3">Organizations</h4>
+                    <h4 className="text-sm font-medium text-elasticApp-elements-textPrimary mb-3">Organizations</h4>
                     <div className="flex flex-wrap gap-3">
                       {connection.stats.organizations.map((org) => (
                         <a
@@ -433,7 +433,7 @@ export default function GithubConnection() {
                           className="flex items-center gap-2 p-2 rounded-lg bg-[#F8F8F8] dark:bg-[#1A1A1A] hover:bg-[#F0F0F0] dark:hover:bg-[#252525] transition-colors"
                         >
                           <img src={org.avatar_url} alt={org.login} className="w-6 h-6 rounded-md" />
-                          <span className="text-sm text-bolt-elements-textPrimary">{org.login}</span>
+                          <span className="text-sm text-elasticApp-elements-textPrimary">{org.login}</span>
                         </a>
                       ))}
                     </div>
@@ -442,7 +442,7 @@ export default function GithubConnection() {
 
                 {/* Languages Section */}
                 <div className="mb-6">
-                  <h4 className="text-sm font-medium text-bolt-elements-textPrimary mb-3">Top Languages</h4>
+                  <h4 className="text-sm font-medium text-elasticApp-elements-textPrimary mb-3">Top Languages</h4>
                   <div className="flex flex-wrap gap-2">
                     {Object.entries(connection.stats.languages)
                       .sort(([, a], [, b]) => b - a)
@@ -460,12 +460,12 @@ export default function GithubConnection() {
 
                 {/* Recent Activity Section */}
                 <div className="mb-6">
-                  <h4 className="text-sm font-medium text-bolt-elements-textPrimary mb-3">Recent Activity</h4>
+                  <h4 className="text-sm font-medium text-elasticApp-elements-textPrimary mb-3">Recent Activity</h4>
                   <div className="space-y-3">
                     {connection.stats.recentActivity.map((event) => (
                       <div key={event.id} className="p-3 rounded-lg bg-[#F8F8F8] dark:bg-[#1A1A1A] text-sm">
-                        <div className="flex items-center gap-2 text-bolt-elements-textPrimary">
-                          <div className="i-ph:git-commit w-4 h-4 text-bolt-elements-textSecondary" />
+                        <div className="flex items-center gap-2 text-elasticApp-elements-textPrimary">
+                          <div className="i-ph:git-commit w-4 h-4 text-elasticApp-elements-textSecondary" />
                           <span className="font-medium">{event.type.replace('Event', '')}</span>
                           <span>on</span>
                           <a
@@ -477,7 +477,7 @@ export default function GithubConnection() {
                             {event.repo.name}
                           </a>
                         </div>
-                        <div className="mt-1 text-xs text-bolt-elements-textSecondary">
+                        <div className="mt-1 text-xs text-elasticApp-elements-textSecondary">
                           {new Date(event.created_at).toLocaleDateString()} at{' '}
                           {new Date(event.created_at).toLocaleTimeString()}
                         </div>
@@ -489,33 +489,33 @@ export default function GithubConnection() {
                 {/* Additional Stats */}
                 <div className="grid grid-cols-4 gap-4 mb-6">
                   <div className="p-4 rounded-lg bg-[#F8F8F8] dark:bg-[#1A1A1A]">
-                    <div className="text-sm text-bolt-elements-textSecondary">Member Since</div>
-                    <div className="text-lg font-medium text-bolt-elements-textPrimary">
+                    <div className="text-sm text-elasticApp-elements-textSecondary">Member Since</div>
+                    <div className="text-lg font-medium text-elasticApp-elements-textPrimary">
                       {new Date(connection.user.created_at).toLocaleDateString()}
                     </div>
                   </div>
                   <div className="p-4 rounded-lg bg-[#F8F8F8] dark:bg-[#1A1A1A]">
-                    <div className="text-sm text-bolt-elements-textSecondary">Public Gists</div>
-                    <div className="text-lg font-medium text-bolt-elements-textPrimary">
+                    <div className="text-sm text-elasticApp-elements-textSecondary">Public Gists</div>
+                    <div className="text-lg font-medium text-elasticApp-elements-textPrimary">
                       {connection.stats.totalGists}
                     </div>
                   </div>
                   <div className="p-4 rounded-lg bg-[#F8F8F8] dark:bg-[#1A1A1A]">
-                    <div className="text-sm text-bolt-elements-textSecondary">Organizations</div>
-                    <div className="text-lg font-medium text-bolt-elements-textPrimary">
+                    <div className="text-sm text-elasticApp-elements-textSecondary">Organizations</div>
+                    <div className="text-lg font-medium text-elasticApp-elements-textPrimary">
                       {connection.stats.organizations.length}
                     </div>
                   </div>
                   <div className="p-4 rounded-lg bg-[#F8F8F8] dark:bg-[#1A1A1A]">
-                    <div className="text-sm text-bolt-elements-textSecondary">Languages</div>
-                    <div className="text-lg font-medium text-bolt-elements-textPrimary">
+                    <div className="text-sm text-elasticApp-elements-textSecondary">Languages</div>
+                    <div className="text-lg font-medium text-elasticApp-elements-textPrimary">
                       {Object.keys(connection.stats.languages).length}
                     </div>
                   </div>
                 </div>
 
                 {/* Repositories Section */}
-                <h4 className="text-sm font-medium text-bolt-elements-textPrimary mb-3">Recent Repositories</h4>
+                <h4 className="text-sm font-medium text-elasticApp-elements-textPrimary mb-3">Recent Repositories</h4>
                 <div className="space-y-3">
                   {connection.stats.repos.map((repo) => (
                     <a
@@ -527,14 +527,14 @@ export default function GithubConnection() {
                     >
                       <div className="flex items-center justify-between">
                         <div>
-                          <h5 className="text-sm font-medium text-bolt-elements-textPrimary flex items-center gap-2">
-                            <div className="i-ph:git-repository w-4 h-4 text-bolt-elements-textSecondary" />
+                          <h5 className="text-sm font-medium text-elasticApp-elements-textPrimary flex items-center gap-2">
+                            <div className="i-ph:git-repository w-4 h-4 text-elasticApp-elements-textSecondary" />
                             {repo.name}
                           </h5>
                           {repo.description && (
-                            <p className="text-xs text-bolt-elements-textSecondary mt-1">{repo.description}</p>
+                            <p className="text-xs text-elasticApp-elements-textSecondary mt-1">{repo.description}</p>
                           )}
-                          <div className="flex items-center gap-2 mt-2 text-xs text-bolt-elements-textSecondary">
+                          <div className="flex items-center gap-2 mt-2 text-xs text-elasticApp-elements-textSecondary">
                             <span className="flex items-center gap-1">
                               <div className="i-ph:git-branch w-3 h-3" />
                               {repo.default_branch}
@@ -543,7 +543,7 @@ export default function GithubConnection() {
                             <span>Updated {new Date(repo.updated_at).toLocaleDateString()}</span>
                           </div>
                         </div>
-                        <div className="flex items-center gap-3 text-xs text-bolt-elements-textSecondary">
+                        <div className="flex items-center gap-3 text-xs text-elasticApp-elements-textSecondary">
                           <span className="flex items-center gap-1">
                             <div className="i-ph:star w-3 h-3" />
                             {repo.stargazers_count}
@@ -571,7 +571,7 @@ function LoadingSpinner() {
     <div className="flex items-center justify-center p-4">
       <div className="flex items-center gap-2">
         <div className="i-ph:spinner-gap-bold animate-spin w-4 h-4" />
-        <span className="text-bolt-elements-textSecondary">Loading...</span>
+        <span className="text-elasticApp-elements-textSecondary">Loading...</span>
       </div>
     </div>
   );
