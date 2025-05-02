@@ -1,0 +1,199 @@
+@use 'variables.scss';
+@use 'z-index.scss';
+@use 'animations.scss';
+@use 'components/terminal.scss';
+@use 'components/resize-handle.scss';
+@use 'components/code.scss';
+@use 'components/editor.scss';
+@use 'components/toast.scss';
+
+// Chat message container styles
+.chat-message-container {
+  background-color: var(--bolt-elements-background-depth-1);
+  border-radius: 8px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+  
+  // Custom scrollbar styling
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(128, 128, 128, 0.3);
+    border-radius: 3px;
+    transition: background-color 0.3s ease;
+    
+    &:hover {
+      background-color: rgba(128, 128, 128, 0.5);
+    }
+  }
+  
+  // Firefox scrollbar styling
+  scrollbar-width: thin;
+  scrollbar-color: rgba(128, 128, 128, 0.3) transparent;
+}
+
+// Unified chat styles - separate from workbench
+.unified-chat {
+  overflow-y: auto;
+  height: 100%;
+  max-height: calc(100vh - 250px);
+  
+  // Custom scrollbar styling
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(128, 128, 128, 0.3);
+    border-radius: 3px;
+    transition: background-color 0.3s ease;
+    
+    &:hover {
+      background-color: rgba(128, 128, 128, 0.5);
+    }
+  }
+  
+  // Firefox scrollbar styling
+  scrollbar-width: thin;
+  scrollbar-color: rgba(128, 128, 128, 0.3) transparent;
+  
+  // User and assistant message styling
+  > div.flex {
+    position: relative;
+    
+    // User message styling
+    .i-ph\:user-fill {
+      color: white;
+    }
+    
+    // Robot icon styling
+    .i-ph\:robot {
+      color: white;
+    }
+    
+    // Assistant message styling
+    &:not(.text-right) {
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 3px;
+        background: linear-gradient(to bottom, var(--primary-color), var(--accent-color));
+        opacity: 0.5;
+      }
+    }
+  }
+}
+
+// Ensure workbench has higher z-index
+.z-workbench {
+  z-index: 10;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+:root {
+  --gradient-opacity: 0.9;
+  --primary-color: rgba(255, 64, 153, var(--gradient-opacity));
+  --secondary-color: rgba(214, 51, 204, var(--gradient-opacity));
+  --accent-color: rgba(130, 87, 229, var(--gradient-opacity));
+  // Original colors:
+  // --primary-color: rgba(158, 117, 240, var(--gradient-opacity));
+  // --secondary-color: rgba(138, 43, 226, var(--gradient-opacity));
+  // --accent-color: rgba(128, 59, 239, var(--gradient-opacity));
+}
+
+@keyframes textGradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, #6C5CE7, #A55EEA, #E84393, #A55EEA, #6C5CE7);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+  animation: textGradientShift 8s infinite ease-in-out;
+}
+
+@keyframes gradientShift {
+  0% {
+    --primary-color: rgba(108, 92, 231, var(--gradient-opacity));
+    --secondary-color: rgba(165, 94, 234, var(--gradient-opacity));
+    --accent-color: rgba(232, 67, 147, var(--gradient-opacity));
+  }
+  33% {
+    --primary-color: rgba(232, 67, 147, var(--gradient-opacity));
+    --secondary-color: rgba(108, 92, 231, var(--gradient-opacity));
+    --accent-color: rgba(165, 94, 234, var(--gradient-opacity));
+  }
+  66% {
+    --primary-color: rgba(165, 94, 234, var(--gradient-opacity));
+    --secondary-color: rgba(232, 67, 147, var(--gradient-opacity));
+    --accent-color: rgba(108, 92, 231, var(--gradient-opacity));
+  }
+  100% {
+    --primary-color: rgba(108, 92, 231, var(--gradient-opacity));
+    --secondary-color: rgba(165, 94, 234, var(--gradient-opacity));
+    --accent-color: rgba(232, 67, 147, var(--gradient-opacity));
+  }
+}
+
+:root {
+  animation: gradientShift 15s infinite alternate ease-in-out;
+}
+
+// Global scrollbar styling
+* {
+  // Custom scrollbar styling
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(128, 128, 128, 0.3);
+    border-radius: 3px;
+    transition: background-color 0.3s ease;
+    
+    &:hover {
+      background-color: rgba(128, 128, 128, 0.5);
+    }
+  }
+  
+  // Firefox scrollbar styling
+  scrollbar-width: thin;
+  scrollbar-color: rgba(128, 128, 128, 0.3) transparent;
+}
