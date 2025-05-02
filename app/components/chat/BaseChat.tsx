@@ -500,7 +500,7 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
                 <h1 className="text-3xl lg:text-5xl font-bold mb-4 animate-fade-in tracking-tight">
                   <span className="gradient-text drop-shadow-sm">Code, Ship, Dream</span>
                 </h1>
-                <p className="text-md lg:text-xl mb-8 text-bolt-elements-textSecondary animate-fade-in animation-delay-200 font-light">
+                <p className="text-md lg:text-xl mb-8 text-elasticApp-elements-textSecondary animate-fade-in animation-delay-200 font-light">
                   Idea to app in minutes
                 </p>
                 <div className="absolute -z-10 w-64 h-64 bg-gradient-to-r from-primary-color to-accent-color rounded-full filter blur-[100px] opacity-20 top-[-20%] left-[50%] transform -translate-x-1/2"></div>
@@ -562,7 +562,7 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
                   'sticky bottom-2': chatStarted,
                 })}
               >
-                <div className="bg-bolt-elements-background-depth-2">
+                <div className="bg-elasticApp-elements-background-depth-2">
                   {actionAlert && (
                     <ChatAlert
                       alert={actionAlert}
@@ -657,11 +657,11 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
                       }}
                       onDragLeave={(e) => {
                         e.preventDefault();
-                        e.currentTarget.style.border = '1px solid var(--bolt-elements-borderColor)';
+                        e.currentTarget.style.border = '1px solid var(--elasticApp-elements-borderColor)';
                       }}
                       onDrop={(e) => {
                         e.preventDefault();
-                        e.currentTarget.style.border = '1px solid var(--bolt-elements-borderColor)';
+                        e.currentTarget.style.border = '1px solid var(--elasticApp-elements-borderColor)';
 
                         const files = Array.from(e.dataTransfer.files);
                         files.forEach((file) => {
@@ -823,9 +823,9 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
                         {/* Model settings button removed */}
                       </div>
                       {input.length > 3 ? (
-                        <div className="text-xs text-bolt-elements-textTertiary">
-                          Use <kbd className="kdb px-1.5 py-0.5 rounded bg-bolt-elements-background-depth-2">Shift</kbd>{' '}
-                          + <kbd className="kdb px-1.5 py-0.5 rounded bg-bolt-elements-background-depth-2">Return</kbd>{' '}
+                        <div className="text-xs text-elasticApp-elements-textTertiary">
+                          Use <kbd className="kdb px-1.5 py-0.5 rounded bg-elasticApp-elements-background-depth-2">Shift</kbd>{' '}
+                          + <kbd className="kdb px-1.5 py-0.5 rounded bg-elasticApp-elements-background-depth-2">Return</kbd>{' '}
                           a new line
                         </div>
                       ) : null}

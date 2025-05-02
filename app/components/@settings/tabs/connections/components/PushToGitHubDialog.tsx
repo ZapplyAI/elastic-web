@@ -216,12 +216,12 @@ export function PushToGitHubDialog({ isOpen, onClose, onPush }: PushToGitHubDial
                     </Dialog.Close>
                   </div>
 
-                  <div className="bg-bolt-elements-background-depth-2 dark:bg-bolt-elements-background-depth-3 rounded-lg p-3 text-left">
-                    <p className="text-xs text-bolt-elements-textSecondary dark:text-bolt-elements-textSecondary-dark mb-2">
+                  <div className="bg-elasticApp-elements-background-depth-2 dark:bg-elasticApp-elements-background-depth-3 rounded-lg p-3 text-left">
+                    <p className="text-xs text-elasticApp-elements-textSecondary dark:text-elasticApp-elements-textSecondary-dark mb-2">
                       Repository URL
                     </p>
                     <div className="flex items-center gap-2">
-                      <code className="flex-1 text-sm bg-bolt-elements-background dark:bg-bolt-elements-background-dark px-3 py-2 rounded border border-bolt-elements-borderColor dark:border-bolt-elements-borderColor-dark text-bolt-elements-textPrimary dark:text-bolt-elements-textPrimary-dark font-mono">
+                      <code className="flex-1 text-sm bg-elasticApp-elements-background dark:bg-elasticApp-elements-background-dark px-3 py-2 rounded border border-elasticApp-elements-borderColor dark:border-elasticApp-elements-borderColor-dark text-elasticApp-elements-textPrimary dark:text-elasticApp-elements-textPrimary-dark font-mono">
                         {createdRepoUrl}
                       </code>
                       <motion.button
@@ -229,7 +229,7 @@ export function PushToGitHubDialog({ isOpen, onClose, onPush }: PushToGitHubDial
                           navigator.clipboard.writeText(createdRepoUrl);
                           toast.success('URL copied to clipboard');
                         }}
-                        className="p-2 text-bolt-elements-textSecondary hover:text-bolt-elements-textPrimary dark:text-bolt-elements-textSecondary-dark dark:hover:text-bolt-elements-textPrimary-dark"
+                        className="p-2 text-elasticApp-elements-textSecondary hover:text-elasticApp-elements-textPrimary dark:text-elasticApp-elements-textSecondary-dark dark:hover:text-elasticApp-elements-textPrimary-dark"
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                       >
@@ -238,18 +238,18 @@ export function PushToGitHubDialog({ isOpen, onClose, onPush }: PushToGitHubDial
                     </div>
                   </div>
 
-                  <div className="bg-bolt-elements-background-depth-2 dark:bg-bolt-elements-background-depth-3 rounded-lg p-3">
-                    <p className="text-xs text-bolt-elements-textSecondary dark:text-bolt-elements-textSecondary-dark mb-2">
+                  <div className="bg-elasticApp-elements-background-depth-2 dark:bg-elasticApp-elements-background-depth-3 rounded-lg p-3">
+                    <p className="text-xs text-elasticApp-elements-textSecondary dark:text-elasticApp-elements-textSecondary-dark mb-2">
                       Pushed Files ({pushedFiles.length})
                     </p>
                     <div className="max-h-[200px] overflow-y-auto custom-scrollbar">
                       {pushedFiles.map((file) => (
                         <div
                           key={file.path}
-                          className="flex items-center justify-between py-1 text-sm text-bolt-elements-textPrimary dark:text-bolt-elements-textPrimary-dark"
+                          className="flex items-center justify-between py-1 text-sm text-elasticApp-elements-textPrimary dark:text-elasticApp-elements-textPrimary-dark"
                         >
                           <span className="font-mono truncate flex-1">{file.path}</span>
-                          <span className="text-xs text-bolt-elements-textSecondary dark:text-bolt-elements-textSecondary-dark ml-2">
+                          <span className="text-xs text-elasticApp-elements-textSecondary dark:text-elasticApp-elements-textSecondary-dark ml-2">
                             {formatSize(file.size)}
                           </span>
                         </div>
@@ -262,7 +262,7 @@ export function PushToGitHubDialog({ isOpen, onClose, onPush }: PushToGitHubDial
                       href={createdRepoUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-4 py-2 rounded-lg bg-purple-500 text-white hover:bg-purple-600 text-sm inline-flex items-center gap-2"
+                      className="px-4 py-2 rounded-lg bg-elasticApp-elements-background-depth-2 dark:bg-elasticApp-elements-background-depth-3 text-elasticApp-elements-textPrimary dark:text-elasticApp-elements-textPrimary-dark hover:bg-elasticApp-elements-background-depth-3 dark:hover:bg-elasticApp-elements-background-depth-4 text-sm inline-flex items-center gap-2"
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >
@@ -274,7 +274,7 @@ export function PushToGitHubDialog({ isOpen, onClose, onPush }: PushToGitHubDial
                         navigator.clipboard.writeText(createdRepoUrl);
                         toast.success('URL copied to clipboard');
                       }}
-                      className="px-4 py-2 rounded-lg bg-[#F5F5F5] dark:bg-[#1A1A1A] text-gray-600 dark:text-gray-400 hover:bg-[#E5E5E5] dark:hover:bg-[#252525] text-sm inline-flex items-center gap-2"
+                      className="px-4 py-2 rounded-lg bg-elasticApp-elements-background-depth-2 dark:bg-elasticApp-elements-background-depth-3 text-elasticApp-elements-textPrimary dark:text-elasticApp-elements-textPrimary-dark hover:bg-elasticApp-elements-background-depth-3 dark:hover:bg-elasticApp-elements-background-depth-4 text-sm inline-flex items-center gap-2"
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >
@@ -283,7 +283,7 @@ export function PushToGitHubDialog({ isOpen, onClose, onPush }: PushToGitHubDial
                     </motion.button>
                     <motion.button
                       onClick={handleClose}
-                      className="px-4 py-2 rounded-lg bg-[#F5F5F5] dark:bg-[#1A1A1A] text-gray-600 dark:text-gray-400 hover:bg-[#E5E5E5] dark:hover:bg-[#252525] text-sm"
+                      className="px-4 py-2 rounded-lg bg-elasticApp-elements-background-depth-2 dark:bg-elasticApp-elements-background-depth-3 text-elasticApp-elements-textPrimary dark:text-elasticApp-elements-textPrimary-dark hover:bg-elasticApp-elements-background-depth-3 dark:hover:bg-elasticApp-elements-background-depth-4 text-sm"
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >
@@ -318,7 +318,7 @@ export function PushToGitHubDialog({ isOpen, onClose, onPush }: PushToGitHubDial
                     initial={{ scale: 0.8 }}
                     animate={{ scale: 1 }}
                     transition={{ delay: 0.1 }}
-                    className="mx-auto w-12 h-12 rounded-xl bg-bolt-elements-background-depth-3 flex items-center justify-center text-purple-500"
+                    className="mx-auto w-12 h-12 rounded-xl bg-elasticApp-elements-background-depth-3 flex items-center justify-center text-purple-500"
                   >
                     <div className="i-ph:github-logo w-6 h-6" />
                   </motion.div>
@@ -363,7 +363,7 @@ export function PushToGitHubDialog({ isOpen, onClose, onPush }: PushToGitHubDial
                     initial={{ scale: 0.8 }}
                     animate={{ scale: 1 }}
                     transition={{ delay: 0.1 }}
-                    className="w-10 h-10 rounded-xl bg-bolt-elements-background-depth-3 flex items-center justify-center text-purple-500"
+                    className="w-10 h-10 rounded-xl bg-elasticApp-elements-background-depth-3 flex items-center justify-center text-purple-500"
                   >
                     <div className="i-ph:git-branch w-5 h-5" />
                   </motion.div>
@@ -383,7 +383,7 @@ export function PushToGitHubDialog({ isOpen, onClose, onPush }: PushToGitHubDial
                   </Dialog.Close>
                 </div>
 
-                <div className="flex items-center gap-3 mb-6 p-3 bg-bolt-elements-background-depth-2 dark:bg-bolt-elements-background-depth-3 rounded-lg">
+                <div className="flex items-center gap-3 mb-6 p-3 bg-elasticApp-elements-background-depth-2 dark:bg-elasticApp-elements-background-depth-3 rounded-lg">
                   <img src={user.avatar_url} alt={user.login} className="w-10 h-10 rounded-full" />
                   <div>
                     <p className="text-sm font-medium text-gray-900 dark:text-white">{user.name || user.login}</p>
@@ -402,7 +402,7 @@ export function PushToGitHubDialog({ isOpen, onClose, onPush }: PushToGitHubDial
                       value={repoName}
                       onChange={(e) => setRepoName(e.target.value)}
                       placeholder="my-awesome-project"
-                      className="w-full px-4 py-2 rounded-lg bg-bolt-elements-background-depth-2 dark:bg-bolt-elements-background-depth-3 border border-[#E5E5E5] dark:border-[#1A1A1A] text-gray-900 dark:text-white placeholder-gray-400"
+                      className="w-full px-4 py-2 rounded-lg bg-elasticApp-elements-background-depth-2 dark:bg-elasticApp-elements-background-depth-3 border border-[#E5E5E5] dark:border-[#1A1A1A] text-gray-900 dark:text-white placeholder-gray-400"
                       required
                     />
                   </div>
@@ -416,7 +416,7 @@ export function PushToGitHubDialog({ isOpen, onClose, onPush }: PushToGitHubDial
                             key={repo.full_name}
                             type="button"
                             onClick={() => setRepoName(repo.name)}
-                            className="w-full p-3 text-left rounded-lg bg-bolt-elements-background-depth-2 dark:bg-bolt-elements-background-depth-3 hover:bg-bolt-elements-background-depth-3 dark:hover:bg-bolt-elements-background-depth-4 transition-colors group"
+                            className="w-full p-3 text-left rounded-lg bg-elasticApp-elements-background-depth-2 dark:bg-elasticApp-elements-background-depth-3 hover:bg-elasticApp-elements-background-depth-3 dark:hover:bg-elasticApp-elements-background-depth-4 transition-colors group"
                             whileHover={{ scale: 1.01 }}
                             whileTap={{ scale: 0.99 }}
                           >

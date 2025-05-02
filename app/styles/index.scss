@@ -9,33 +9,33 @@
 
 // Chat message container styles
 .chat-message-container {
-  background-color: var(--bolt-elements-background-depth-1);
+  background-color: var(--elasticApp-elements-background-depth-1);
   border-radius: 8px;
   height: 100%;
   display: flex;
   flex-direction: column;
   position: relative;
   z-index: 1;
-  
+
   // Custom scrollbar styling
   &::-webkit-scrollbar {
     width: 6px;
   }
-  
+
   &::-webkit-scrollbar-track {
     background: transparent;
   }
-  
+
   &::-webkit-scrollbar-thumb {
     background-color: rgba(128, 128, 128, 0.3);
     border-radius: 3px;
     transition: background-color 0.3s ease;
-    
+
     &:hover {
       background-color: rgba(128, 128, 128, 0.5);
     }
   }
-  
+
   // Firefox scrollbar styling
   scrollbar-width: thin;
   scrollbar-color: rgba(128, 128, 128, 0.3) transparent;
@@ -46,44 +46,44 @@
   overflow-y: auto;
   height: 100%;
   max-height: calc(100vh - 250px);
-  
+
   // Custom scrollbar styling
   &::-webkit-scrollbar {
     width: 6px;
   }
-  
+
   &::-webkit-scrollbar-track {
     background: transparent;
   }
-  
+
   &::-webkit-scrollbar-thumb {
     background-color: rgba(128, 128, 128, 0.3);
     border-radius: 3px;
     transition: background-color 0.3s ease;
-    
+
     &:hover {
       background-color: rgba(128, 128, 128, 0.5);
     }
   }
-  
+
   // Firefox scrollbar styling
   scrollbar-width: thin;
   scrollbar-color: rgba(128, 128, 128, 0.3) transparent;
-  
+
   // User and assistant message styling
   > div.flex {
     position: relative;
-    
+
     // User message styling
     .i-ph\:user-fill {
       color: white;
     }
-    
+
     // Robot icon styling
     .i-ph\:robot {
       color: white;
     }
-    
+
     // Assistant message styling
     &:not(.text-right) {
       &::before {
@@ -178,21 +178,21 @@ body {
     width: 6px;
     height: 6px;
   }
-  
+
   &::-webkit-scrollbar-track {
     background: transparent;
   }
-  
+
   &::-webkit-scrollbar-thumb {
     background-color: rgba(128, 128, 128, 0.3);
     border-radius: 3px;
     transition: background-color 0.3s ease;
-    
+
     &:hover {
       background-color: rgba(128, 128, 128, 0.5);
     }
   }
-  
+
   // Firefox scrollbar styling
   scrollbar-width: thin;
   scrollbar-color: rgba(128, 128, 128, 0.3) transparent;

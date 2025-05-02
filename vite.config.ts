@@ -8,6 +8,7 @@ import * as dotenv from 'dotenv';
 import { execSync } from 'child_process';
 import { readFileSync } from 'fs';
 import { join } from 'path';
+import { netlifyPlugin } from "@netlify/remix-adapter/plugin";
 
 dotenv.config();
 
@@ -57,8 +58,8 @@ const getPackageJson = () => {
     };
   } catch {
     return {
-      name: 'bolt.diy',
-      description: 'A DIY LLM interface',
+      name: 'chat.elasticApp.ai',
+      description: 'An LLM interface',
       license: 'MIT',
       dependencies: {},
       devDependencies: {},
@@ -138,8 +139,9 @@ export default defineConfig((config) => {
           }
         },
       },
-      config.mode !== 'test' && remixCloudflareDevProxy(),
+      // config.mode !== 'test' && remixCloudflareDevProxy(), // Removed Cloudflare proxy
       remixVitePlugin({
+        // presets: [netlifyPreset()], // Removed incorrect preset
         future: {
           v3_fetcherPersist: true,
           v3_relativeSplatPath: true,
@@ -147,6 +149,7 @@ export default defineConfig((config) => {
           v3_lazyRouteDiscovery: true,
         },
       }),
+      netlifyPlugin(), // Added Netlify plugin here
       UnoCSS(),
       tsconfigPaths(),
       chrome129IssuePlugin(),
@@ -182,7 +185,7 @@ function chrome129IssuePlugin() {
           if (version === 129) {
             res.setHeader('content-type', 'text/html');
             res.end(
-              '<body><h1>Please use Chrome Canary for testing.</h1><p>Chrome 129 has an issue with JavaScript modules & Vite local development, see <a href="https://github.com/stackblitz/bolt.new/issues/86#issuecomment-2395519258">for more information.</a></p><p><b>Note:</b> This only impacts <u>local development</u>. `pnpm run build` and `pnpm run start` will work fine in this browser.</p></body>',
+              '<body><h1>Please use Chrome Canary for testing.</h1><p>Chrome 129 has an issue with JavaScript modules & Vite local development, see</p><p><b>Note:</b> This only impacts <u>local development</u>. `pnpm run build` and `pnpm run start` will work fine in this browser.</p></body>',
             );
 
             return;

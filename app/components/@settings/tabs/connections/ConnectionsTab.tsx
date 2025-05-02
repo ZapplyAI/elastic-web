@@ -8,7 +8,7 @@ const NetlifyConnection = React.lazy(() => import('./NetlifyConnection'));
 // Loading fallback component
 const LoadingFallback = () => (
   <div className="p-4 bg-white dark:bg-[#0A0A0A] rounded-lg border border-[#E5E5E5] dark:border-[#1A1A1A]">
-    <div className="flex items-center gap-2 text-bolt-elements-textSecondary">
+    <div className="flex items-center gap-2 text-elasticApp-elements-textSecondary">
       <div className="i-ph:spinner-gap w-5 h-5 animate-spin" />
       <span>Loading connection...</span>
     </div>
@@ -26,9 +26,9 @@ export default function ConnectionsTab() {
         transition={{ delay: 0.1 }}
       >
         <div className="i-ph:plugs-connected w-5 h-5 text-purple-500" />
-        <h2 className="text-lg font-medium text-bolt-elements-textPrimary">Connection Settings</h2>
+        <h2 className="text-lg font-medium text-elasticApp-elements-textPrimary">Connection Settings</h2>
       </motion.div>
-      <p className="text-sm text-bolt-elements-textSecondary mb-6">
+      <p className="text-sm text-elasticApp-elements-textSecondary mb-6">
         Manage your external service connections and integrations
       </p>
 

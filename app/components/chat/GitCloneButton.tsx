@@ -1,7 +1,7 @@
 import ignore from 'ignore';
 import { useGit } from '~/lib/hooks/useGit';
 import type { Message } from 'ai';
-import { detectProjectCommands, createCommandsMessage, escapeBoltTags } from '~/utils/projectCommands';
+import { detectProjectCommands, createCommandsMessage, escapeElasticAppTags } from '~/utils/projectCommands';
 import { generateId } from '~/utils/fileUtils';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
@@ -121,16 +121,16 @@ ${skippedFiles.map((f) => `- ${f}`).join('\n')}`
     : ''
 }
 
-<boltArtifact id="imported-files" title="Git Cloned Files" type="bundled">
+<elasticAppArtifact id="imported-files" title="Git Cloned Files" type="bundled">
 ${fileContents
   .map(
     (file) =>
-      `<boltAction type="file" filePath="${file.path}">
-${escapeBoltTags(file.content)}
-</boltAction>`,
+      `<elasticAppAction type="file" filePath="${file.path}">
+${escapeElasticAppTags(file.content)}
+</elasticAppAction>`,
   )
   .join('\n')}
-</boltArtifact>`,
+</elasticAppArtifact>`,
           id: generateId(),
           createdAt: new Date(),
         };
@@ -160,7 +160,7 @@ ${escapeBoltTags(file.content)}
         size="lg"
         className={classNames(
           'gap-2 bg-[#F5F5F5] dark:bg-[#252525]',
-          'text-bolt-elements-textPrimary dark:text-white',
+          'text-elasticApp-elements-textPrimary dark:text-white',
           'hover:bg-[#E5E5E5] dark:hover:bg-[#333333]',
           'border-[#E5E5E5] dark:border-[#333333]',
           'h-10 px-4 py-2 min-w-[120px] justify-center',

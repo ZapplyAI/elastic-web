@@ -453,17 +453,17 @@ export function RepositorySelectionDialog({ isOpen, onClose, onSelect }: Reposit
         <Dialog.Overlay className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50" />
         <Dialog.Content className="fixed top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[90vw] md:w-[600px] max-h-[85vh] overflow-hidden bg-white dark:bg-[#1A1A1A] rounded-xl shadow-xl z-[51] border border-[#E5E5E5] dark:border-[#333333]">
           <div className="p-4 border-b border-[#E5E5E5] dark:border-[#333333] flex items-center justify-between">
-            <Dialog.Title className="text-lg font-semibold text-bolt-elements-textPrimary dark:text-bolt-elements-textPrimary-dark">
+            <Dialog.Title className="text-lg font-semibold text-elasticApp-elements-textPrimary dark:text-elasticApp-elements-textPrimary-dark">
               Import GitHub Repository
             </Dialog.Title>
             <Dialog.Close
               onClick={handleClose}
               className={classNames(
                 'p-2 rounded-lg transition-all duration-200 ease-in-out',
-                'text-bolt-elements-textTertiary hover:text-bolt-elements-textPrimary',
-                'dark:text-bolt-elements-textTertiary-dark dark:hover:text-bolt-elements-textPrimary-dark',
-                'hover:bg-bolt-elements-background-depth-2 dark:hover:bg-bolt-elements-background-depth-3',
-                'focus:outline-none focus:ring-2 focus:ring-bolt-elements-borderColor dark:focus:ring-bolt-elements-borderColor-dark',
+                'text-elasticApp-elements-textTertiary hover:text-elasticApp-elements-textPrimary',
+                'dark:text-elasticApp-elements-textTertiary-dark dark:hover:text-elasticApp-elements-textPrimary-dark',
+                'hover:bg-elasticApp-elements-background-depth-2 dark:hover:bg-elasticApp-elements-background-depth-3',
+                'focus:outline-none focus:ring-2 focus:ring-elasticApp-elements-borderColor dark:focus:ring-elasticApp-elements-borderColor-dark',
               )}
             >
               <span className="i-ph:x block w-5 h-5" aria-hidden="true" />
@@ -518,11 +518,11 @@ export function RepositorySelectionDialog({ isOpen, onClose, onSelect }: Reposit
                           setSearchQuery(e.target.value);
                           handleSearch(e.target.value);
                         }}
-                        className="flex-1 px-4 py-2 rounded-lg bg-[#F5F5F5] dark:bg-[#252525] border border-[#E5E5E5] dark:border-[#333333] text-bolt-elements-textPrimary"
+                        className="flex-1 px-4 py-2 rounded-lg bg-[#F5F5F5] dark:bg-[#252525] border border-[#E5E5E5] dark:border-[#333333] text-elasticApp-elements-textPrimary"
                       />
                       <button
                         onClick={() => setFilters({})}
-                        className="px-3 py-2 rounded-lg bg-[#F5F5F5] dark:bg-[#252525] text-bolt-elements-textSecondary hover:text-bolt-elements-textPrimary"
+                        className="px-3 py-2 rounded-lg bg-[#F5F5F5] dark:bg-[#252525] text-elasticApp-elements-textSecondary hover:text-elasticApp-elements-textPrimary"
                       >
                         <span className="i-ph:funnel-simple" />
                       </button>
@@ -569,17 +569,17 @@ export function RepositorySelectionDialog({ isOpen, onClose, onSelect }: Reposit
                         <h3 className="font-medium">{selectedRepository.full_name}</h3>
                       </div>
                       <div className="space-y-2">
-                        <label className="text-sm text-bolt-elements-textSecondary">Select Branch</label>
+                        <label className="text-sm text-elasticApp-elements-textSecondary">Select Branch</label>
                         <select
                           value={selectedBranch}
                           onChange={(e) => setSelectedBranch(e.target.value)}
-                          className="w-full px-3 py-2 rounded-lg bg-bolt-elements-background-depth-2 dark:bg-bolt-elements-background-depth-3 border border-bolt-elements-borderColor dark:border-bolt-elements-borderColor-dark text-bolt-elements-textPrimary dark:text-bolt-elements-textPrimary-dark focus:outline-none focus:ring-2 focus:ring-bolt-elements-borderColor dark:focus:ring-bolt-elements-borderColor-dark"
+                          className="w-full px-3 py-2 rounded-lg bg-elasticApp-elements-background-depth-2 dark:bg-elasticApp-elements-background-depth-3 border border-elasticApp-elements-borderColor dark:border-elasticApp-elements-borderColor-dark text-elasticApp-elements-textPrimary dark:text-elasticApp-elements-textPrimary-dark focus:outline-none focus:ring-2 focus:ring-elasticApp-elements-borderColor dark:focus:ring-elasticApp-elements-borderColor-dark"
                         >
                           {branches.map((branch) => (
                             <option
                               key={branch.name}
                               value={branch.name}
-                              className="bg-bolt-elements-background-depth-2 dark:bg-bolt-elements-background-depth-3 text-bolt-elements-textPrimary dark:text-bolt-elements-textPrimary-dark"
+                              className="bg-elasticApp-elements-background-depth-2 dark:bg-elasticApp-elements-background-depth-3 text-elasticApp-elements-textPrimary dark:text-elasticApp-elements-textPrimary-dark"
                             >
                               {branch.name} {branch.default ? '(default)' : ''}
                             </option>
@@ -628,7 +628,7 @@ function TabButton({ active, onClick, children }: { active: boolean; onClick: ()
         'px-4 py-2 h-10 rounded-lg transition-all duration-200 flex items-center gap-2 min-w-[120px] justify-center',
         active
           ? 'bg-purple-500 text-white hover:bg-purple-600'
-          : 'bg-[#F5F5F5] dark:bg-[#252525] text-bolt-elements-textPrimary dark:text-white hover:bg-[#E5E5E5] dark:hover:bg-[#333333] border border-[#E5E5E5] dark:border-[#333333]',
+          : 'bg-[#F5F5F5] dark:bg-[#252525] text-elasticApp-elements-textPrimary dark:text-white hover:bg-[#E5E5E5] dark:hover:bg-[#333333] border border-[#E5E5E5] dark:border-[#333333]',
       )}
     >
       {children}
@@ -649,7 +649,7 @@ function RepositoryList({
 }) {
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center py-8 text-bolt-elements-textSecondary">
+      <div className="flex items-center justify-center py-8 text-elasticApp-elements-textSecondary">
         <span className="i-ph:spinner animate-spin mr-2" />
         Loading repositories...
       </div>
@@ -658,7 +658,7 @@ function RepositoryList({
 
   if (repos.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-8 text-bolt-elements-textSecondary">
+      <div className="flex flex-col items-center justify-center py-8 text-elasticApp-elements-textSecondary">
         <span className="i-ph:folder-simple-dashed w-12 h-12 mb-2 opacity-50" />
         <p>{activeTab === 'my-repos' ? 'No repositories found' : 'Search for repositories'}</p>
       </div>
@@ -673,8 +673,8 @@ function RepositoryCard({ repo, onSelect }: { repo: GitHubRepoInfo; onSelect: ()
     <div className="p-4 rounded-lg bg-[#F5F5F5] dark:bg-[#252525] border border-[#E5E5E5] dark:border-[#333333] hover:border-purple-500/50 transition-colors">
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-2">
-          <span className="i-ph:git-repository text-bolt-elements-textTertiary" />
-          <h3 className="font-medium text-bolt-elements-textPrimary dark:text-white">{repo.name}</h3>
+          <span className="i-ph:git-repository text-elasticApp-elements-textTertiary" />
+          <h3 className="font-medium text-elasticApp-elements-textPrimary dark:text-white">{repo.name}</h3>
         </div>
         <button
           onClick={onSelect}
@@ -684,8 +684,8 @@ function RepositoryCard({ repo, onSelect }: { repo: GitHubRepoInfo; onSelect: ()
           Import
         </button>
       </div>
-      {repo.description && <p className="text-sm text-bolt-elements-textSecondary mb-3">{repo.description}</p>}
-      <div className="flex items-center gap-4 text-sm text-bolt-elements-textTertiary">
+      {repo.description && <p className="text-sm text-elasticApp-elements-textSecondary mb-3">{repo.description}</p>}
+      <div className="flex items-center gap-4 text-sm text-elasticApp-elements-textTertiary">
         {repo.language && (
           <span className="flex items-center gap-1">
             <span className="i-ph:code" />

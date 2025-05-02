@@ -47,7 +47,7 @@ export const Messages = forwardRef<HTMLDivElement, MessagesProps>(
     };
 
     return (
-      <div id={id} className={classNames(props.className, "unified-chat")} ref={ref}>
+      <div id={id} className={classNames(props.className, 'unified-chat')} ref={ref}>
         {messages.length > 0
           ? messages.map((message, index) => {
               const { role, content, id: messageId, annotations } = message;
@@ -61,7 +61,9 @@ export const Messages = forwardRef<HTMLDivElement, MessagesProps>(
               return (
                 <div
                   key={index}
-                  className={classNames('flex gap-4 py-4 w-full border-b border-bolt-elements-borderColor last:border-b-0')}
+                  className={classNames(
+                    'flex gap-4 py-4 w-full border-b border-elasticApp-elements-borderColor last:border-b-0',
+                  )}
                 >
                   {isUserMessage ? (
                     <div className="flex items-center justify-center w-[24px] h-[24px] overflow-hidden text-white shrink-0 self-start">
@@ -88,7 +90,7 @@ export const Messages = forwardRef<HTMLDivElement, MessagesProps>(
                             key="i-ph:arrow-u-up-left"
                             className={classNames(
                               'i-ph:arrow-u-up-left',
-                              'text-xl text-bolt-elements-textSecondary hover:text-bolt-elements-textPrimary transition-colors',
+                              'text-xl text-elasticApp-elements-textSecondary hover:text-elasticApp-elements-textPrimary transition-colors',
                             )}
                           />
                         </WithTooltip>
@@ -100,7 +102,7 @@ export const Messages = forwardRef<HTMLDivElement, MessagesProps>(
                           key="i-ph:git-fork"
                           className={classNames(
                             'i-ph:git-fork',
-                            'text-xl text-bolt-elements-textSecondary hover:text-bolt-elements-textPrimary transition-colors',
+                            'text-xl text-elasticApp-elements-textSecondary hover:text-elasticApp-elements-textPrimary transition-colors',
                           )}
                         />
                       </WithTooltip>
@@ -111,7 +113,7 @@ export const Messages = forwardRef<HTMLDivElement, MessagesProps>(
             })
           : null}
         {isStreaming && (
-          <div className="text-center w-full text-bolt-elements-textSecondary i-svg-spinners:3-dots-fade text-4xl mt-4"></div>
+          <div className="text-center w-full text-elasticApp-elements-textSecondary i-svg-spinners:3-dots-fade text-4xl mt-4"></div>
         )}
       </div>
     );

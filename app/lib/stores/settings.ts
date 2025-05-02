@@ -202,7 +202,7 @@ const getInitialTabConfiguration = (): TabWindowConfig => {
   }
 
   try {
-    const saved = localStorage.getItem('bolt_tab_configuration');
+    const saved = localStorage.getItem('elasticApp_tab_configuration');
 
     if (!saved) {
       return defaultConfig;
@@ -271,7 +271,7 @@ export const resetTabConfiguration = () => {
   };
 
   tabConfigurationStore.set(defaultConfig);
-  localStorage.setItem('bolt_tab_configuration', JSON.stringify(defaultConfig));
+  localStorage.setItem('elasticApp_tab_configuration', JSON.stringify(defaultConfig));
 };
 
 // Developer mode store with persistence

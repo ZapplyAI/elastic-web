@@ -23,9 +23,9 @@ export interface BuildAction extends BaseAction {
   type: 'build';
 }
 
-export type BoltAction = FileAction | ShellAction | StartAction | BuildAction;
+export type ElasticAppAction = FileAction | ShellAction | StartAction | BuildAction;
 
-export type BoltActionData = BoltAction | BaseAction;
+export type ElasticAppActionData = ElasticAppAction | BaseAction;
 
 export interface ActionAlert {
   type: string;

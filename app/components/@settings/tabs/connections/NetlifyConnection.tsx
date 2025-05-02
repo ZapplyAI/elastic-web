@@ -84,14 +84,14 @@ export default function NetlifyConnection() {
               crossOrigin="anonymous"
               src="https://cdn.simpleicons.org/netlify"
             />
-            <h3 className="text-base font-medium text-bolt-elements-textPrimary">Netlify Connection</h3>
+            <h3 className="text-base font-medium text-elasticApp-elements-textPrimary">Netlify Connection</h3>
           </div>
         </div>
 
         {!connection.user ? (
           <div className="space-y-4">
             <div>
-              <label className="block text-sm text-bolt-elements-textSecondary mb-2">Personal Access Token</label>
+              <label className="block text-sm text-elasticApp-elements-textSecondary mb-2">Personal Access Token</label>
               <input
                 type="password"
                 value={connection.token}
@@ -102,12 +102,12 @@ export default function NetlifyConnection() {
                   'w-full px-3 py-2 rounded-lg text-sm',
                   'bg-[#F8F8F8] dark:bg-[#1A1A1A]',
                   'border border-[#E5E5E5] dark:border-[#333333]',
-                  'text-bolt-elements-textPrimary placeholder-bolt-elements-textTertiary',
+                  'text-elasticApp-elements-textPrimary placeholder-elasticApp-elements-textTertiary',
                   'focus:outline-none focus:ring-1 focus:ring-[#00AD9F]',
                   'disabled:opacity-50',
                 )}
               />
-              <div className="mt-2 text-sm text-bolt-elements-textSecondary">
+              <div className="mt-2 text-sm text-elasticApp-elements-textSecondary">
                 <a
                   href="https://app.netlify.com/user/applications#personal-access-tokens"
                   target="_blank"
@@ -158,7 +158,7 @@ export default function NetlifyConnection() {
                   <div className="i-ph:plug w-4 h-4" />
                   Disconnect
                 </button>
-                <span className="text-sm text-bolt-elements-textSecondary flex items-center gap-1">
+                <span className="text-sm text-elasticApp-elements-textSecondary flex items-center gap-1">
                   <div className="i-ph:check-circle w-4 h-4 text-green-500" />
                   Connected to Netlify
                 </span>
@@ -174,13 +174,13 @@ export default function NetlifyConnection() {
                 className="w-12 h-12 rounded-full border-2 border-[#00AD9F]"
               />
               <div>
-                <h4 className="text-sm font-medium text-bolt-elements-textPrimary">{connection.user.full_name}</h4>
-                <p className="text-sm text-bolt-elements-textSecondary">{connection.user.email}</p>
+                <h4 className="text-sm font-medium text-elasticApp-elements-textPrimary">{connection.user.full_name}</h4>
+                <p className="text-sm text-elasticApp-elements-textSecondary">{connection.user.email}</p>
               </div>
             </div>
 
             {fetchingStats ? (
-              <div className="flex items-center gap-2 text-sm text-bolt-elements-textSecondary">
+              <div className="flex items-center gap-2 text-sm text-elasticApp-elements-textSecondary">
                 <div className="i-ph:spinner-gap w-4 h-4 animate-spin" />
                 Fetching Netlify sites...
               </div>
@@ -188,7 +188,7 @@ export default function NetlifyConnection() {
               <div>
                 <button
                   onClick={() => setIsSitesExpanded(!isSitesExpanded)}
-                  className="w-full bg-transparent text-left text-sm font-medium text-bolt-elements-textPrimary mb-3 flex items-center gap-2"
+                  className="w-full bg-transparent text-left text-sm font-medium text-elasticApp-elements-textPrimary mb-3 flex items-center gap-2"
                 >
                   <div className="i-ph:buildings w-4 h-4" />
                   Your Sites ({connection.stats?.totalSites || 0})
@@ -211,11 +211,11 @@ export default function NetlifyConnection() {
                       >
                         <div className="flex items-center justify-between">
                           <div>
-                            <h5 className="text-sm font-medium text-bolt-elements-textPrimary flex items-center gap-2">
+                            <h5 className="text-sm font-medium text-elasticApp-elements-textPrimary flex items-center gap-2">
                               <div className="i-ph:globe w-4 h-4 text-[#00AD9F]" />
                               {site.name}
                             </h5>
-                            <div className="flex items-center gap-2 mt-2 text-xs text-bolt-elements-textSecondary">
+                            <div className="flex items-center gap-2 mt-2 text-xs text-elasticApp-elements-textSecondary">
                               <a
                                 href={site.url}
                                 target="_blank"
@@ -236,7 +236,7 @@ export default function NetlifyConnection() {
                             </div>
                           </div>
                           {site.build_settings?.provider && (
-                            <div className="text-xs text-bolt-elements-textSecondary px-2 py-1 rounded-md bg-[#F0F0F0] dark:bg-[#252525]">
+                            <div className="text-xs text-elasticApp-elements-textSecondary px-2 py-1 rounded-md bg-[#F0F0F0] dark:bg-[#252525]">
                               <span className="flex items-center gap-1">
                                 <div className="i-ph:git-branch w-3 h-3" />
                                 {site.build_settings.provider}
@@ -248,7 +248,7 @@ export default function NetlifyConnection() {
                     ))}
                   </div>
                 ) : isSitesExpanded ? (
-                  <div className="text-sm text-bolt-elements-textSecondary flex items-center gap-2">
+                  <div className="text-sm text-elasticApp-elements-textSecondary flex items-center gap-2">
                     <div className="i-ph:info w-4 h-4" />
                     No sites found in your Netlify account
                   </div>

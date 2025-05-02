@@ -1,24 +1,25 @@
-import type { ActionType, BoltAction, BoltActionData, FileAction, ShellAction } from '~/types/actions';
-import type { BoltArtifactData } from '~/types/artifact';
+import type { ActionType, ElasticAppAction, ElasticAppActionData, FileAction, ShellAction } from '~/types/actions';
+import type { ElasticAppArtifactData } from '~/types/artifact';
 import { createScopedLogger } from '~/utils/logger';
 import { unreachable } from '~/utils/unreachable';
 
-const ARTIFACT_TAG_OPEN = '<boltArtifact';
-const ARTIFACT_TAG_CLOSE = '</boltArtifact>';
-const ARTIFACT_ACTION_TAG_OPEN = '<boltAction';
-const ARTIFACT_ACTION_TAG_CLOSE = '</boltAction>';
+const ARTIFACT_TAG_OPEN = '<elasticAppArtifact';
+const ARTIFACT_TAG_CLOSE = '</elasticAppArtifact>';
+const ARTIFACT_ACTION_TAG_OPEN = '<elasticAppAction';
+const ARTIFACT_ACTION_TAG_CLOSE = '</elasticAppAction>';
 
 const logger = createScopedLogger('MessageParser');
 
-export interface ArtifactCallbackData extends BoltArtifactData {
+export interface ArtifactCallbackData extends ElasticAppArtifactData {
   messageId: string;
+  action: ElasticAppAction;
 }
 
 export interface ActionCallbackData {
   artifactId: string;
   messageId: string;
   actionId: string;
-  action: BoltAction;
+  action: ElasticAppAction;
 }
 
 export type ArtifactCallback = (data: ArtifactCallbackData) => void;
@@ -47,8 +48,8 @@ interface MessageState {
   position: number;
   insideArtifact: boolean;
   insideAction: boolean;
-  currentArtifact?: BoltArtifactData;
-  currentAction: BoltActionData;
+  currentArtifact?: ElasticAppArtifactData;
+  currentAction: ElasticAppActionData;
   actionId: number;
 }
 
@@ -133,7 +134,7 @@ export class StreamingMessageParser {
                */
               actionId: String(state.actionId - 1),
 
-              action: currentAction as BoltAction,
+              action: currentAction as ElasticAppAction,
             });
 
             state.insideAction = false;
@@ -179,7 +180,7 @@ export class StreamingMessageParser {
                 artifactId: currentArtifact.id,
                 messageId,
                 actionId: String(state.actionId++),
-                action: state.currentAction as BoltAction,
+                action: state.currentAction as ElasticAppAction,
               });
 
               i = actionEndIndex + 1;
@@ -236,7 +237,7 @@ export class StreamingMessageParser {
                 id: artifactId,
                 title: artifactTitle,
                 type,
-              } satisfies BoltArtifactData;
+              } satisfies ElasticAppArtifactData;
 
               state.currentArtifact = currentArtifact;
 
@@ -316,7 +317,7 @@ export class StreamingMessageParser {
 
 const createArtifactElement: ElementFactory = (props) => {
   const elementProps = [
-    'class="__boltArtifact__"',
+    'class="__elasticAppArtifact__"',
     ...Object.entries(props).map(([key, value]) => {
       return `data-${camelToDashCase(key)}=${JSON.stringify(value)}`;
     }),

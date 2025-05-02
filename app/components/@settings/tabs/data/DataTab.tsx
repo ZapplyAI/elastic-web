@@ -32,7 +32,7 @@ export default function DataTab() {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `bolt-chats-${new Date().toISOString()}.json`;
+      a.download = `elasticApp-chats-${new Date().toISOString()}.json`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -48,8 +48,8 @@ export default function DataTab() {
   const handleExportSettings = () => {
     try {
       const settings = {
-        userProfile: localStorage.getItem('bolt_user_profile'),
-        settings: localStorage.getItem('bolt_settings'),
+        userProfile: localStorage.getItem('elasticApp_user_profile'),
+        settings: localStorage.getItem('elasticApp_settings'),
         exportDate: new Date().toISOString(),
       };
 
@@ -57,7 +57,7 @@ export default function DataTab() {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `bolt-settings-${new Date().toISOString()}.json`;
+      a.download = `elasticApp-settings-${new Date().toISOString()}.json`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -82,11 +82,11 @@ export default function DataTab() {
       const settings = JSON.parse(content);
 
       if (settings.userProfile) {
-        localStorage.setItem('bolt_user_profile', settings.userProfile);
+        localStorage.setItem('elasticApp_user_profile', settings.userProfile);
       }
 
       if (settings.settings) {
-        localStorage.setItem('bolt_settings', settings.settings);
+        localStorage.setItem('elasticApp_settings', settings.settings);
       }
 
       window.location.reload(); // Reload to apply settings
@@ -116,7 +116,7 @@ export default function DataTab() {
           throw new Error(`Invalid value for key: ${key}`);
         }
 
-        localStorage.setItem(`bolt_${key.toLowerCase()}`, value);
+        localStorage.setItem(`elasticApp_${key.toLowerCase()}`, value);
       });
 
       toast.success('API keys imported successfully');
@@ -161,7 +161,7 @@ export default function DataTab() {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'bolt-api-keys-template.json';
+      a.download = 'elasticApp-api-keys-template.json';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -181,9 +181,9 @@ export default function DataTab() {
 
     try {
       // Clear all stored settings from localStorage
-      localStorage.removeItem('bolt_user_profile');
-      localStorage.removeItem('bolt_settings');
-      localStorage.removeItem('bolt_chat_history');
+      localStorage.removeItem('elasticApp_user_profile');
+      localStorage.removeItem('elasticApp_settings');
+      localStorage.removeItem('elasticApp_chat_history');
 
       // Clear all data from IndexedDB
       if (!db) {
@@ -215,7 +215,7 @@ export default function DataTab() {
 
     try {
       // Clear chat history from localStorage
-      localStorage.removeItem('bolt_chat_history');
+      localStorage.removeItem('elasticApp_chat_history');
 
       // Clear chats from IndexedDB
       if (!db) {
@@ -252,7 +252,7 @@ export default function DataTab() {
               <div className="i-ph:warning-circle-fill w-5 h-5 text-yellow-500" />
               <DialogTitle>Reset All Settings?</DialogTitle>
             </div>
-            <p className="text-sm text-bolt-elements-textSecondary mt-2">
+            <p className="text-sm text-elasticApp-elements-textSecondary mt-2">
               This will reset all your settings to their default values. This action cannot be undone.
             </p>
             <div className="flex justify-end items-center gap-3 mt-6">
@@ -288,7 +288,7 @@ export default function DataTab() {
               <div className="i-ph:warning-circle-fill w-5 h-5 text-red-500" />
               <DialogTitle>Delete All Chats?</DialogTitle>
             </div>
-            <p className="text-sm text-bolt-elements-textSecondary mt-2">
+            <p className="text-sm text-elasticApp-elements-textSecondary mt-2">
               This will permanently delete all your chat history. This action cannot be undone.
             </p>
             <div className="flex justify-end items-center gap-3 mt-6">
@@ -327,7 +327,7 @@ export default function DataTab() {
           <div className="i-ph:chat-circle-duotone w-5 h-5 text-purple-500" />
           <h3 className="text-lg font-medium text-gray-900 dark:text-white">Chat History</h3>
         </div>
-        <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">Export or delete all your chat history.</p>
+        <p className="text-sm text-elasticApp-elements-textSecondary mb-4">Export or delete all your chat history.</p>
         <div className="flex gap-4">
           <motion.button
             className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500 text-white text-sm hover:bg-purple-600"
@@ -361,7 +361,7 @@ export default function DataTab() {
           <div className="i-ph:gear-duotone w-5 h-5 text-purple-500" />
           <h3 className="text-lg font-medium text-gray-900 dark:text-white">Settings Backup</h3>
         </div>
-        <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+        <p className="text-sm text-elasticApp-elements-textSecondary mb-4">
           Export your settings to a JSON file or import settings from a previously exported file.
         </p>
         <div className="flex gap-4">
@@ -406,7 +406,7 @@ export default function DataTab() {
           <div className="i-ph:key-duotone w-5 h-5 text-purple-500" />
           <h3 className="text-lg font-medium text-gray-900 dark:text-white">API Keys Management</h3>
         </div>
-        <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+        <p className="text-sm text-elasticApp-elements-textSecondary mb-4">
           Import API keys from a JSON file or download a template to fill in your keys.
         </p>
         <div className="flex gap-4">
