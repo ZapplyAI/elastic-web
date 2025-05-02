@@ -1,0 +1,13 @@
+# Netlify configuration for Remix Vite projects
+
+[build]
+# Use pnpm to build the site
+command = "pnpm run build"
+# Specify the directory containing the built client-side assets
+publish = "build/client"
+
+[dev]
+# Command to run the local development server
+command = "pnpm run dev"
+# Specify that the framework is Vite
+framework = "vite" 

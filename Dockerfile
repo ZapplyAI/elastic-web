@@ -1,95 +1,48 @@
-ARG BASE=node:20.18.0
-FROM ${BASE} AS base
+# 1. Use an official Node.js runtime as a parent image
+FROM node:18 AS base
+# No need for libc6-compat on Debian-based image
+# RUN apk add --no-cache libc6-compat
 
+# Set the working directory in the container
 WORKDIR /app
 
-# Install dependencies (this step is cached as long as the dependencies don't change)
+# Install dependencies stage
+FROM base AS deps
+# Install pnpm globally
+RUN npm install -g pnpm
+# Copy package.json and lock file
 COPY package.json pnpm-lock.yaml ./
+# Install dependencies using pnpm
+RUN pnpm install --frozen-lockfile
 
-#RUN npm install -g corepack@latest
-
-#RUN corepack enable pnpm && pnpm install
-RUN npm install -g pnpm && pnpm install
-
-# Copy the rest of your app's source code
+# Build stage
+FROM base AS build
+# Install pnpm globally (needed again for RUN command)
+RUN npm install -g pnpm
+# Install git needed for build steps (use apt-get for Debian)
+RUN apt-get update && apt-get install -y --no-install-recommends git && rm -rf /var/lib/apt/lists/*
+# Copy installed dependencies
+COPY --from=deps /app/node_modules /app/node_modules
+# Copy the rest of the application code
 COPY . .
-
-# Expose the port the app runs on
-EXPOSE 5173
-
-# Production image
-FROM base AS elasticApp-ai-production
-
-# Define environment variables with default values or let them be overridden
-ARG GROQ_API_KEY
-ARG HuggingFace_API_KEY
-ARG OPENAI_API_KEY
-ARG ANTHROPIC_API_KEY
-ARG OPEN_ROUTER_API_KEY
-ARG GOOGLE_GENERATIVE_AI_API_KEY
-ARG OLLAMA_API_BASE_URL
-ARG XAI_API_KEY
-ARG TOGETHER_API_KEY
-ARG TOGETHER_API_BASE_URL
-ARG AWS_BEDROCK_CONFIG
-ARG VITE_LOG_LEVEL=debug
-ARG DEFAULT_NUM_CTX
-
-ENV WRANGLER_SEND_METRICS=false \
-    GROQ_API_KEY=${GROQ_API_KEY} \
-    HuggingFace_KEY=${HuggingFace_API_KEY} \
-    OPENAI_API_KEY=${OPENAI_API_KEY} \
-    ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY} \
-    OPEN_ROUTER_API_KEY=${OPEN_ROUTER_API_KEY} \
-    GOOGLE_GENERATIVE_AI_API_KEY=${GOOGLE_GENERATIVE_AI_API_KEY} \
-    OLLAMA_API_BASE_URL=${OLLAMA_API_BASE_URL} \
-    XAI_API_KEY=${XAI_API_KEY} \
-    TOGETHER_API_KEY=${TOGETHER_API_KEY} \
-    TOGETHER_API_BASE_URL=${TOGETHER_API_BASE_URL} \
-    AWS_BEDROCK_CONFIG=${AWS_BEDROCK_CONFIG} \
-    VITE_LOG_LEVEL=${VITE_LOG_LEVEL} \
-    DEFAULT_NUM_CTX=${DEFAULT_NUM_CTX}\
-    RUNNING_IN_DOCKER=true
-
-# Pre-configure wrangler to disable metrics
-RUN mkdir -p /root/.config/.wrangler && \
-    echo '{"enabled":false}' > /root/.config/.wrangler/metrics.json
-
+# Build the Remix app using pnpm
 RUN pnpm run build
 
-CMD [ "pnpm", "run", "dockerstart"]
+# Production stage
+FROM base AS production
+ENV NODE_ENV=production
+# Install pnpm globally (needed for CMD)
+RUN npm install -g pnpm
+# Copy built app and dependencies
+COPY --from=build /app/build /app/build
+COPY --from=build /app/public /app/public
+COPY --from=deps /app/node_modules /app/node_modules
+COPY --from=build /app/package.json /app/package.json
 
-# Development image
-FROM base AS elasticApp-ai-development
+# Expose the port the app runs on (Cloud Run often expects 8080)
+# The start:gcp script will use the PORT env var provided by Cloud Run.
+EXPOSE 8080
 
-# Define the same environment variables for Developmentpment
-ARG GROQ_API_KEY
-ARG HuggingFace 
-ARG OPENAI_API_KEY
-ARG ANTHROPIC_API_KEY
-ARG OPEN_ROUTER_API_KEY
-ARG GOOGLE_GENERATIVE_AI_API_KEY
-ARG OLLAMA_API_BASE_URL
-ARG XAI_API_KEY
-ARG TOGETHER_API_KEY
-ARG TOGETHER_API_BASE_URL
-ARG VITE_LOG_LEVEL=debug
-ARG DEFAULT_NUM_CTX
-
-ENV GROQ_API_KEY=${GROQ_API_KEY} \
-    HuggingFace_API_KEY=${HuggingFace_API_KEY} \
-    OPENAI_API_KEY=${OPENAI_API_KEY} \
-    ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY} \
-    OPEN_ROUTER_API_KEY=${OPEN_ROUTER_API_KEY} \
-    GOOGLE_GENERATIVE_AI_API_KEY=${GOOGLE_GENERATIVE_AI_API_KEY} \
-    OLLAMA_API_BASE_URL=${OLLAMA_API_BASE_URL} \
-    XAI_API_KEY=${XAI_API_KEY} \
-    TOGETHER_API_KEY=${TOGETHER_API_KEY} \
-    TOGETHER_API_BASE_URL=${TOGETHER_API_BASE_URL} \
-    AWS_BEDROCK_CONFIG=${AWS_BEDROCK_CONFIG} \
-    VITE_LOG_LEVEL=${VITE_LOG_LEVEL} \
-    DEFAULT_NUM_CTX=${DEFAULT_NUM_CTX}\
-    RUNNING_IN_DOCKER=true
-
-RUN mkdir -p ${WORKDIR}/run
-CMD pnpm run dev --host
+# Command to run the application using the specific GCP start script
+CMD ["pnpm", "run", "start:gcp"]
+# europe west 2
