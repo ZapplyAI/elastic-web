@@ -8,4 +8,4 @@ export const userProfileStore = atom<UserProfile | null>(null);
 export function setUserProfile(profile: UserProfile | null) {
   userProfileStore.set(profile);
   console.log('[Nano Store] User profile updated:', profile);
-} 
+}

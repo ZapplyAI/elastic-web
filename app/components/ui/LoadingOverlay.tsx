@@ -23,7 +23,9 @@ export const LoadingOverlay = ({
                 style={{ width: `${Math.min(100, Math.max(0, progress))}%` }}
               />
             </div>
-            {progressText && <p className="text-sm text-elasticApp-elements-textTertiary text-center">{progressText}</p>}
+            {progressText && (
+              <p className="text-sm text-elasticApp-elements-textTertiary text-center">{progressText}</p>
+            )}
           </div>
         )}
       </div>

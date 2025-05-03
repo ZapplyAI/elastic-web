@@ -163,6 +163,7 @@ function runTest(input: string | string[], expected: ExpectedResult | string) {
   });
 
   let message = '';
+
   if (Array.isArray(input)) {
     input.forEach((chunk) => {
       message += chunk;

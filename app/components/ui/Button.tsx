@@ -7,7 +7,8 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: 'bg-elasticApp-elements-background text-elasticApp-elements-textPrimary hover:bg-elasticApp-elements-background-depth-2',
+        default:
+          'bg-elasticApp-elements-background text-elasticApp-elements-textPrimary hover:bg-elasticApp-elements-background-depth-2',
         destructive: 'bg-red-500 text-white hover:bg-red-600',
         outline:
           'border border-input bg-transparent hover:bg-elasticApp-elements-background-depth-2 hover:text-elasticApp-elements-textPrimary',

@@ -27,4 +27,4 @@ export interface UserProfile {
   email_verified: boolean;
   created_at: string; // ISO 8601 date string
   subscription: UserSubscription | null;
-} 
+}

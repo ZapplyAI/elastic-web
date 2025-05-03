@@ -1,4 +1,4 @@
-import { cloudflareDevProxyVitePlugin as remixCloudflareDevProxy, vitePlugin as remixVitePlugin } from '@remix-run/dev';
+import { vitePlugin as remixVitePlugin } from '@remix-run/dev';
 import UnoCSS from 'unocss/vite';
 import { defineConfig, type ViteDevServer } from 'vite';
 import { nodePolyfills } from 'vite-plugin-node-polyfills';
@@ -8,7 +8,7 @@ import * as dotenv from 'dotenv';
 import { execSync } from 'child_process';
 import { readFileSync } from 'fs';
 import { join } from 'path';
-import { netlifyPlugin } from "@netlify/remix-adapter/plugin";
+import { netlifyPlugin } from '@netlify/remix-adapter';
 
 dotenv.config();
 
@@ -90,6 +90,7 @@ export default defineConfig((config) => {
       __PKG_DEV_DEPENDENCIES: JSON.stringify(pkg.devDependencies),
       __PKG_PEER_DEPENDENCIES: JSON.stringify(pkg.peerDependencies),
       __PKG_OPTIONAL_DEPENDENCIES: JSON.stringify(pkg.optionalDependencies),
+
       // Define global values
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
     },
@@ -125,6 +126,7 @@ export default defineConfig((config) => {
           global: true,
         },
         protocolImports: true,
+
         // Exclude Node.js modules that shouldn't be polyfilled in Cloudflare
         exclude: ['child_process', 'fs', 'path'],
       }),
@@ -137,8 +139,11 @@ export default defineConfig((config) => {
               map: null,
             };
           }
+
+          return null; // Ensure a value is always returned
         },
       },
+
       // config.mode !== 'test' && remixCloudflareDevProxy(), // Removed Cloudflare proxy
       remixVitePlugin({
         // presets: [netlifyPreset()], // Removed incorrect preset

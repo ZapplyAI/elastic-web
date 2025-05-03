@@ -322,7 +322,8 @@ function Button({ active = false, disabled = false, children, onClick, className
         {
           'bg-elasticApp-elements-item-backgroundDefault hover:bg-elasticApp-elements-item-backgroundActive text-elasticApp-elements-textTertiary hover:text-elasticApp-elements-textPrimary':
             !active,
-          'bg-elasticApp-elements-item-backgroundAccent text-elasticApp-elements-item-contentAccent': active && !disabled,
+          'bg-elasticApp-elements-item-backgroundAccent text-elasticApp-elements-item-contentAccent':
+            active && !disabled,
           'bg-elasticApp-elements-item-backgroundDefault text-alpha-gray-20 dark:text-alpha-white-20 cursor-not-allowed':
             disabled,
         },

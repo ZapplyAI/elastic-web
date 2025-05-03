@@ -30,16 +30,7 @@ export async function streamText(props: {
   authToken: string;
   userProfile: UserProfile | null;
 }) {
-  const {
-    messages,
-    files,
-    promptId,
-    contextOptimization,
-    contextFiles,
-    summary,
-    authToken,
-    userProfile,
-  } = props;
+  const { messages, files, promptId, contextOptimization, contextFiles, summary, authToken, userProfile } = props;
 
   let currentModel = DEFAULT_MODEL;
   let currentProvider = DEFAULT_PROVIDER.name;
@@ -49,13 +40,16 @@ export async function streamText(props: {
       const { model, provider, content } = extractPropertiesFromMessage(message);
       currentModel = model;
       currentProvider = provider;
+
       return { ...message, content };
     } else if (message.role == 'assistant') {
       let content = message.content;
       content = content.replace(/<div class=\\"__elasticAppThought__\\">.*?<\/div>/s, '');
       content = content.replace(/<think>.*?<\/think>/s, '');
+
       return { ...message, content };
     }
+
     return message;
   });
 
@@ -66,11 +60,14 @@ export async function streamText(props: {
   if (!modelDetails) {
     logger.warn(`Model details not found for ${currentModel}. Using default.`);
     modelDetails = provider.staticModels?.[0];
+
     if (!modelDetails) {
       throw new Error(`No models available for provider ${provider.name}`);
     }
+
     currentModel = modelDetails.name;
   }
+
   const dynamicMaxTokens = modelDetails?.maxTokenAllowed ?? MAX_TOKENS;
 
   let systemPromptText =
@@ -92,6 +89,7 @@ export async function streamText(props: {
         processedMessages = processedMessages.slice(props.messageSliceId);
       } else {
         const lastMessage = processedMessages.pop();
+
         if (lastMessage) {
           processedMessages = [lastMessage];
         }
@@ -102,6 +100,7 @@ export async function streamText(props: {
   logger.info(`Preparing proxy call for provider: ${provider.name}, model: ${currentModel}`);
 
   const subscriptionId = userProfile?.subscription?.id;
+
   if (!subscriptionId) {
     logger.error('Cannot make LLM call: Missing subscription ID in user profile.');
     throw new Error('Missing subscription ID');
@@ -148,6 +147,7 @@ export async function streamText(props: {
   };
 
   logger.info(`Making POST request to proxy: ${PROXY_URL}`);
+
   try {
     const response = await fetch(PROXY_URL, {
       method: 'POST',
@@ -171,8 +171,8 @@ export async function streamText(props: {
     }
 
     logger.info('Proxy request successful, returning stream.');
-    return response.body;
 
+    return response.body;
   } catch (error) {
     logger.error('Error during proxy fetch call:', error);
     throw error;

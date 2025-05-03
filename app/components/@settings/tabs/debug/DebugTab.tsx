@@ -1870,7 +1870,9 @@ export default function DebugTab() {
                     <div className="text-sm flex items-center gap-2">
                       <div className="i-ph:git-commit text-elasticApp-elements-textSecondary w-4 h-4" />
                       <span className="text-elasticApp-elements-textSecondary">Commit:</span>
-                      <span className="text-elasticApp-elements-textPrimary">{webAppInfo.gitInfo.local.commitHash}</span>
+                      <span className="text-elasticApp-elements-textPrimary">
+                        {webAppInfo.gitInfo.local.commitHash}
+                      </span>
                     </div>
                     <div className="text-sm flex items-center gap-2">
                       <div className="i-ph:user text-elasticApp-elements-textSecondary w-4 h-4" />
@@ -1880,7 +1882,9 @@ export default function DebugTab() {
                     <div className="text-sm flex items-center gap-2">
                       <div className="i-ph:clock text-elasticApp-elements-textSecondary w-4 h-4" />
                       <span className="text-elasticApp-elements-textSecondary">Commit Time:</span>
-                      <span className="text-elasticApp-elements-textPrimary">{webAppInfo.gitInfo.local.commitTime}</span>
+                      <span className="text-elasticApp-elements-textPrimary">
+                        {webAppInfo.gitInfo.local.commitTime}
+                      </span>
                     </div>
 
                     {webAppInfo.gitInfo.github && (

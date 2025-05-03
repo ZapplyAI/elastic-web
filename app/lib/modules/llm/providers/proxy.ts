@@ -44,9 +44,9 @@ export default class ProxyProvider extends BaseProvider {
   ];
 
   async getDynamicModels(
-    apiKeys?: Record<string, string>,
-    settings?: IProviderSetting,
-    serverEnv?: Record<string, string>,
+    _apiKeys?: Record<string, string>,
+    _settings?: IProviderSetting,
+    _serverEnv?: Record<string, string>,
   ): Promise<ModelInfo[]> {
     // We'll just return the static models for now
     return [];
@@ -71,7 +71,7 @@ export default class ProxyProvider extends BaseProvider {
     const anthropic = createAnthropic({
       apiKey,
     });
-    
+
     // Get the model instance
     return anthropic(model);
   }

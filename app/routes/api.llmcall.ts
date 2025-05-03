@@ -56,10 +56,36 @@ async function llmCallAction({ context, request }: ActionFunctionArgs) {
 
   if (streamOutput) {
     try {
-      const result = await streamText({
-        options: {
-          system,
+      // Get auth token from request headers or cookies
+      const authToken = request.headers.get('Authorization')?.replace('Bearer ', '') || '';
+
+      // Create a dummy user profile with required properties
+      const userProfile = {
+        id: 'dummy-user-id',
+        email: 'dummy@example.com',
+        email_verified: true,
+        created_at: new Date().toISOString(),
+        subscription: {
+          id: 'default-subscription-id',
+          plan: {
+            id: 'default-plan-id',
+            name: 'Default Plan',
+            monthly_fee: '0',
+            premium_calls_quota: 1000,
+            overage_rate: '0',
+            context_window: 100000,
+            team_support: false,
+            description: 'Default plan for API calls',
+          },
+          status: 'active',
+          start_date: new Date().toISOString(),
+          end_date: null,
+          next_billing_date: null,
+          trial_expiration_date: null,
         },
+      };
+
+      const stream = await streamText({
         messages: [
           {
             role: 'user',
@@ -67,11 +93,12 @@ async function llmCallAction({ context, request }: ActionFunctionArgs) {
           },
         ],
         env: context.cloudflare?.env as any,
-        apiKeys,
         providerSettings,
+        authToken,
+        userProfile,
       });
 
-      return new Response(result.textStream, {
+      return new Response(stream, {
         status: 200,
         headers: {
           'Content-Type': 'text/plain; charset=utf-8',

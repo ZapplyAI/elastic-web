@@ -174,7 +174,9 @@ export default function NetlifyConnection() {
                 className="w-12 h-12 rounded-full border-2 border-[#00AD9F]"
               />
               <div>
-                <h4 className="text-sm font-medium text-elasticApp-elements-textPrimary">{connection.user.full_name}</h4>
+                <h4 className="text-sm font-medium text-elasticApp-elements-textPrimary">
+                  {connection.user.full_name}
+                </h4>
                 <p className="text-sm text-elasticApp-elements-textSecondary">{connection.user.email}</p>
               </div>
             </div>

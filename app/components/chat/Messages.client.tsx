@@ -24,7 +24,8 @@ export const Messages = forwardRef<HTMLDivElement, MessagesProps>(
   (props: MessagesProps, ref: ForwardedRef<HTMLDivElement> | undefined) => {
     const { id, isStreaming = false, messages = [] } = props;
     const location = useLocation();
-    const profile = useStore(profileStore);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const _profile = useStore(profileStore);
 
     const handleRewind = (messageId: string) => {
       const searchParams = new URLSearchParams(location.search);

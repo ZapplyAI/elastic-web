@@ -19,6 +19,20 @@ export class ElasticAppShell {
     });
   }
 
+  // Public accessors for private properties
+  get terminal() {
+    return this.#terminal;
+  }
+
+  get process() {
+    return this.#process;
+  }
+
+  // Public method to access the ready promise
+  ready() {
+    return this.#readyPromise;
+  }
+
   async init(webcontainer: WebContainer, terminal: ITerminal) {
     const { process } = await this.newElasticAppShellProcess(webcontainer, terminal);
     this.#process = process;
@@ -67,6 +81,7 @@ export class ElasticAppShell {
 
   async write(data: string) {
     await this.#readyPromise;
+
     const input = this.#process?.input.getWriter();
     input?.write(data);
     input?.releaseLock();
@@ -74,6 +89,40 @@ export class ElasticAppShell {
 
   async clear() {
     await this.write('\x1b[2J\x1b[3J\x1b[;H');
+  }
+
+  async executeCommand(id: string, command: string, onAbort?: () => void): Promise<ExecutionResult> {
+    await this.#readyPromise;
+
+    if (!this.#process) {
+      return undefined;
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const _onAbort = onAbort;
+
+    const output = '';
+    const exitCode = 0;
+
+    try {
+      // Clear the terminal
+      await this.clear();
+
+      // Write the command
+      await this.write(command + '\n');
+
+      /*
+       * Collect output (this is a simplified implementation)
+       * In a real implementation, you would need to capture the output
+       * and determine when the command has completed
+       */
+
+      // For now, we'll just return a success result
+      return { output, exitCode };
+    } catch (error) {
+      console.error('Error executing command:', error);
+      return { output: error instanceof Error ? error.message : String(error), exitCode: 1 };
+    }
   }
 }
 

@@ -116,7 +116,8 @@ export const TerminalTabs = memo(() => {
                         className={classNames(
                           'flex items-center text-sm cursor-pointer gap-1.5 px-3 py-2 h-full whitespace-nowrap rounded-full',
                           {
-                            'bg-elasticApp-elements-terminals-buttonBackground text-elasticApp-elements-textPrimary': isActive,
+                            'bg-elasticApp-elements-terminals-buttonBackground text-elasticApp-elements-textPrimary':
+                              isActive,
                             'bg-elasticApp-elements-background-depth-2 text-elasticApp-elements-textSecondary hover:bg-elasticApp-elements-terminals-buttonBackground':
                               !isActive,
                           },
