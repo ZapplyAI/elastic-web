@@ -1,8 +1,9 @@
 import React from 'react';
 import { generateNonce } from '~/utils/auth';
 
-const AUTH_URI_BASE = 'http://localhost:3000/session/auth'; // Keep the correct URI
-const CALLBACK_URL = 'http://localhost:5173/auth/callback';
+// Use environment variables with fallbacks for local development
+const AUTH_URI_BASE = import.meta.env.VITE_AUTH_URI_BASE || 'http://localhost:3000/session/auth';
+const CALLBACK_URL = import.meta.env.VITE_AUTH_CALLBACK_URL || 'http://localhost:5173/auth/callback';
 const NONCE_STORAGE_KEY = 'authNonce';
 
 export function AuthScreen() {
