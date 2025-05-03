@@ -386,6 +386,12 @@ ${value.content}
 
       const blob = new Blob([JSON.stringify(chatData, null, 2)], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
+
+      if (typeof document === 'undefined') {
+        console.warn('Document is not defined, cannot export chat');
+        return;
+      }
+
       const a = document.createElement('a');
       a.href = url;
       a.download = `chat-${new Date().toISOString()}.json`;
@@ -403,6 +409,11 @@ function navigateChat(nextId: string) {
    *
    * `navigate(`/chat/${nextId}`, { replace: true });`
    */
+  if (typeof window === 'undefined') {
+    console.warn('Window is not defined, cannot navigate');
+    return;
+  }
+
   const url = new URL(window.location.href);
   url.pathname = `/chat/${nextId}`;
 
