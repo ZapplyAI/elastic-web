@@ -64,7 +64,10 @@ export function useChatHistory() {
       getMessages(db, mixedId)
         .then(async (storedMessages) => {
           if (storedMessages && storedMessages.messages.length > 0) {
-            const snapshotStr = localStorage.getItem(`snapshot:${mixedId}`);
+            let snapshotStr;
+            if (typeof localStorage !== 'undefined') {
+              snapshotStr = localStorage.getItem(`snapshot:${mixedId}`);
+            }
             const snapshot: Snapshot = snapshotStr ? JSON.parse(snapshotStr) : { chatIndex: 0, files: {} };
             const summary = snapshot.summary;
 
@@ -216,13 +219,18 @@ ${value.content}
         files,
         summary: chatSummary,
       };
-      localStorage.setItem(`snapshot:${id}`, JSON.stringify(snapshot));
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem(`snapshot:${id}`, JSON.stringify(snapshot));
+      }
     },
     [chatId],
   );
 
   const restoreSnapshot = useCallback(async (id: string) => {
-    const snapshotStr = localStorage.getItem(`snapshot:${id}`);
+    let snapshotStr;
+    if (typeof localStorage !== 'undefined') {
+      snapshotStr = localStorage.getItem(`snapshot:${id}`);
+    }
     const container = await webcontainer;
 
     // if (snapshotStr)setSnapshot(JSON.parse(snapshotStr));

@@ -102,6 +102,13 @@ export default function AuthCallback() {
     try {
       console.log('[Auth Callback] Running client-side verification...');
 
+      if (typeof window === 'undefined') {
+        console.error('[Auth Callback] Window is not defined');
+        setError('Authentication failed: Browser environment not available.');
+        setMessage('Error during authentication.');
+        return;
+      }
+
       const params = new URLSearchParams(window.location.search);
       const state = params.get('state');
       const token = params.get('token');
@@ -137,6 +144,13 @@ export default function AuthCallback() {
       }
 
       // Get and validate nonce
+      if (typeof sessionStorage === 'undefined') {
+        console.error('[Auth Callback] SessionStorage is not defined');
+        setError('Authentication failed: Browser storage not available.');
+        setMessage('Error during authentication.');
+        return;
+      }
+
       const expectedNonce = sessionStorage.getItem(NONCE_STORAGE_KEY);
       console.log('[Auth Callback] Retrieved nonce from session storage');
 

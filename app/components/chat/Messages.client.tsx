@@ -30,7 +30,9 @@ export const Messages = forwardRef<HTMLDivElement, MessagesProps>(
     const handleRewind = (messageId: string) => {
       const searchParams = new URLSearchParams(location.search);
       searchParams.set('rewindTo', messageId);
-      window.location.search = searchParams.toString();
+      if (typeof window !== 'undefined') {
+        window.location.search = searchParams.toString();
+      }
     };
 
     const handleFork = async (messageId: string) => {
@@ -41,7 +43,9 @@ export const Messages = forwardRef<HTMLDivElement, MessagesProps>(
         }
 
         const urlId = await forkChat(db, chatId.get()!, messageId);
-        window.location.href = `/chat/${urlId}`;
+        if (typeof window !== 'undefined') {
+          window.location.href = `/chat/${urlId}`;
+        }
       } catch (error) {
         toast.error('Failed to fork chat: ' + (error as Error).message);
       }
