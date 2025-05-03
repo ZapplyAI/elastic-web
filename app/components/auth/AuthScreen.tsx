@@ -11,7 +11,9 @@ export function AuthScreen() {
     const nonce = generateNonce();
 
     try {
-      sessionStorage.setItem(NONCE_STORAGE_KEY, nonce);
+      if (typeof sessionStorage !== 'undefined') {
+        sessionStorage.setItem(NONCE_STORAGE_KEY, nonce);
+      }
     } catch (error) {
       console.error('Failed to store nonce in sessionStorage:', error);
       return;
@@ -22,7 +24,9 @@ export function AuthScreen() {
       callback_url: CALLBACK_URL,
     });
     const redirectUri = `${AUTH_URI_BASE}?${params.toString()}`;
-    window.location.href = redirectUri;
+    if (typeof window !== 'undefined') {
+      window.location.href = redirectUri;
+    }
   };
 
   return (
