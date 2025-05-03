@@ -1,8 +1,7 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-/* eslint-disable */
 /*
  * Preventing TS checks with files presented in the video for a better presentation.
+ * @ts-nocheck
+ * eslint-disable
  */
 import { useStore } from '@nanostores/react';
 import type { Message } from 'ai';

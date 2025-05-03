@@ -116,6 +116,10 @@ export const ImportFolderButton: React.FC<ImportFolderButtonProps> = ({ classNam
       />
       <Button
         onClick={() => {
+          if (typeof document === 'undefined') {
+            return;
+          }
+
           const input = document.getElementById('folder-import');
           input?.click();
         }}
