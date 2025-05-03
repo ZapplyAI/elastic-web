@@ -10,4 +10,13 @@ publish = "build/client"
 # Command to run the local development server
 command = "pnpm run dev"
 # Specify that the framework is Vite
-framework = "vite" 
+framework = "vite"
+
+# Function settings
+[functions]
+# Increase the function timeout to 30 seconds (default is 10)
+timeout = 30
+
+# Set environment variables for all functions
+[build.environment]
+NODE_VERSION = "18.18.0"

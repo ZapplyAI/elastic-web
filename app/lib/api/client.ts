@@ -41,7 +41,19 @@ export async function fetchUserProfile(token: string): Promise<UserProfile | nul
 
     return userProfile;
   } catch (error) {
-    console.error('[API Client] Network or other error fetching profile:', error);
+    // Enhanced error logging with more context
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    const errorStack = error instanceof Error ? error.stack : undefined;
+    const requestId = new Date().getTime().toString();
+
+    console.error('[API Client] Network or other error fetching profile:', {
+      error: errorMessage,
+      stack: errorStack,
+      url,
+      requestId,
+      netlifyInfo: 'If this error persists in Netlify, check network connectivity to the API service.',
+    });
+
     return null;
   }
 }

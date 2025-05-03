@@ -146,8 +146,31 @@ async function chatAction({ context, request }: ActionFunctionArgs) {
       },
     });
   } catch (error: any) {
-    logger.error('Chat Action Error (Outer Catch):', error);
-    return remixJson({ error: error.message || 'Internal Server Error' }, { status: 500 });
+    // Enhanced error logging with more context
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    const errorStack = error instanceof Error ? error.stack : undefined;
+
+    logger.error('Chat Action Error (Outer Catch):', {
+      error: errorMessage,
+      stack: errorStack,
+      requestId: new Date().getTime().toString(),
+    });
+
+    // Return a more detailed error response
+    return remixJson(
+      {
+        error: 'Internal Server Error',
+        message: errorMessage.substring(0, 200),
+        requestId: new Date().getTime().toString(),
+        netlifyInfo: 'If this error persists in Netlify, check environment variables and function timeout settings.',
+      },
+      {
+        status: 500,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    );
   }
 }
 

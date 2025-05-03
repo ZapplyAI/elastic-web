@@ -6,12 +6,18 @@
 
   --cm-gutter-backgroundColor: var(--elasticApp-elements-editor-gutter-backgroundColor, var(--cm-backgroundColor));
   --cm-gutter-textColor: var(--elasticApp-elements-editor-gutter-textColor, var(--elasticApp-elements-textSecondary));
-  --cm-gutter-activeLineTextColor: var(--elasticApp-elements-editor-gutter-activeLineTextColor, var(--cm-gutter-textColor));
+  --cm-gutter-activeLineTextColor: var(
+    --elasticApp-elements-editor-gutter-activeLineTextColor,
+    var(--cm-gutter-textColor)
+  );
 
   /* Fold Gutter */
 
   --cm-foldGutter-textColor: var(--elasticApp-elements-editor-foldGutter-textColor, var(--cm-gutter-textColor));
-  --cm-foldGutter-textColorHover: var(--elasticApp-elements-editor-foldGutter-textColorHover, var(--cm-gutter-textColor));
+  --cm-foldGutter-textColorHover: var(
+    --elasticApp-elements-editor-foldGutter-textColorHover,
+    var(--cm-gutter-textColor)
+  );
 
   /* Active Line */
 
@@ -41,7 +47,10 @@
 
   --cm-search-backgroundColor: var(--elasticApp-elements-editor-search-backgroundColor, var(--cm-backgroundColor));
   --cm-search-textColor: var(--elasticApp-elements-editor-search-textColor, var(--elasticApp-elements-textSecondary));
-  --cm-search-closeButton-backgroundColor: var(--elasticApp-elements-editor-search-closeButton-backgroundColor, transparent);
+  --cm-search-closeButton-backgroundColor: var(
+    --elasticApp-elements-editor-search-closeButton-backgroundColor,
+    transparent
+  );
 
   --cm-search-closeButton-backgroundColorHover: var(
     --elasticApp-elements-editor-search-closeButton-backgroundColorHover,
@@ -68,7 +77,10 @@
     var(--elasticApp-elements-item-backgroundActive)
   );
 
-  --cm-search-button-textColor: var(--elasticApp-elements-editor-search-button-textColor, var(--elasticApp-elements-textSecondary));
+  --cm-search-button-textColor: var(
+    --elasticApp-elements-editor-search-button-textColor,
+    var(--elasticApp-elements-textSecondary)
+  );
 
   --cm-search-button-textColorHover: var(
     --elasticApp-elements-editor-search-button-textColorHover,
@@ -84,8 +96,14 @@
   );
 
   --cm-search-input-backgroundColor: var(--elasticApp-elements-editor-search-input-backgroundColor, transparent);
-  --cm-search-input-textColor: var(--elasticApp-elements-editor-search-input-textColor, var(--elasticApp-elements-textPrimary));
-  --cm-search-input-borderColor: var(--elasticApp-elements-editor-search-input-borderColor, var(--elasticApp-elements-borderColor));
+  --cm-search-input-textColor: var(
+    --elasticApp-elements-editor-search-input-textColor,
+    var(--elasticApp-elements-textPrimary)
+  );
+  --cm-search-input-borderColor: var(
+    --elasticApp-elements-editor-search-input-borderColor,
+    var(--elasticApp-elements-borderColor)
+  );
 
   --cm-search-input-borderColorFocused: var(
     --elasticApp-elements-editor-search-input-borderColorFocused,
@@ -107,9 +125,15 @@
     var(--elasticApp-elements-textPrimary)
   );
 
-  --cm-tooltip-borderColor: var(--elasticApp-elements-editor-tooltip-borderColor, var(--elasticApp-elements-borderColor));
+  --cm-tooltip-borderColor: var(
+    --elasticApp-elements-editor-tooltip-borderColor,
+    var(--elasticApp-elements-borderColor)
+  );
 
-  --cm-searchMatch-backgroundColor: var(--elasticApp-elements-editor-searchMatch-backgroundColor, rgba(234, 92, 0, 0.33));
+  --cm-searchMatch-backgroundColor: var(
+    --elasticApp-elements-editor-searchMatch-backgroundColor,
+    rgba(234, 92, 0, 0.33)
+  );
 }
 
 html[data-theme='light'] {
