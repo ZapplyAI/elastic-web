@@ -24,6 +24,7 @@ export function AuthScreen() {
       callback_url: CALLBACK_URL,
     });
     const redirectUri = `${AUTH_URI_BASE}?${params.toString()}`;
+
     if (typeof window !== 'undefined') {
       window.location.href = redirectUri;
     }

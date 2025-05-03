@@ -30,6 +30,7 @@ export const Messages = forwardRef<HTMLDivElement, MessagesProps>(
     const handleRewind = (messageId: string) => {
       const searchParams = new URLSearchParams(location.search);
       searchParams.set('rewindTo', messageId);
+
       if (typeof window !== 'undefined') {
         window.location.search = searchParams.toString();
       }
@@ -43,6 +44,7 @@ export const Messages = forwardRef<HTMLDivElement, MessagesProps>(
         }
 
         const urlId = await forkChat(db, chatId.get()!, messageId);
+
         if (typeof window !== 'undefined') {
           window.location.href = `/chat/${urlId}`;
         }

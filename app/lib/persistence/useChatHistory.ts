@@ -65,9 +65,11 @@ export function useChatHistory() {
         .then(async (storedMessages) => {
           if (storedMessages && storedMessages.messages.length > 0) {
             let snapshotStr;
+
             if (typeof localStorage !== 'undefined') {
               snapshotStr = localStorage.getItem(`snapshot:${mixedId}`);
             }
+
             const snapshot: Snapshot = snapshotStr ? JSON.parse(snapshotStr) : { chatIndex: 0, files: {} };
             const summary = snapshot.summary;
 
@@ -219,6 +221,7 @@ ${value.content}
         files,
         summary: chatSummary,
       };
+
       if (typeof localStorage !== 'undefined') {
         localStorage.setItem(`snapshot:${id}`, JSON.stringify(snapshot));
       }
@@ -228,9 +231,11 @@ ${value.content}
 
   const restoreSnapshot = useCallback(async (id: string) => {
     let snapshotStr;
+
     if (typeof localStorage !== 'undefined') {
       snapshotStr = localStorage.getItem(`snapshot:${id}`);
     }
+
     const container = await webcontainer;
 
     // if (snapshotStr)setSnapshot(JSON.parse(snapshotStr));
@@ -370,7 +375,11 @@ ${value.content}
 
       try {
         const newId = await createChatFromMessages(db, description, messages, metadata);
-        window.location.href = `/chat/${newId}`;
+
+        if (typeof window !== 'undefined') {
+          window.location.href = `/chat/${newId}`;
+        }
+
         toast.success('Chat imported successfully');
       } catch (error) {
         if (error instanceof Error) {

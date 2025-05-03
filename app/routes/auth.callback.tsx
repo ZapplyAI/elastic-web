@@ -106,10 +106,12 @@ export default function AuthCallback() {
         console.error('[Auth Callback] Window is not defined');
         setError('Authentication failed: Browser environment not available.');
         setMessage('Error during authentication.');
+
         return;
       }
 
-      const params = new URLSearchParams(window.location.search);
+      // Ensure we're in a browser environment before accessing window.location
+      const params = new URLSearchParams(typeof window !== 'undefined' ? window.location.search : '');
       const state = params.get('state');
       const token = params.get('token');
 
@@ -148,10 +150,12 @@ export default function AuthCallback() {
         console.error('[Auth Callback] SessionStorage is not defined');
         setError('Authentication failed: Browser storage not available.');
         setMessage('Error during authentication.');
+
         return;
       }
 
-      const expectedNonce = sessionStorage.getItem(NONCE_STORAGE_KEY);
+      // Ensure we're in a browser environment before accessing sessionStorage
+      const expectedNonce = typeof sessionStorage !== 'undefined' ? sessionStorage.getItem(NONCE_STORAGE_KEY) : null;
       console.log('[Auth Callback] Retrieved nonce from session storage');
 
       if (!expectedNonce) {
@@ -163,8 +167,10 @@ export default function AuthCallback() {
       }
 
       // Clean up nonce regardless of outcome
-      sessionStorage.removeItem(NONCE_STORAGE_KEY);
-      console.log('[Auth Callback] Nonce removed from storage for security');
+      if (typeof sessionStorage !== 'undefined') {
+        sessionStorage.removeItem(NONCE_STORAGE_KEY);
+        console.log('[Auth Callback] Nonce removed from storage for security');
+      }
 
       // Verify nonce matches state parameter
       if (state !== expectedNonce) {

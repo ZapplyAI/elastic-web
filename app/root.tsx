@@ -127,9 +127,12 @@ export const Head = createHead(() => (
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const theme = useStore(themeStore);
+  const isClient = typeof window !== 'undefined' && typeof document !== 'undefined';
 
   useEffect(() => {
-    document.querySelector('html')?.setAttribute('data-theme', theme);
+    if (isClient) {
+      document.querySelector('html')?.setAttribute('data-theme', theme);
+    }
   }, [theme]);
 
   return (
@@ -144,7 +147,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
 export default function App() {
   const theme = useStore(themeStore);
   const location = useLocation();
-  const { isAuthenticated, userProfile } = useLoaderData<typeof loader>();
+  const { isAuthenticated, userProfile } = useLoaderData<{
+    isAuthenticated: boolean;
+    userProfile: UserProfile | null;
+  }>();
 
   useEffect(() => {
     setUserProfile(userProfile);
