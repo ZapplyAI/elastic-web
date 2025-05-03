@@ -1,5 +1,6 @@
 import { AnimatePresence, cubicBezier, motion } from 'framer-motion';
 import styles from './SendButton.module.scss';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { classNames } from '~/utils/classNames';
 
 interface SendButtonProps {
@@ -30,23 +31,15 @@ export const SendButton = ({ show, isStreaming, disabled, onClick }: SendButtonP
               onClick?.(event);
             }
           }}
-          aria-label={isStreaming ? "Stop" : "Send"}
+          aria-label={isStreaming ? 'Stop' : 'Send'}
         >
           <div className={styles.icon}>
             {!isStreaming ? (
-              <svg 
-                className={styles.arrowIcon} 
-                viewBox="0 0 24 24" 
-                xmlns="http://www.w3.org/2000/svg"
-              >
+              <svg className={styles.arrowIcon} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
               </svg>
             ) : (
-              <svg 
-                className={styles.stopIcon} 
-                viewBox="0 0 24 24" 
-                xmlns="http://www.w3.org/2000/svg"
-              >
+              <svg className={styles.stopIcon} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4 14H8V8h8v8z" />
               </svg>
             )}

@@ -3,6 +3,7 @@ export interface Template {
   label: string;
   description: string;
   githubRepo: string;
+  branch?: string;
   tags?: string[];
   icon?: string;
 }

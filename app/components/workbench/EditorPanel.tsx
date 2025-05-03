@@ -36,6 +36,7 @@ interface EditorPanelProps {
   onFileReset?: () => void;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DEFAULT_EDITOR_SIZE = 100 - DEFAULT_TERMINAL_SIZE;
 
 const editorSettings: EditorSettings = { tabSize: 2 };
@@ -57,6 +58,7 @@ export const EditorPanel = memo(
     renderLogger.trace('EditorPanel');
 
     const theme = useStore(themeStore);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const showTerminal = useStore(workbenchStore.showTerminal);
 
     const activeFileSegments = useMemo(() => {

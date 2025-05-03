@@ -1,18 +1,7 @@
 import { useStore } from '@nanostores/react';
-import type {
-  LinksFunction,
-  LoaderFunctionArgs,
-} from '@remix-run/cloudflare';
+import type { LinksFunction, LoaderFunctionArgs } from '@remix-run/cloudflare';
 import { json } from '@remix-run/cloudflare';
-import {
-  Links,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-  useLoaderData,
-  useLocation,
-} from '@remix-run/react';
+import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData, useLocation } from '@remix-run/react';
 import tailwindReset from '@unocss/reset/tailwind-compat.css?url';
 import { themeStore } from './lib/stores/theme';
 import { stripIndents } from './utils/stripIndent';
@@ -40,9 +29,11 @@ const TOKEN_COOKIE_NAME = 'elastic_authToken';
 export async function loader({ request }: LoaderFunctionArgs) {
   const cookieHeader = request.headers.get('Cookie');
   const cookies = new Map<string, string>();
+
   if (cookieHeader) {
     cookieHeader.split(';').forEach((cookie) => {
       const parts = cookie.match(/(.*?)=(.*)$/);
+
       if (parts) {
         const name = parts[1].trim();
         const value = parts[2].trim();
@@ -50,7 +41,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
       }
     });
   }
-  
+
   const authToken = cookies.get(TOKEN_COOKIE_NAME);
   let isAuthenticated = false;
   let userProfile: UserProfile | null = null;
@@ -58,11 +49,14 @@ export async function loader({ request }: LoaderFunctionArgs) {
   if (authToken) {
     console.log(`[Loader] Auth token found. Fetching user profile...`);
     userProfile = await fetchUserProfile(authToken);
+
     // Consider user authenticated only if profile fetch is successful
-    isAuthenticated = userProfile !== null; 
+    isAuthenticated = userProfile !== null;
+
     if (!isAuthenticated) {
-        console.warn('[Loader] Token found, but profile fetch failed. User treated as unauthenticated.')
-        // Optionally clear the invalid cookie here?
+      console.warn('[Loader] Token found, but profile fetch failed. User treated as unauthenticated.');
+
+      // Optionally clear the invalid cookie here?
     }
   } else {
     console.log(`[Loader] Auth token not found.`);
@@ -75,10 +69,11 @@ export async function loader({ request }: LoaderFunctionArgs) {
     hasProfile: userProfile !== null,
     path: new URL(request.url).pathname,
   });
-  
+
   // Return both auth status and user profile
-  return json({ isAuthenticated, userProfile }); 
+  return json({ isAuthenticated, userProfile });
 }
+
 // --- End Server-Side Loader ---
 
 export const links: LinksFunction = () => [
@@ -160,19 +155,11 @@ export default function App() {
       userAgent: navigator.userAgent,
       timestamp: new Date().toISOString(),
       loaderAuthStatus: isAuthenticated,
-      loaderUserProfile: userProfile
+      loaderUserProfile: userProfile,
     });
   }, [theme, isAuthenticated, userProfile]);
 
   const isCallbackRoute = location.pathname === '/auth/callback';
 
-  return (
-    <Layout>
-      {isCallbackRoute ? (
-        <Outlet />
-      ) : (
-        isAuthenticated ? <Outlet /> : <AuthScreen />
-      )}
-    </Layout>
-  );
+  return <Layout>{isCallbackRoute ? <Outlet /> : isAuthenticated ? <Outlet /> : <AuthScreen />}</Layout>;
 }

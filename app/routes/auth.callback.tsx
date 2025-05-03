@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { useNavigate, useSubmit } from '@remix-run/react';
-import type { ActionFunctionArgs } from '@remix-run/cloudflare'; 
-import { json, redirect } from '@remix-run/cloudflare'; 
+import type { ActionFunctionArgs } from '@remix-run/cloudflare';
+import { json, redirect } from '@remix-run/cloudflare';
 import { ClientOnly } from 'remix-utils/client-only'; // Add ClientOnly back
 
 const NONCE_STORAGE_KEY = 'authNonce';
@@ -21,14 +22,18 @@ export async function action({ request }: ActionFunctionArgs) {
   // Set the httpOnly cookie with the new name
   const expiryDate = new Date();
   expiryDate.setDate(expiryDate.getDate() + 7); // 7-day expiry
+
   const cookieValue = [
     `${TOKEN_COOKIE_NAME}=${token}`,
     'HttpOnly',
     'Path=/',
     'SameSite=Lax',
     `Expires=${expiryDate.toUTCString()}`,
+
     // process.env.NODE_ENV === 'production' ? 'Secure' : '' // Add Secure flag in production
-  ].filter(Boolean).join('; ');
+  ]
+    .filter(Boolean)
+    .join('; ');
 
   const headers = new Headers();
   headers.append('Set-Cookie', cookieValue);
@@ -39,15 +44,16 @@ export async function action({ request }: ActionFunctionArgs) {
 
 // Client-side Component
 export default function AuthCallback() {
-  const submit = useSubmit(); 
+  const submit = useSubmit();
+
   // const navigate = useNavigate(); // Likely not needed now, handled by action redirect
   const [message, setMessage] = useState('Verifying authentication...');
   const [error, setError] = useState<string | null>(null);
 
   // This function runs client-side after hydration
-  const runVerification = () => { 
+  const runVerification = () => {
     console.log('[Client Callback - httpOnly] Running verification...');
-    
+
     const params = new URLSearchParams(window.location.search);
     const state = params.get('state');
     const token = params.get('token');
@@ -63,6 +69,7 @@ export default function AuthCallback() {
       console.error('Auth callback error: Missing state, token, or expected nonce.');
       setError('Authentication failed: Invalid callback parameters.');
       setMessage('Error during authentication.');
+
       return;
     }
 
@@ -71,6 +78,7 @@ export default function AuthCallback() {
       console.error(`Received: ${state}, Expected: ${expectedNonce}`);
       setError('Authentication failed: Security check failed (nonce mismatch).');
       setMessage('Error during authentication.');
+
       return;
     }
 
@@ -82,20 +90,20 @@ export default function AuthCallback() {
     formData.append('token', token);
     submit(formData, {
       method: 'post',
-      action: '/auth/callback', 
-      replace: true, 
+      action: '/auth/callback',
+      replace: true,
     });
   };
 
+  // Wrap in ClientOnly to ensure useEffect runs client-side
   return (
-    // Wrap in ClientOnly to ensure useEffect runs client-side
     <ClientOnly fallback={<p>Verifying...</p>}>
       {() => {
         useEffect(() => {
           // Run verification logic only on the client after mount
-          const timerId = setTimeout(runVerification, 0); 
+          const timerId = setTimeout(runVerification, 0);
           return () => clearTimeout(timerId);
-          // eslint-disable-next-line react-hooks/exhaustive-deps
+          // eslint-disable-next-line
         }, []); // Run only once
 
         // Render the UI part
@@ -104,13 +112,11 @@ export default function AuthCallback() {
             <div className="p-8 bg-white dark:bg-gray-800 rounded-lg shadow-md text-center">
               <h1 className="text-2xl font-bold mb-4">Authentication Callback</h1>
               <p className="mb-6">{message}</p>
-              {error && (
-                <p className="text-red-600 dark:text-red-400 mt-4">Error: {error}</p>
-              )}
+              {error && <p className="text-red-600 dark:text-red-400 mt-4">Error: {error}</p>}
             </div>
           </div>
         );
       }}
     </ClientOnly>
   );
-} 
+}

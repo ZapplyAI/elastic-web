@@ -146,6 +146,9 @@ importers:
       '@remix-run/cloudflare-pages':
         specifier: ^2.15.2
         version: 2.15.3(@cloudflare/workers-types@4.20250204.0)(typescript@5.7.3)
+      '@remix-run/netlify':
+        specifier: ^1.19.3
+        version: 1.19.3(@netlify/functions@1.6.0)
       '@remix-run/node':
         specifier: ^2.15.2
         version: 2.15.3(typescript@5.7.3)
@@ -242,6 +245,9 @@ importers:
       path-browserify:
         specifier: ^1.0.1
         version: 1.0.1
+      plugin:
+        specifier: link:@netlify/remix-adapter/plugin
+        version: link:@netlify/remix-adapter/plugin
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -321,9 +327,6 @@ importers:
       '@remix-run/dev':
         specifier: ^2.15.2
         version: 2.15.3(@remix-run/react@2.15.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.3))(@types/node@22.13.1)(sass-embedded@1.83.4)(typescript@5.7.3)(vite@5.4.14(@types/node@22.13.1)(sass-embedded@1.83.4))(wrangler@3.108.0(@cloudflare/workers-types@4.20250204.0))
-      '@remix-run/netlify':
-        specifier: ^1.19.3
-        version: 1.19.3(@netlify/functions@1.6.0)
       '@testing-library/jest-dom':
         specifier: ^6.6.3
         version: 6.6.3

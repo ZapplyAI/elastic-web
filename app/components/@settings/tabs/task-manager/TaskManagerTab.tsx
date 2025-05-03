@@ -1215,7 +1215,9 @@ const TaskManagerTab: React.FC = () => {
             <div className="grid grid-cols-3 gap-4">
               <div>
                 <span className="text-sm text-elasticApp-elements-textSecondary">Updates Reduced</span>
-                <p className="text-lg font-medium text-elasticApp-elements-textPrimary">{energySavings.updatesReduced}</p>
+                <p className="text-lg font-medium text-elasticApp-elements-textPrimary">
+                  {energySavings.updatesReduced}
+                </p>
               </div>
               <div>
                 <span className="text-sm text-elasticApp-elements-textSecondary">Time in Saver Mode</span>

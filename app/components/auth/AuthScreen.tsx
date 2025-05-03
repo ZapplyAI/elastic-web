@@ -8,12 +8,14 @@ const NONCE_STORAGE_KEY = 'authNonce';
 export function AuthScreen() {
   const handleLogin = () => {
     const nonce = generateNonce();
+
     try {
       sessionStorage.setItem(NONCE_STORAGE_KEY, nonce);
     } catch (error) {
       console.error('Failed to store nonce in sessionStorage:', error);
       return;
     }
+
     const params = new URLSearchParams({
       state: nonce,
       callback_url: CALLBACK_URL,

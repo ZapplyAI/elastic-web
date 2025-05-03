@@ -79,7 +79,10 @@ const UpdateProgressDisplay = ({ progress }: { progress: UpdateProgress }) => (
                       {filesOfType.map((file, index) => {
                         const fileName = file.split(': ')[1];
                         return (
-                          <div key={index} className="text-sm text-elasticApp-elements-textSecondary flex items-center gap-2">
+                          <div
+                            key={index}
+                            className="text-sm text-elasticApp-elements-textSecondary flex items-center gap-2"
+                          >
                             <div
                               className={classNames('w-4 h-4', {
                                 'i-ph:pencil-simple': type === 'Modified',
@@ -338,7 +341,9 @@ const UpdateTab = () => {
           <div className="flex items-center justify-between">
             <div>
               <span className="text-sm text-elasticApp-elements-textPrimary">In-App Notifications</span>
-              <p className="text-xs text-elasticApp-elements-textSecondary">Show notifications when updates are available</p>
+              <p className="text-xs text-elasticApp-elements-textSecondary">
+                Show notifications when updates are available
+              </p>
             </div>
             <button
               onClick={() => setUpdateSettings((prev) => ({ ...prev, notifyInApp: !prev.notifyInApp }))}
@@ -584,7 +589,10 @@ const UpdateTab = () => {
                   <p className="font-medium mb-2">Commit Messages:</p>
                   <div className="bg-[#F5F5F5] dark:bg-[#1A1A1A] rounded-lg p-3 space-y-2">
                     {updateProgress.details.commitMessages.map((msg, index) => (
-                      <div key={index} className="text-sm text-elasticApp-elements-textSecondary flex items-start gap-2">
+                      <div
+                        key={index}
+                        className="text-sm text-elasticApp-elements-textSecondary flex items-start gap-2"
+                      >
                         <div className="i-ph:git-commit text-purple-500 w-4 h-4 mt-0.5 flex-shrink-0" />
                         <span>{msg}</span>
                       </div>

@@ -37,7 +37,9 @@ CardTitle.displayName = 'CardTitle';
 
 const CardDescription = forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLParagraphElement>>(
   ({ className, ...props }, ref) => {
-    return <p ref={ref} className={classNames('text-sm text-elasticApp-elements-textSecondary', className)} {...props} />;
+    return (
+      <p ref={ref} className={classNames('text-sm text-elasticApp-elements-textSecondary', className)} {...props} />
+    );
   },
 );
 CardDescription.displayName = 'CardDescription';

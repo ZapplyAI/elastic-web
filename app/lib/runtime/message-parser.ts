@@ -188,7 +188,11 @@ export class StreamingMessageParser {
               break;
             }
           } else if (artifactCloseIndex !== -1) {
-            this._options.callbacks?.onArtifactClose?.({ messageId, ...currentArtifact });
+            this._options.callbacks?.onArtifactClose?.({
+              messageId,
+              ...currentArtifact,
+              action: { type: 'file', filePath: '', content: '' }, // Dummy action to satisfy the interface
+            });
 
             state.insideArtifact = false;
             state.currentArtifact = undefined;
@@ -241,7 +245,11 @@ export class StreamingMessageParser {
 
               state.currentArtifact = currentArtifact;
 
-              this._options.callbacks?.onArtifactOpen?.({ messageId, ...currentArtifact });
+              this._options.callbacks?.onArtifactOpen?.({
+                messageId,
+                ...currentArtifact,
+                action: { type: 'file', filePath: '', content: '' }, // Dummy action to satisfy the interface
+              });
 
               const artifactFactory = this._options.artifactElement ?? createArtifactElement;
 
@@ -282,6 +290,10 @@ export class StreamingMessageParser {
 
   reset() {
     this.#messages.clear();
+  }
+
+  parseChunk(input: string, messageId: string = 'default') {
+    return this.parse(messageId, input);
   }
 
   #parseActionTag(input: string, actionOpenIndex: number, actionEndIndex: number) {

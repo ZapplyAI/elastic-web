@@ -151,7 +151,9 @@ const CloudProvidersTab = () => {
             </div>
             <div>
               <h4 className="text-md font-medium text-elasticApp-elements-textPrimary">Cloud Providers</h4>
-              <p className="text-sm text-elasticApp-elements-textSecondary">Connect to cloud-based AI models and services</p>
+              <p className="text-sm text-elasticApp-elements-textSecondary">
+                Connect to cloud-based AI models and services
+              </p>
             </div>
           </div>
 

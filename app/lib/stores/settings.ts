@@ -77,8 +77,10 @@ const getInitialProviderSettings = (): ProviderSetting => {
     };
   });
 
-  // We're not loading from localStorage anymore to ensure Anthropic is always the only enabled provider
-  // This overrides any user settings
+  /*
+   * We're not loading from localStorage anymore to ensure Anthropic is always the only enabled provider
+   * This overrides any user settings
+   */
 
   return initialSettings;
 };
@@ -90,7 +92,7 @@ export const updateProviderSettings = (provider: string, settings: ProviderSetti
   const currentSettings = providersStore.get();
 
   // Create new provider config with updated settings
-  let updatedProvider = {
+  const updatedProvider = {
     ...currentSettings[provider],
     settings: {
       ...currentSettings[provider].settings,

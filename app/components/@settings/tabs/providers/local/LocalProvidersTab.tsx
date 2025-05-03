@@ -408,7 +408,9 @@ export default function LocalProvidersTab() {
               <div className="flex items-center gap-2">
                 <h2 className="text-lg font-semibold text-elasticApp-elements-textPrimary">Local AI Models</h2>
               </div>
-              <p className="text-sm text-elasticApp-elements-textSecondary">Configure and manage your local AI providers</p>
+              <p className="text-sm text-elasticApp-elements-textSecondary">
+                Configure and manage your local AI providers
+              </p>
             </div>
           </div>
 
@@ -588,7 +590,9 @@ export default function LocalProvidersTab() {
                           <div className="flex items-center justify-between">
                             <div className="space-y-2">
                               <div className="flex items-center gap-2">
-                                <h5 className="text-sm font-medium text-elasticApp-elements-textPrimary">{model.name}</h5>
+                                <h5 className="text-sm font-medium text-elasticApp-elements-textPrimary">
+                                  {model.name}
+                                </h5>
                                 <ModelStatusBadge status={model.status} />
                               </div>
                               <ModelDetails model={model} />
@@ -665,7 +669,9 @@ export default function LocalProvidersTab() {
                       </motion.div>
                       <div>
                         <div className="flex items-center gap-2">
-                          <h3 className="text-md font-semibold text-elasticApp-elements-textPrimary">{provider.name}</h3>
+                          <h3 className="text-md font-semibold text-elasticApp-elements-textPrimary">
+                            {provider.name}
+                          </h3>
                           <div className="flex gap-1">
                             <span className="px-2 py-0.5 text-xs rounded-full bg-green-500/10 text-green-500">
                               Local
