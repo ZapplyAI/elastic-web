@@ -8,7 +8,7 @@ import * as dotenv from 'dotenv';
 import { execSync } from 'child_process';
 import { readFileSync } from 'fs';
 import { join } from 'path';
-import { netlifyPlugin } from '@netlify/remix-adapter';
+import { netlifyPlugin } from '@netlify/remix-adapter/plugin';
 
 dotenv.config();
 
