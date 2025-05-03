@@ -14,8 +14,12 @@
 
 # Function settings
 [functions]
-  # Increase the function timeout to 30 seconds (default is 10)
-  timeout = 30
+  # Function settings
+  node_bundler = "esbuild"
+
+  # Define function timeout
+  [functions.timeout]
+  seconds = 30
 
 # Set environment variables for all functions
 [build.environment]
