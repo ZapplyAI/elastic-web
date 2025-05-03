@@ -7,7 +7,7 @@
   "type": "module",
   "version": "0.0.7",
   "scripts": {
-    "deploy": "NODE_OPTIONS='--max_old_space_size=4096' npm run build && wrangler pages deploy",
+    "deploy": "NODE_OPTIONS='--max_old_space_size=4096' pnpm run build && wrangler pages deploy",
     "deploy:gcp": "chmod +x ./scripts/deploy-to-gcp.sh && ./scripts/deploy-to-gcp.sh",
     "build": "NODE_OPTIONS='--max_old_space_size=4096' remix vite:build",
     "dev": "node pre-start.cjs  && remix vite:dev",
