@@ -132,7 +132,7 @@ export const ChatImpl = memo(
 
     // Always use Anthropic as the provider
     const [provider, setProvider] = useState<ProviderInfo>(
-      PROVIDER_LIST.find((p) => p.name === 'Anthropic') || PROVIDER_LIST[0]
+      PROVIDER_LIST.find((p) => p.name === 'Anthropic') || PROVIDER_LIST[0],
     );
 
     const { showChat } = useStore(chatStore);

@@ -9,7 +9,6 @@ export async function action(args: ActionFunctionArgs) {
   return enhancerAction(args);
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const logger = createScopedLogger('api.enhancher');
 
 async function enhancerAction({ context, request }: ActionFunctionArgs) {
@@ -46,6 +45,8 @@ async function enhancerAction({ context, request }: ActionFunctionArgs) {
     // Get auth token from request headers or cookies
     const authToken = request.headers.get('Authorization')?.replace('Bearer ', '') || '';
 
+    logger.info(`Processing enhancer request for model: ${model}, provider: ${providerName}`);
+
     // Create a dummy user profile with required properties
     const userProfile = {
       id: 'dummy-user-id',
@@ -71,6 +72,17 @@ async function enhancerAction({ context, request }: ActionFunctionArgs) {
         trial_expiration_date: null,
       },
     };
+
+    // Validate message content
+    if (!message || typeof message !== 'string') {
+      logger.error('Invalid message format', { message });
+      throw new Response('Invalid or missing message content', {
+        status: 400,
+        statusText: 'Bad Request',
+      });
+    }
+
+    logger.info('Calling streamText for prompt enhancement');
 
     const stream = await streamText({
       messages: [
@@ -114,6 +126,8 @@ async function enhancerAction({ context, request }: ActionFunctionArgs) {
       userProfile,
     });
 
+    logger.info('Stream received successfully, returning response');
+
     // Return the stream directly
     return new Response(stream, {
       status: 200,
@@ -124,18 +138,60 @@ async function enhancerAction({ context, request }: ActionFunctionArgs) {
       },
     });
   } catch (error: unknown) {
-    console.log(error);
+    // Enhanced error logging
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    const errorStack = error instanceof Error ? error.stack : undefined;
 
-    if (error instanceof Error && error.message?.includes('API key')) {
-      throw new Response('Invalid or missing API key', {
-        status: 401,
-        statusText: 'Unauthorized',
-      });
+    logger.error('Error in enhancer action:', {
+      error: errorMessage,
+      stack: errorStack,
+      model,
+      provider: providerName,
+    });
+
+    // Handle specific error types
+    if (error instanceof Error) {
+      if (error.message?.includes('API key')) {
+        logger.error('API key error', { message: error.message });
+        return new Response('Invalid or missing API key', {
+          status: 401,
+          statusText: 'Unauthorized',
+        });
+      } else if (error.message?.includes('Authentication error')) {
+        logger.error('Authentication error', { message: error.message });
+        return new Response(error.message, {
+          status: 401,
+          statusText: 'Unauthorized',
+        });
+      } else if (error.message?.includes('Resource not found')) {
+        logger.error('Resource not found', { message: error.message });
+        return new Response(error.message, {
+          status: 404,
+          statusText: 'Not Found',
+        });
+      } else if (error.message?.includes('Server error')) {
+        logger.error('Server error', { message: error.message });
+        return new Response(error.message, {
+          status: 502,
+          statusText: 'Bad Gateway',
+        });
+      }
     }
 
-    throw new Response(null, {
-      status: 500,
-      statusText: 'Internal Server Error',
-    });
+    // Default error response with more details
+    return new Response(
+      JSON.stringify({
+        error: 'Internal Server Error',
+        message: errorMessage.substring(0, 200),
+        requestId: new Date().getTime().toString(),
+      }),
+      {
+        status: 500,
+        statusText: 'Internal Server Error',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    );
   }
 }

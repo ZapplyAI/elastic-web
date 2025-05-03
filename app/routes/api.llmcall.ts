@@ -59,6 +59,17 @@ async function llmCallAction({ context, request }: ActionFunctionArgs) {
       // Get auth token from request headers or cookies
       const authToken = request.headers.get('Authorization')?.replace('Bearer ', '') || '';
 
+      logger.info(`Processing LLM call request for model: ${model}, provider: ${providerName}, streamOutput: true`);
+
+      // Validate message content
+      if (!message || typeof message !== 'string') {
+        logger.error('Invalid message format', { message });
+        throw new Response('Invalid or missing message content', {
+          status: 400,
+          statusText: 'Bad Request',
+        });
+      }
+
       // Create a dummy user profile with required properties
       const userProfile = {
         id: 'dummy-user-id',
@@ -85,6 +96,8 @@ async function llmCallAction({ context, request }: ActionFunctionArgs) {
         },
       };
 
+      logger.info('Calling streamText for LLM call');
+
       const stream = await streamText({
         messages: [
           {
@@ -98,6 +111,8 @@ async function llmCallAction({ context, request }: ActionFunctionArgs) {
         userProfile,
       });
 
+      logger.info('Stream received successfully, returning response');
+
       return new Response(stream, {
         status: 200,
         headers: {
@@ -105,27 +120,92 @@ async function llmCallAction({ context, request }: ActionFunctionArgs) {
         },
       });
     } catch (error: unknown) {
-      console.log(error);
+      // Enhanced error logging
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      const errorStack = error instanceof Error ? error.stack : undefined;
 
-      if (error instanceof Error && error.message?.includes('API key')) {
-        throw new Response('Invalid or missing API key', {
-          status: 401,
-          statusText: 'Unauthorized',
-        });
+      logger.error('Error in LLM call action (streaming):', {
+        error: errorMessage,
+        stack: errorStack,
+        model,
+        provider: providerName,
+      });
+
+      // Handle specific error types
+      if (error instanceof Error) {
+        if (error.message?.includes('API key')) {
+          logger.error('API key error', { message: error.message });
+          return new Response('Invalid or missing API key', {
+            status: 401,
+            statusText: 'Unauthorized',
+          });
+        } else if (error.message?.includes('Authentication error')) {
+          logger.error('Authentication error', { message: error.message });
+          return new Response(error.message, {
+            status: 401,
+            statusText: 'Unauthorized',
+          });
+        } else if (error.message?.includes('Resource not found')) {
+          logger.error('Resource not found', { message: error.message });
+          return new Response(error.message, {
+            status: 404,
+            statusText: 'Not Found',
+          });
+        } else if (error.message?.includes('Server error')) {
+          logger.error('Server error', { message: error.message });
+          return new Response(error.message, {
+            status: 502,
+            statusText: 'Bad Gateway',
+          });
+        }
       }
 
-      throw new Response(null, {
-        status: 500,
-        statusText: 'Internal Server Error',
-      });
+      // Default error response with more details
+      return new Response(
+        JSON.stringify({
+          error: 'Internal Server Error',
+          message: errorMessage.substring(0, 200),
+          requestId: new Date().getTime().toString(),
+        }),
+        {
+          status: 500,
+          statusText: 'Internal Server Error',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      );
     }
   } else {
     try {
+      logger.info(`Processing LLM call request for model: ${model}, provider: ${providerName}, streamOutput: false`);
+
+      // Validate message content
+      if (!message || typeof message !== 'string') {
+        logger.error('Invalid message format', { message });
+        throw new Response('Invalid or missing message content', {
+          status: 400,
+          statusText: 'Bad Request',
+        });
+      }
+
+      // Validate system prompt
+      if (!system || typeof system !== 'string') {
+        logger.error('Invalid system prompt format', { system });
+        throw new Response('Invalid or missing system prompt', {
+          status: 400,
+          statusText: 'Bad Request',
+        });
+      }
+
+      logger.info('Fetching model list');
+
       const models = await getModelList({ apiKeys, providerSettings, serverEnv: context.cloudflare?.env as any });
       const modelDetails = models.find((m: ModelInfo) => m.name === model);
 
       if (!modelDetails) {
-        throw new Error('Model not found');
+        logger.error('Model not found', { model, availableModels: models.map((m) => m.name) });
+        throw new Error(`Model "${model}" not found or not available`);
       }
 
       const dynamicMaxTokens = modelDetails && modelDetails.maxTokenAllowed ? modelDetails.maxTokenAllowed : MAX_TOKENS;
@@ -133,10 +213,13 @@ async function llmCallAction({ context, request }: ActionFunctionArgs) {
       const providerInfo = PROVIDER_LIST.find((p) => p.name === provider.name);
 
       if (!providerInfo) {
-        throw new Error('Provider not found');
+        logger.error('Provider not found', { providerName, availableProviders: PROVIDER_LIST.map((p) => p.name) });
+        throw new Error(`Provider "${providerName}" not found or not available`);
       }
 
-      logger.info(`Generating response Provider: ${provider.name}, Model: ${modelDetails.name}`);
+      logger.info(
+        `Generating response with Provider: ${provider.name}, Model: ${modelDetails.name}, MaxTokens: ${dynamicMaxTokens}`,
+      );
 
       const result = await generateText({
         system,
@@ -155,7 +238,8 @@ async function llmCallAction({ context, request }: ActionFunctionArgs) {
         maxTokens: dynamicMaxTokens,
         toolChoice: 'none',
       });
-      logger.info(`Generated response`);
+
+      logger.info(`Generated response successfully`);
 
       return new Response(JSON.stringify(result), {
         status: 200,
@@ -164,19 +248,61 @@ async function llmCallAction({ context, request }: ActionFunctionArgs) {
         },
       });
     } catch (error: unknown) {
-      console.log(error);
+      // Enhanced error logging
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      const errorStack = error instanceof Error ? error.stack : undefined;
 
-      if (error instanceof Error && error.message?.includes('API key')) {
-        throw new Response('Invalid or missing API key', {
-          status: 401,
-          statusText: 'Unauthorized',
-        });
+      logger.error('Error in LLM call action (non-streaming):', {
+        error: errorMessage,
+        stack: errorStack,
+        model,
+        provider: providerName,
+      });
+
+      // Handle specific error types
+      if (error instanceof Error) {
+        if (error.message?.includes('API key')) {
+          logger.error('API key error', { message: error.message });
+          return new Response('Invalid or missing API key', {
+            status: 401,
+            statusText: 'Unauthorized',
+          });
+        } else if (error.message?.includes('Authentication error')) {
+          logger.error('Authentication error', { message: error.message });
+          return new Response(error.message, {
+            status: 401,
+            statusText: 'Unauthorized',
+          });
+        } else if (error.message?.includes('not found') || error.message?.includes('not available')) {
+          logger.error('Resource not found', { message: error.message });
+          return new Response(error.message, {
+            status: 404,
+            statusText: 'Not Found',
+          });
+        } else if (error.message?.includes('Server error')) {
+          logger.error('Server error', { message: error.message });
+          return new Response(error.message, {
+            status: 502,
+            statusText: 'Bad Gateway',
+          });
+        }
       }
 
-      throw new Response(null, {
-        status: 500,
-        statusText: 'Internal Server Error',
-      });
+      // Default error response with more details
+      return new Response(
+        JSON.stringify({
+          error: 'Internal Server Error',
+          message: errorMessage.substring(0, 200),
+          requestId: new Date().getTime().toString(),
+        }),
+        {
+          status: 500,
+          statusText: 'Internal Server Error',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      );
     }
   }
 }

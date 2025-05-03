@@ -149,32 +149,98 @@ export async function streamText(props: {
   logger.info(`Making POST request to proxy: ${PROXY_URL}`);
 
   try {
-    const response = await fetch(PROXY_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${authToken}`,
-      },
-      body: JSON.stringify(proxyPayload),
+    // Add timeout to the fetch request to prevent hanging in Netlify functions
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 25000); // 25 second timeout
+
+    // Log the request details for debugging
+    logger.info(`Making proxy request to: ${PROXY_URL}`, {
+      provider: providerName,
+      model: currentModel,
+      subscriptionId,
     });
 
-    logger.info(`Proxy request status: ${response.status}`);
+    try {
+      const response = await fetch(PROXY_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${authToken}`,
+        },
+        body: JSON.stringify(proxyPayload),
+        signal: controller.signal,
+      });
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      logger.error(`Proxy request failed: ${response.status} ${response.statusText}`, { errorText });
-      throw new Error(`Proxy request failed: ${response.status} ${response.statusText}`);
+      clearTimeout(timeoutId);
+
+      logger.info(`Proxy request status: ${response.status}`);
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        const requestId = new Date().getTime().toString();
+
+        logger.error(`Proxy request failed: ${response.status} ${response.statusText}`, {
+          errorText,
+          requestId,
+          netlifyInfo: 'This error may be related to Netlify function timeout or network connectivity issues.',
+        });
+
+        // Provide more specific error messages based on status code
+        if (response.status === 401 || response.status === 403) {
+          throw new Error(`Authentication error: Please check your API credentials (${response.status})`);
+        } else if (response.status === 404) {
+          throw new Error(`Resource not found: The requested endpoint or model may not exist (${response.status})`);
+        } else if (response.status >= 500) {
+          throw new Error(
+            `Server error: The API service is experiencing issues (${response.status}). Please try again later.`,
+          );
+        } else {
+          throw new Error(
+            `Proxy request failed: ${response.status} ${response.statusText} - ${errorText.substring(0, 200)}`,
+          );
+        }
+      }
+
+      if (!response.body) {
+        logger.error('Proxy response missing body');
+        throw new Error('Proxy response missing body');
+      }
+
+      logger.info('Proxy request successful, returning stream.');
+
+      return response.body;
+    } catch (fetchError) {
+      clearTimeout(timeoutId);
+
+      // Check if this was a timeout abort
+      if (fetchError instanceof Error && fetchError.name === 'AbortError') {
+        logger.error('Proxy request timed out after 25 seconds', {
+          url: PROXY_URL,
+          netlifyInfo:
+            'This is likely a timeout issue with Netlify functions. Consider increasing the function timeout in netlify.toml.',
+        });
+        throw new Error('Request to AI service timed out. Please try again later.');
+      }
+
+      // Re-throw other fetch errors
+      throw fetchError;
     }
-
-    if (!response.body) {
-      throw new Error('Proxy response missing body');
-    }
-
-    logger.info('Proxy request successful, returning stream.');
-
-    return response.body;
   } catch (error) {
-    logger.error('Error during proxy fetch call:', error);
-    throw error;
+    // Enhanced error logging with more context
+    logger.error('Error during proxy fetch call:', error, {
+      provider: providerName,
+      model: currentModel,
+      url: PROXY_URL,
+      errorMessage: error instanceof Error ? error.message : String(error),
+      errorStack: error instanceof Error ? error.stack : undefined,
+    });
+
+    // Rethrow with a more user-friendly message
+    if (error instanceof Error) {
+      // Keep original error if it's already well-formatted
+      throw error;
+    } else {
+      throw new Error(`Failed to connect to AI service: ${String(error)}`);
+    }
   }
 }
