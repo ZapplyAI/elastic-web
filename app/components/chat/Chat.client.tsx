@@ -200,7 +200,7 @@ export const ChatImpl = memo(
       // console.log(prompt, searchParams, model, provider);
 
       if (prompt) {
-        setSearchParams({});
+        setSearchParams(new URLSearchParams());
         runAnimation();
         append({
           role: 'user',

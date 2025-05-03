@@ -11,3 +11,16 @@ interface Performance {
     usedJSHeapSize: number;
   };
 }
+
+// Declare Link in a namespace to prevent conflicts
+declare namespace MDXNamespace {
+  interface Link {
+    // Add properties as needed
+  }
+}
+
+declare namespace ReactRouterNamespace {
+  interface Link {
+    // Add properties as needed
+  }
+}

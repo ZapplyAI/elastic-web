@@ -23,7 +23,7 @@
     "dockerrun": "docker run -it -d --name elasticApp-ai-live -p 5173:5173 --env-file .env.local elasticApp-ai",
     "dockerbuild:prod": "docker build -t elasticApp-ai:production -t elasticApp-ai:latest --target elasticApp-ai-production .",
     "dockerbuild": "docker build -t elasticApp-ai:development -t elasticApp-ai:latest --target elasticApp-ai-development .",
-    "typecheck": "tsc",
+    "typecheck": "node scripts/typecheck.js",
     "typegen": "wrangler types",
     "preview": "NODE_OPTIONS='--max_old_space_size=4096' pnpm run build && pnpm run start",
     "prepare": "husky",
