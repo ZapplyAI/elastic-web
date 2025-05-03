@@ -1,0 +1,22 @@
+# Netlify configuration for Remix Vite projects
+
+[build]
+  # Use pnpm to build the site
+  command = "pnpm run build"
+  # Specify the directory containing the built client-side assets
+  publish = "build/client"
+
+[dev]
+  # Command to run the local development server
+  command = "pnpm run dev"
+  # Specify that the framework is Vite
+  framework = "vite"
+
+# Function settings
+[functions]
+  # Increase the function timeout to 30 seconds (default is 10)
+  timeout = 30
+
+# Set environment variables for all functions
+[build.environment]
+  NODE_VERSION = "22.15.0"
