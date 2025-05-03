@@ -33,6 +33,10 @@ export const ModelSelector = ({
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (typeof document === 'undefined') {
+      return;
+    }
+
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsModelDropdownOpen(false);
@@ -42,7 +46,10 @@ export const ModelSelector = ({
 
     document.addEventListener('mousedown', handleClickOutside);
 
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    // eslint-disable-next-line consistent-return
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
   }, []);
 
   // Filter models based on search query

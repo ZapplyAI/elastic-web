@@ -61,6 +61,10 @@ export function ImportButtons(importChat: ((description: string, messages: Messa
         <div className="flex gap-2">
           <Button
             onClick={() => {
+              if (typeof document === 'undefined') {
+                return;
+              }
+
               const input = document.getElementById('chat-import');
               input?.click();
             }}

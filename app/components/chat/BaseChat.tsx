@@ -341,6 +341,10 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
     };
 
     const handleFileUpload = () => {
+      if (typeof document === 'undefined') {
+        return;
+      }
+
       const input = document.createElement('input');
       input.type = 'file';
       input.accept = 'image/*';
@@ -507,7 +511,10 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
                 <button
                   onClick={() => {
                     setShowChatHistoryModal(false);
-                    window.location.href = '/';
+
+                    if (typeof window !== 'undefined') {
+                      window.location.href = '/';
+                    }
                   }}
                   className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors flex items-center gap-2"
                 >
@@ -773,6 +780,10 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
                           title="Import folder"
                           className="transition-all"
                           onClick={() => {
+                            if (typeof document === 'undefined') {
+                              return;
+                            }
+
                             const input = document.createElement('input');
                             input.type = 'file';
                             input.setAttribute('webkitdirectory', '');
