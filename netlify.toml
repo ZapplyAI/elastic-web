@@ -27,7 +27,7 @@
 
 # Redirects to route all requests to the Remix serverless function
 [[redirects]]
-from = "/*"
-to = "/.netlify/functions/server"
-status = 200
-force = true # Optional: Use force=true if you want to override static files with function responses for certain paths
+  from = "/*"
+  to = "/.netlify/functions/server"
+  status = 200
+  force = true
