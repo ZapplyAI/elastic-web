@@ -105,7 +105,10 @@ ${escapeElasticAppTags(file.content)}
         console.error('Error during import:', error);
         toast.error('Failed to import repository');
         setLoading(false);
-        window.location.href = '/';
+
+        if (typeof window !== 'undefined') {
+          window.location.href = '/';
+        }
 
         return;
       }
@@ -120,7 +123,10 @@ ${escapeElasticAppTags(file.content)}
     const url = searchParams.get('url');
 
     if (!url) {
-      window.location.href = '/';
+      if (typeof window !== 'undefined') {
+        window.location.href = '/';
+      }
+
       return;
     }
 
@@ -128,7 +134,10 @@ ${escapeElasticAppTags(file.content)}
       console.error('Error importing repo:', error);
       toast.error('Failed to import repository');
       setLoading(false);
-      window.location.href = '/';
+
+      if (typeof window !== 'undefined') {
+        window.location.href = '/';
+      }
     });
     setImported(true);
   }, [searchParams, historyReady, gitReady, imported]);

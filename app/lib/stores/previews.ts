@@ -107,7 +107,7 @@ export class PreviewsStore {
       });
 
       // Reload the page content
-      if (typeof window !== 'undefined' && window.location) {
+      if (typeof window !== 'undefined' && typeof document !== 'undefined' && window.location) {
         const iframe = document.querySelector('iframe');
 
         if (iframe) {
@@ -169,7 +169,7 @@ export class PreviewsStore {
       });
 
       // Watch for DOM changes that might affect storage
-      if (typeof window !== 'undefined') {
+      if (typeof window !== 'undefined' && typeof document !== 'undefined') {
         const observer = new MutationObserver((_mutations) => {
           // Broadcast storage changes when DOM changes
           this._broadcastStorageSync();

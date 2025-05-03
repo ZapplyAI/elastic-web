@@ -35,15 +35,19 @@ export const PortDropdown = memo(
         }
       };
 
-      if (isDropdownOpen) {
-        window.addEventListener('mousedown', handleClickOutside);
-      } else {
-        window.removeEventListener('mousedown', handleClickOutside);
+      if (typeof window !== 'undefined') {
+        if (isDropdownOpen) {
+          window.addEventListener('mousedown', handleClickOutside);
+        } else {
+          window.removeEventListener('mousedown', handleClickOutside);
+        }
+
+        return () => {
+          window.removeEventListener('mousedown', handleClickOutside);
+        };
       }
 
-      return () => {
-        window.removeEventListener('mousedown', handleClickOutside);
-      };
+      return undefined;
     }, [isDropdownOpen]);
 
     return (

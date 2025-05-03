@@ -105,6 +105,10 @@ const inlineThemeCode = stripIndents`
   setTutorialKitTheme();
 
   function setTutorialKitTheme() {
+    if (typeof window === 'undefined' || typeof document === 'undefined') {
+      return;
+    }
+
     let theme = localStorage.getItem('elasticApp_theme');
 
     if (!theme) {

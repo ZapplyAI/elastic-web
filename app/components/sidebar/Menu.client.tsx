@@ -93,7 +93,9 @@ export const Menu = () => {
 
           if (chatId.get() === item.id) {
             // hard page navigation to clear the stores
-            window.location.pathname = '/';
+            if (typeof window !== 'undefined') {
+              window.location.pathname = '/';
+            }
           }
         })
         .catch((error) => {
@@ -131,11 +133,15 @@ export const Menu = () => {
       }
     }
 
-    window.addEventListener('mousemove', onMouseMove);
+    if (typeof window !== 'undefined') {
+      window.addEventListener('mousemove', onMouseMove);
 
-    return () => {
-      window.removeEventListener('mousemove', onMouseMove);
-    };
+      return () => {
+        window.removeEventListener('mousemove', onMouseMove);
+      };
+    }
+
+    return undefined;
   }, [isSettingsOpen]);
 
   const handleDeleteClick = (event: React.UIEvent, item: ChatHistoryItem) => {

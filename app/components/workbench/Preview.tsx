@@ -49,7 +49,7 @@ export const Preview = memo(() => {
     side: null as ResizeSide,
     startX: 0,
     startWidthPercent: 37.5,
-    windowWidth: window.innerWidth,
+    windowWidth: typeof window !== 'undefined' ? window.innerWidth : 1024,
   });
 
   const SCALING_FACTOR = 2;
@@ -110,6 +110,10 @@ export const Preview = memo(() => {
   };
 
   const toggleFullscreen = async () => {
+    if (typeof document === 'undefined') {
+      return;
+    }
+
     if (!isFullscreen && containerRef.current) {
       await containerRef.current.requestFullscreen();
     } else if (document.fullscreenElement) {
@@ -118,6 +122,10 @@ export const Preview = memo(() => {
   };
 
   useEffect(() => {
+    if (typeof document === 'undefined') {
+      return undefined;
+    }
+
     const handleFullscreenChange = () => {
       setIsFullscreen(!!document.fullscreenElement);
     };
@@ -138,13 +146,17 @@ export const Preview = memo(() => {
       return;
     }
 
+    if (typeof document === 'undefined') {
+      return;
+    }
+
     document.body.style.userSelect = 'none';
 
     resizingState.current.isResizing = true;
     resizingState.current.side = side;
     resizingState.current.startX = e.clientX;
     resizingState.current.startWidthPercent = widthPercent;
-    resizingState.current.windowWidth = window.innerWidth;
+    resizingState.current.windowWidth = typeof window !== 'undefined' ? window.innerWidth : 1024;
 
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
@@ -178,6 +190,11 @@ export const Preview = memo(() => {
   const onMouseUp = () => {
     resizingState.current.isResizing = false;
     resizingState.current.side = null;
+
+    if (typeof document === 'undefined') {
+      return;
+    }
+
     document.removeEventListener('mousemove', onMouseMove);
     document.removeEventListener('mouseup', onMouseUp);
 
@@ -189,11 +206,15 @@ export const Preview = memo(() => {
       // Optional: Adjust widthPercent if necessary
     };
 
-    window.addEventListener('resize', handleWindowResize);
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', handleWindowResize);
 
-    return () => {
-      window.removeEventListener('resize', handleWindowResize);
-    };
+      return () => {
+        window.removeEventListener('resize', handleWindowResize);
+      };
+    }
+
+    return undefined;
   }, []);
 
   const GripIcon = () => (
@@ -227,14 +248,17 @@ export const Preview = memo(() => {
       if (match) {
         const previewId = match[1];
         const previewUrl = `/webcontainer/preview/${previewId}`;
-        const newWindow = window.open(
-          previewUrl,
-          '_blank',
-          `noopener,noreferrer,width=${size.width},height=${size.height},menubar=no,toolbar=no,location=no,status=no`,
-        );
 
-        if (newWindow) {
-          newWindow.focus();
+        if (typeof window !== 'undefined') {
+          const newWindow = window.open(
+            previewUrl,
+            '_blank',
+            `noopener,noreferrer,width=${size.width},height=${size.height},menubar=no,toolbar=no,location=no,status=no`,
+          );
+
+          if (newWindow) {
+            newWindow.focus();
+          }
         }
       } else {
         console.warn('[Preview] Invalid WebContainer URL:', activePreview.baseUrl);

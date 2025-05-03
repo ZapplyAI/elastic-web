@@ -398,11 +398,15 @@ export function EventLogsTab() {
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    if (typeof document !== 'undefined') {
+      document.addEventListener('mousedown', handleClickOutside);
 
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+      };
+    }
+
+    return undefined;
   }, []);
 
   const selectedLevelOption = logLevelOptions.find((opt) => opt.value === selectedLevel);
@@ -425,14 +429,18 @@ export function EventLogsTab() {
       };
 
       const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `elasticApp-event-logs-${new Date().toISOString()}.json`;
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
+
+      if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `elasticApp-event-logs-${new Date().toISOString()}.json`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      }
+
       toast.success('Event logs exported successfully as JSON');
     } catch (error) {
       console.error('Failed to export JSON:', error);
@@ -459,14 +467,18 @@ export function EventLogsTab() {
         .map((row) => row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(','))
         .join('\n');
       const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `elasticApp-event-logs-${new Date().toISOString()}.csv`;
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
+
+      if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `elasticApp-event-logs-${new Date().toISOString()}.csv`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      }
+
       toast.success('Event logs exported successfully as CSV');
     } catch (error) {
       console.error('Failed to export CSV:', error);
@@ -744,14 +756,18 @@ export function EventLogsTab() {
         .join('\n');
 
       const blob = new Blob([textContent], { type: 'text/plain' });
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `elasticApp-event-logs-${new Date().toISOString()}.txt`;
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
+
+      if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `elasticApp-event-logs-${new Date().toISOString()}.txt`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      }
+
       toast.success('Event logs exported successfully as text file');
     } catch (error) {
       console.error('Failed to export text file:', error);

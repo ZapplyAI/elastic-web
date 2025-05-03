@@ -28,6 +28,10 @@ export function useShortcuts(): void {
   const shortcuts = useStore(shortcutsStore);
 
   useEffect(() => {
+    if (typeof window === 'undefined' || typeof document === 'undefined') {
+      return undefined;
+    }
+
     const handleKeyDown = (event: KeyboardEvent): void => {
       // Don't trigger shortcuts when typing in input fields
       if (

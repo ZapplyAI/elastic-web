@@ -29,14 +29,17 @@ export default function DataTab() {
 
       // Download as JSON
       const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `elasticApp-chats-${new Date().toISOString()}.json`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
+
+      if (typeof URL !== 'undefined' && typeof document !== 'undefined') {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `elasticApp-chats-${new Date().toISOString()}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
 
       toast.success('Chats exported successfully');
     } catch (error) {
@@ -47,6 +50,10 @@ export default function DataTab() {
 
   const handleExportSettings = () => {
     try {
+      if (typeof localStorage === 'undefined') {
+        throw new Error('localStorage is not available');
+      }
+
       const settings = {
         userProfile: localStorage.getItem('elasticApp_user_profile'),
         settings: localStorage.getItem('elasticApp_settings'),
@@ -54,14 +61,17 @@ export default function DataTab() {
       };
 
       const blob = new Blob([JSON.stringify(settings, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `elasticApp-settings-${new Date().toISOString()}.json`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
+
+      if (typeof URL !== 'undefined' && typeof document !== 'undefined') {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `elasticApp-settings-${new Date().toISOString()}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
 
       toast.success('Settings exported successfully');
     } catch (error) {
@@ -81,15 +91,20 @@ export default function DataTab() {
       const content = await file.text();
       const settings = JSON.parse(content);
 
-      if (settings.userProfile) {
-        localStorage.setItem('elasticApp_user_profile', settings.userProfile);
+      if (typeof localStorage !== 'undefined') {
+        if (settings.userProfile) {
+          localStorage.setItem('elasticApp_user_profile', settings.userProfile);
+        }
+
+        if (settings.settings) {
+          localStorage.setItem('elasticApp_settings', settings.settings);
+        }
       }
 
-      if (settings.settings) {
-        localStorage.setItem('elasticApp_settings', settings.settings);
+      if (typeof window !== 'undefined') {
+        window.location.reload(); // Reload to apply settings
       }
 
-      window.location.reload(); // Reload to apply settings
       toast.success('Settings imported successfully');
     } catch (error) {
       console.error('Import error:', error);
@@ -158,14 +173,17 @@ export default function DataTab() {
       };
 
       const blob = new Blob([JSON.stringify(template, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'elasticApp-api-keys-template.json';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
+
+      if (typeof URL !== 'undefined' && typeof document !== 'undefined') {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'elasticApp-api-keys-template.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
 
       toast.success('Template downloaded successfully');
     } catch (error) {
@@ -181,9 +199,11 @@ export default function DataTab() {
 
     try {
       // Clear all stored settings from localStorage
-      localStorage.removeItem('elasticApp_user_profile');
-      localStorage.removeItem('elasticApp_settings');
-      localStorage.removeItem('elasticApp_chat_history');
+      if (typeof localStorage !== 'undefined') {
+        localStorage.removeItem('elasticApp_user_profile');
+        localStorage.removeItem('elasticApp_settings');
+        localStorage.removeItem('elasticApp_chat_history');
+      }
 
       // Clear all data from IndexedDB
       if (!db) {
@@ -199,7 +219,10 @@ export default function DataTab() {
       setShowResetInlineConfirm(false);
 
       // Then reload and show success message
-      window.location.reload();
+      if (typeof window !== 'undefined') {
+        window.location.reload();
+      }
+
       toast.success('Settings reset successfully');
     } catch (error) {
       console.error('Reset error:', error);
@@ -215,7 +238,9 @@ export default function DataTab() {
 
     try {
       // Clear chat history from localStorage
-      localStorage.removeItem('elasticApp_chat_history');
+      if (typeof localStorage !== 'undefined') {
+        localStorage.removeItem('elasticApp_chat_history');
+      }
 
       // Clear chats from IndexedDB
       if (!db) {

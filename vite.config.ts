@@ -8,7 +8,7 @@ import * as dotenv from 'dotenv';
 import { execSync } from 'child_process';
 import { readFileSync } from 'fs';
 import { join } from 'path';
-// import { netlifyPlugin } from '@netlify/remix-edge-adapter/plugin';
+import { netlifyPlugin } from '@netlify/remix-edge-adapter/plugin';
 
 dotenv.config();
 
@@ -146,7 +146,7 @@ export default defineConfig((config) => {
 
       // config.mode !== 'test' && remixCloudflareDevProxy(), // Removed Cloudflare proxy
       remixVitePlugin({
-        // For Cloudflare Pages deployment
+        // presets: [netlifyPreset()], // Removed incorrect preset
         future: {
           v3_fetcherPersist: true,
           v3_relativeSplatPath: true,
@@ -154,7 +154,7 @@ export default defineConfig((config) => {
           v3_lazyRouteDiscovery: true,
         },
       }),
-      // netlifyPlugin(), // Removed Netlify plugin for Cloudflare compatibility
+      netlifyPlugin(),
       UnoCSS(),
       tsconfigPaths(),
       chrome129IssuePlugin(),

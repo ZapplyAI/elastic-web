@@ -262,13 +262,17 @@ export default function DebugTab() {
       logStore.logError('Unhandled Promise Rejection', event.reason);
     };
 
-    window.addEventListener('error', handleError);
-    window.addEventListener('unhandledrejection', handleRejection);
+    if (typeof window !== 'undefined') {
+      window.addEventListener('error', handleError);
+      window.addEventListener('unhandledrejection', handleRejection);
 
-    return () => {
-      window.removeEventListener('error', handleError);
-      window.removeEventListener('unhandledrejection', handleRejection);
-    };
+      return () => {
+        window.removeEventListener('error', handleError);
+        window.removeEventListener('unhandledrejection', handleRejection);
+      };
+    }
+
+    return undefined;
   }, []);
 
   // Check for errors when the errors section is opened
@@ -427,10 +431,10 @@ export default function DebugTab() {
           cores: navigator.hardwareConcurrency,
         },
         screen: {
-          width: window.screen.width,
-          height: window.screen.height,
-          colorDepth: window.screen.colorDepth,
-          pixelRatio: window.devicePixelRatio,
+          width: typeof window !== 'undefined' ? window.screen.width : 0,
+          height: typeof window !== 'undefined' ? window.screen.height : 0,
+          colorDepth: typeof window !== 'undefined' ? window.screen.colorDepth : 0,
+          pixelRatio: typeof window !== 'undefined' ? window.devicePixelRatio : 1,
         },
         time: {
           timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
@@ -653,14 +657,18 @@ export default function DebugTab() {
       };
 
       const blob = new Blob([JSON.stringify(debugData, null, 2)], { type: 'application/json' });
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `elasticApp-debug-info-${new Date().toISOString()}.json`;
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
+
+      if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `elasticApp-debug-info-${new Date().toISOString()}.json`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      }
+
       toast.success('Debug information exported successfully');
     } catch (error) {
       console.error('Failed to export debug info:', error);
@@ -696,14 +704,18 @@ export default function DebugTab() {
       // Create CSV content
       const csvContent = csvData.map((row) => row.join(',')).join('\n');
       const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `elasticApp-debug-info-${new Date().toISOString()}.csv`;
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
+
+      if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `elasticApp-debug-info-${new Date().toISOString()}.csv`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      }
+
       toast.success('Debug information exported as CSV');
     } catch (error) {
       console.error('Failed to export CSV:', error);
@@ -1058,14 +1070,18 @@ export default function DebugTab() {
         .join('\n');
 
       const blob = new Blob([textContent], { type: 'text/plain' });
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `elasticApp-debug-info-${new Date().toISOString()}.txt`;
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
+
+      if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `elasticApp-debug-info-${new Date().toISOString()}.txt`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      }
+
       toast.success('Debug information exported as text file');
     } catch (error) {
       console.error('Failed to export text file:', error);
