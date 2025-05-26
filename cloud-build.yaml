@@ -1,0 +1,26 @@
+steps:
+  # Create the Artifact Registry repository if it doesn't exist
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        gcloud artifacts repositories describe elasticapp-repo --location=us-central1 || \
+        gcloud artifacts repositories create elasticapp-repo --repository-format=docker --location=us-central1 --description="Repository for ElasticApp Docker images"
+
+  # Build the container image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/elastic-x/elasticapp-repo/elasticapp:latest', '--target', 'elasticApp-production', '.']
+
+  # Push the container image to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'us-central1-docker.pkg.dev/elastic-x/elasticapp-repo/elasticapp:latest']
+
+# Store images in Artifact Registry
+images:
+  - 'us-central1-docker.pkg.dev/elastic-x/elasticapp-repo/elasticapp:latest'
+
+timeout: '1800s'  # 30 minutes
+options:
+  machineType: 'E2_HIGHCPU_8'  # Use a high-CPU machine for faster builds
+  diskSizeGb: '100'

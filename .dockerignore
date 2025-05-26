@@ -9,18 +9,41 @@
 CONTRIBUTING.md
 LICENSE
 README.md
+docs/
 
 # Ignore environment examples and sensitive info
 .env
 *.local
 *.example
+.env.*
+!.env.production
 
 # Ignore node modules, logs and cache files
 **/*.log
 **/node_modules
 **/dist
-**/build
 **/.cache
 logs
 dist-ssr
 .DS_Store
+
+# Ignore test and development files
+**/*.test.*
+**/*.spec.*
+vitest.config.ts
+**/test
+**/__tests__
+.vscode/
+.idea/
+
+# Ignore other unnecessary files for production
+cloud-build.yaml
+.eslintrc
+.prettierrc
+.prettierignore
+.elastic-copilot/
+
+# IMPORTANT: DO NOT IGNORE these files
+# !server.js
+# !bindings.sh
+# !build/

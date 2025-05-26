@@ -1,33 +1,34 @@
 steps:
-# Build the container image
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/$PROJECT_ID/elasticApp-ai:$COMMIT_SHA', '--target', 'elasticApp-ai-production', '.']
-# Push the container image to Container Registry
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/$PROJECT_ID/elasticApp-ai:$COMMIT_SHA']
+  # Build the container image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/elasticapp:latest', '.']
+
+  # Push the container image to Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/elasticapp:latest']
+
 # Deploy container image to Cloud Run
-- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  entrypoint: gcloud
-  args:
-  - 'run'
-  - 'deploy'
-  - 'elasticApp-ai'
-  - '--image'
-  - 'gcr.io/$PROJECT_ID/elasticApp-ai:$COMMIT_SHA'
-  - '--region'
-  - '${_REGION}'
-  - '--platform'
-  - 'managed'
-  - '--allow-unauthenticated'
-  - '--port'
-  - '5173'
-  - '--memory'
-  - '2Gi'
-  - '--cpu'
-  - '1'
-  - '--set-env-vars'
-  - 'NODE_ENV=production'
-substitutions:
-  _REGION: us-central1  # Default region, can be overridden
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+    - 'run'
+    - 'deploy'
+    - 'elasticapp'
+    - '--image'
+    - 'gcr.io/$PROJECT_ID/elasticapp:latest'
+    - '--platform'
+    - 'managed'
+    - '--region'
+    - 'us-central1'
+    - '--allow-unauthenticated'
+    - '--memory'
+    - '4Gi'
+    - '--cpu'
+    - '1'
+    - '--set-env-vars'
+    - 'NODE_ENV=production'
+
 images:
-- 'gcr.io/$PROJECT_ID/elasticApp-ai:$COMMIT_SHA'
+  - 'gcr.io/$PROJECT_ID/elasticapp:latest'
+
+timeout: '1800s'
